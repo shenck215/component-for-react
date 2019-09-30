@@ -1,7 +1,7 @@
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import { HelloWorld } from '@components/index'
-import '@components/HelloWorld/index.scss'
+import '@components/HelloWorld/style'
 
 const App = () => (
   <div>
