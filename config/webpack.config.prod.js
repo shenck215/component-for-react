@@ -1,4 +1,5 @@
 const path = require("path");
+const fs = require("fs");
 const webpack = require("webpack");
 const merge = require("webpack-merge");
 const baseConfig = require("./webpack.base.js");
@@ -11,6 +12,38 @@ const HappyPack = require('happypack')
 const os = require('os');
 const { name } = require('../package.json')
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+
+const dirs = [
+  path.join(__dirname, "../dist"),
+  path.join(__dirname, "../es"),
+  path.join(__dirname, "../lib")
+]
+dirs.forEach(item => {
+  const files = fs.readdirSync(item)
+  console.log(files)
+})
+// fs.access(path.join(__dirname, "../dist/main.css"), err => {
+//   if(!err){
+//     fs.unlinkSync(path.join(__dirname, "../dist/main.css"))
+//   }
+// })
+
+let path=p.join(__dirname,"./test2");
+deleteFolder(path);
+function deleteFolder(path) {
+    let files = [];
+    if( fs.existsSync(path) ) {
+        files = fs.readdirSync(path);
+        files.forEach(function(file,index){
+            let curPath = path + "/" + file;
+            if(fs.statSync(curPath).isDirectory()) {
+                deleteFolder(curPath);
+            } else {
+                fs.unlinkSync(curPath);
+            }
+        });
+        fs.rmdirSync(path);
+    }
 
 const prodConfig = {
   mode: "production",
@@ -76,7 +109,7 @@ const prodConfig = {
       "process.env.NODE_ENV": JSON.stringify("production"),
       __DEBUG__: false,
     }),
-    new CleanWebpackPlugin(), // 默认清除output.path下生成的目录
+    // new CleanWebpackPlugin(), // 默认清除output.path下生成的目录
     new MiniCssExtractPlugin({
       filename: '[name].min.css',
       chunkFilename: '[id].min.css'
