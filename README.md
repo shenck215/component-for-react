@@ -63,5 +63,11 @@ npm start
 - 编译 npm 包
 
 ```shell
-npm run build:publish
+npm run build
+```
+
+- 发布 npm 包
+
+```shell
+npm run pub
 ```
