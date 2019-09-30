@@ -1,1 +1,3 @@
-export default () => <div className='head'>Hello World</div>
+const prefixCls = 'nextlc-HelloWorld'
+
+export default () => <div className={prefixCls}>Hello World</div>
