@@ -4,46 +4,42 @@ const webpack = require("webpack");
 const merge = require("webpack-merge");
 const baseConfig = require("./webpack.base.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const HappyPack = require('happypack')
-const os = require('os');
-const { name } = require('../package.json')
+const HappyPack = require("happypack");
+const os = require("os");
+const { name } = require("../package.json");
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
+/** 每次打包前要清空的文件夹 */
 const dirs = [
   path.join(__dirname, "../dist"),
   path.join(__dirname, "../es"),
   path.join(__dirname, "../lib")
-]
-dirs.forEach(item => {
-  const files = fs.readdirSync(item)
-  console.log(files)
-})
-// fs.access(path.join(__dirname, "../dist/main.css"), err => {
-//   if(!err){
-//     fs.unlinkSync(path.join(__dirname, "../dist/main.css"))
-//   }
-// })
+];
 
-let path=p.join(__dirname,"./test2");
-deleteFolder(path);
-function deleteFolder(path) {
-    let files = [];
-    if( fs.existsSync(path) ) {
-        files = fs.readdirSync(path);
-        files.forEach(function(file,index){
-            let curPath = path + "/" + file;
-            if(fs.statSync(curPath).isDirectory()) {
-                deleteFolder(curPath);
-            } else {
-                fs.unlinkSync(curPath);
-            }
-        });
-        fs.rmdirSync(path);
-    }
+/** 清空文件夹方法 */
+const deleteFolder = path => {
+  let files = [];
+  if (fs.existsSync(path)) {
+    files = fs.readdirSync(path);
+    files.forEach(function(file, index) {
+      let curPath = path + "/" + file;
+      if (fs.statSync(curPath).isDirectory()) {
+        deleteFolder(curPath);
+      } else {
+        fs.unlinkSync(curPath);
+      }
+    });
+    fs.rmdirSync(path);
+  }
+}
+
+dirs.forEach(p => {
+  deleteFolder(p);
+})
 
 const prodConfig = {
   mode: "production",
@@ -53,71 +49,65 @@ const prodConfig = {
     libraryTarget: "umd",
     filename: "[name].min.js",
     umdNamedDefine: true, // 是否将模块名称作为 AMD 输出的命名空间
-    path: path.join(__dirname, "../dist"),
+    path: path.join(__dirname, "../dist")
   },
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'happypack/loader?id=css'
-        ]
+        use: [MiniCssExtractPlugin.loader, "happypack/loader?id=css"]
       },
       {
         test: /\.scss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'happypack/loader?id=scss'
-        ]
+        use: [MiniCssExtractPlugin.loader, "happypack/loader?id=scss"]
       }
     ]
   },
   devtool: "cheap-module-source-map",
   plugins: [
     new HappyPack({
-      id: 'css',
+      id: "css",
       loaders: [
         // "style-loader",
         {
           loader: "css-loader",
           options: {
-            importLoaders: 2,
+            importLoaders: 2
           }
         },
         "postcss-loader"
       ],
-      threadPool: happyThreadPool,
+      threadPool: happyThreadPool
     }),
     new HappyPack({
-      id: 'scss',
+      id: "scss",
       loaders: [
         // "style-loader",
         {
           loader: "css-loader",
           options: {
-            importLoaders: 2,
+            importLoaders: 2
           }
         },
         "postcss-loader",
-        "sass-loader",
+        "sass-loader"
       ],
-      threadPool: happyThreadPool,
+      threadPool: happyThreadPool
     }),
     new ProgressBarPlugin(),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("production"),
-      __DEBUG__: false,
+      __DEBUG__: false
     }),
     // new CleanWebpackPlugin(), // 默认清除output.path下生成的目录
     new MiniCssExtractPlugin({
-      filename: '[name].min.css',
-      chunkFilename: '[id].min.css'
+      filename: "[name].min.css",
+      chunkFilename: "[id].min.css"
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     }),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ],
   externals: {
     react: {
@@ -142,7 +132,7 @@ const prodConfig = {
           compress: {
             drop_debugger: true,
             drop_console: false
-          },
+          }
         }
       }),
       new OptimizeCSSAssetsPlugin({
