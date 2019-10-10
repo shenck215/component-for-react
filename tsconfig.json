@@ -3,7 +3,7 @@
     "outDir": "es/",
     "module": "es6",
     "target": "es5",
-    "lib": ["es6", "dom"],
+    "lib": ["es5", "dom"],
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
@@ -33,6 +33,7 @@
     "node_modules",
     "dist",
     "es",
-    "lib"
+    "lib",
+    "config"
   ]
 }
