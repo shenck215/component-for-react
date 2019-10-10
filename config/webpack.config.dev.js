@@ -43,7 +43,7 @@ const devConfig = {
   plugins: [
     new HappyPack({
       id: 'css',
-      loaders: [
+      use: [
         "style-loader",
         {
           loader: "css-loader",
@@ -57,7 +57,7 @@ const devConfig = {
     }),
     new HappyPack({
       id: 'scss',
-      loaders: [
+      use: [
         "style-loader",
         {
           loader: "css-loader",
