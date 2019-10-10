@@ -5,7 +5,7 @@ import '@components/HelloWorld/style'
 
 const App = () => (
   <div>
-    <HelloWorld />
+    <HelloWorld text='呵呵！' />
   </div>
 )
 

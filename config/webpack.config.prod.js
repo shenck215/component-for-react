@@ -4,8 +4,7 @@ const webpack = require("webpack");
 const merge = require("webpack-merge");
 const baseConfig = require("./webpack.base.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const HappyPack = require("happypack");
@@ -35,15 +34,15 @@ const deleteFolder = path => {
     });
     fs.rmdirSync(path);
   }
-}
+};
 
 dirs.forEach(p => {
   deleteFolder(p);
-})
+});
 
 const prodConfig = {
   mode: "production",
-  entry: path.join(__dirname, "../src/components/index.js"),
+  entry: path.join(__dirname, "../src/components/index.ts"),
   output: {
     library: name,
     libraryTarget: "umd",
@@ -67,7 +66,7 @@ const prodConfig = {
   plugins: [
     new HappyPack({
       id: "css",
-      loaders: [
+      use: [
         // "style-loader",
         {
           loader: "css-loader",
@@ -81,7 +80,7 @@ const prodConfig = {
     }),
     new HappyPack({
       id: "scss",
-      loaders: [
+      use: [
         // "style-loader",
         {
           loader: "css-loader",
@@ -125,15 +124,11 @@ const prodConfig = {
   },
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        uglifyOptions: {
-          compress: {
-            drop_debugger: true,
-            drop_console: false
-          }
-        }
+      new TerserPlugin({
+        cache: true, // 开启缓存
+        parallel: true, // 支持多进程
+        sourceMap: true,
+        extractComments: true,
       }),
       new OptimizeCSSAssetsPlugin({
         // 压缩css  与 MiniCssExtractPlugin 配合使用

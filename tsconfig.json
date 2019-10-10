@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "outDir": "es/",
+    "module": "es6",
+    "target": "es5",
+    "lib": ["es6", "dom"],
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "rootDirs": ["/src"],
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    // "declaration": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "global.d.ts"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@pages/*": ["src/pages/*"],
+      "@components/*": ["src/components/*"]
+    }
+  },
+  "include": ["./src/components/*"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "es",
+    "lib"
+  ]
+}
