@@ -1,11 +1,12 @@
+import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import { HelloWorld } from '@components/index'
-import '@components/HelloWorld/style'
+import { Head } from '../components'
+import '../components/head/style'
 
 const App = () => (
   <div>
-    <HelloWorld text='呵呵！' />
+    <Head title='呵呵' />
   </div>
 )
 
@@ -20,7 +21,7 @@ function renderWithHotReload(){
 renderWithHotReload()
 
 if(module.hot){
-  module.hot.accept('./index.jsx', () => {
-    renderWithHotReload(App)
+  module.hot.accept('./index.tsx', () => {
+    renderWithHotReload()
   })
 }

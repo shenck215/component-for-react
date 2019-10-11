@@ -24,11 +24,10 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@pages/*": ["src/pages/*"],
-      "@components/*": ["src/components/*"]
+       "@/*": ["src/*"]
     }
   },
-  "include": ["./src/components/*"],
+  "include": ["src/components"],
   "exclude": [
     "node_modules",
     "dist",
@@ -37,3 +36,4 @@
     "config"
   ]
 }
+

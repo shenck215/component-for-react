@@ -31,16 +31,8 @@ module.exports = {
       libraryDirectory: "es",
       camel2DashComponentName: false, // 是否需要驼峰转短线
       camel2UnderlineComponentName: false, // 是否需要驼峰转下划线
-      style: true
+      style: true, // 动态加载相应组件的样式,'css'取css.js，true取index
     },'reactcomponents'],
-
-    ["babel-plugin-import", {
-      libraryName: "antd",
-      libraryDirectory: "es",
-      camel2DashComponentName: false, // 是否需要驼峰转短线
-      camel2UnderlineComponentName: false, // 是否需要驼峰转下划线
-      style: true
-    },'antd'],
   ]
 }
 ```

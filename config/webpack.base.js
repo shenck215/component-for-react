@@ -21,8 +21,7 @@ module.exports = {
       ".html"
     ],
     alias: {
-      "@pages": path.join(__dirname, "../src/page"),
-      "@components": path.join(__dirname, "../src/components")
+      "@": path.join(__dirname, "../src"),
     }
   },
   module: {

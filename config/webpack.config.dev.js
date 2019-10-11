@@ -14,7 +14,7 @@ const getIPAddress = () => {
 
 const devConfig = {
   mode: "development",
-  entry: path.join(__dirname, "../src/page/index.jsx"),
+  entry: path.join(__dirname, "../src/page/index.tsx"),
   output: {
     path: path.join(__dirname, "../dev/"),
     filename: "index.js"
