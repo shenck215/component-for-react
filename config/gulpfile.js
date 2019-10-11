@@ -31,7 +31,9 @@ const DIR = {
   // 输入目录
   scss: path.resolve(__dirname, '../src/components/**/*.scss'),
   buildSrc: path.resolve(__dirname, '../src/components/**/style/*.scss'),
-  style: path.resolve(__dirname, '../src/components/**/style/index.ts'),
+  styleTS: path.resolve(__dirname, '../src/components/**/style/index.ts'),
+  styleLibJS: path.resolve(__dirname, '../lib/**/style/index.js'),
+  styleEsJS: path.resolve(__dirname, '../es/**/style/index.js'),
   
   // 输出目录
   lib: path.resolve(__dirname, '../lib'),
@@ -39,10 +41,8 @@ const DIR = {
   dist: path.resolve(__dirname, '../dist')
 };
 
-const tsProjectForCopyIndexScssLib = ts.createProject('../tsconfig.json')
-const tsProjectForCopyIndexScssEs = ts.createProject('../tsconfig.json')
-const tsProjectForCreateCssLib = ts.createProject('../tsconfig.json')
-const tsProjectForCreateCssEs = ts.createProject('../tsconfig.json')
+const tsLib = ts.createProject('../tsconfig.json')
+const tsEs = ts.createProject('../tsconfig.json')
 
 // 拷贝 scss 文件
 gulp.task('copyScss', () => {
@@ -68,8 +68,8 @@ gulp.task('copyCss', () => {
 // 编译style/index.ts并拷贝到lib
 gulp.task('copyIndexScssLib', () => {
   return gulp
-  .src(DIR.style)
-  .pipe(tsProjectForCopyIndexScssLib())
+  .src(DIR.styleTS)
+  .pipe(tsLib())
   .js
   .pipe(babel({ 
     presets: [
@@ -87,8 +87,8 @@ gulp.task('copyIndexScssLib', () => {
 // 编译style/index.ts并拷贝到es
 gulp.task('copyIndexScssEs', () => {
   return gulp
-  .src(DIR.style)
-  .pipe(tsProjectForCopyIndexScssEs())
+  .src(DIR.styleTS)
+  .pipe(tsEs())
   .js
   .pipe(babel({ 
     presets: [
@@ -106,43 +106,19 @@ gulp.task('copyIndexScssEs', () => {
 // 生成style/css.js到lib
 gulp.task('createCssLib', () => {
   return gulp
-    .src(DIR.style)
-    .pipe(tsProjectForCreateCssLib())
-    .js
+    .src(DIR.styleLibJS)
     .pipe(replace(/\.scss/, '.css'))
     .pipe(rename({ basename: 'css' }))
-    .pipe(babel({ 
-      presets: [
-        [
-          "@babel/preset-env",
-          {
-            modules: 'commonjs'
-          }
-        ]
-      ] 
-    }))
     .pipe(gulp.dest(DIR.lib))
 });
 
-// 生成style/css.js到es
+// 生成style/css.es
 gulp.task('createCssEs', () => {
   return gulp
-    .src(DIR.style)
-    .pipe(tsProjectForCreateCssEs())
-    .js
+    .src(DIR.styleEsJS)
     .pipe(replace(/\.scss/, '.css'))
     .pipe(rename({ basename: 'css' }))
-    .pipe(babel({ 
-      presets: [
-        [
-          "@babel/preset-env",
-          {
-            modules: false
-          }
-        ]
-      ] 
-    }))
-    .pipe(gulp.dest(DIR.es));
+    .pipe(gulp.dest(DIR.es))
 });
 
 // 编译打包所有组件的样式至 dist 目录
@@ -169,12 +145,15 @@ gulp.task('dist', () => {
     .pipe(gulp.dest(DIR.dist));
 });
 
-gulp.task('default', gulp.parallel(
+gulp.task('buildCss', gulp.parallel(
   'dist',
   'copyCss',
   'copyScss',
   'copyIndexScssLib',
   'copyIndexScssEs',
+));
+
+gulp.task('buildCssJs', gulp.parallel(
   'createCssLib',
   'createCssEs',
 ));

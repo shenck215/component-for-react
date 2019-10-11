@@ -19,8 +19,9 @@
     "build:lib": "tsc --outDir lib -m CommonJS -d --allowJs false",
     "build:es": "tsc -d --allowJs false",
     "build:umd": "webpack --config config/webpack.config.prod.js --color",
-    "build:css": "cd config && gulp",
-    "build": "npm run build:umd && npm run build:lib && npm run build:es && npm run build:css",
+    "build:css": "cd config && gulp buildCss",
+    "build:cssjs": "cd config && gulp buildCssJs",
+    "build": "npm run build:umd && npm run build:lib && npm run build:es && npm run build:css && npm run build:cssjs",
     "pub": "npm run build && npm publish --access=public"
   },
   "keywords": [
