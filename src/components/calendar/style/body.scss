@@ -1,0 +1,60 @@
+@import "../../style/theme/default.scss";
+
+$calendarBody-prefix-cls: "#{$nextlc-prefix}-calendar-body";
+
+.#{$calendarBody-prefix-cls}{
+  position: relative;
+  margin: 0 auto;
+  .week {
+    display: flex;
+    th {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      line-height: 20px;
+      flex: 1;
+      text-align: center;
+      margin: 9px 0 -3px;
+    }
+  }
+  .dayBlock {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 20px;
+    margin: 6px;
+    border-radius: 2px;
+    text-align: center;
+    cursor: pointer;
+    &:hover {
+      background-color: #d2f1ec;
+    }
+  }
+  .thisMonth {
+    color: #333;
+  }
+  .prevMonth {
+    color: rgba(0, 0, 0, 0.25);
+  }
+  .nextMonth {
+    color: rgba(0, 0, 0, 0.25);
+  }
+  .today {
+    color: #22baa0;
+    border: 1px solid #22baa0;
+    background-color: #d2f1ec;
+  }
+  .active {
+    background-color: #22baa0 !important;
+    color: #fff;
+    line-height: 20px;
+  }
+  .disable {
+    cursor: not-allowed;
+    background-color: #eee;
+    color: #bbb;
+    &:hover {
+      background-color: #eee;
+    }
+  }
+}

@@ -2,6 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const HappyPack = require("happypack");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const tsImportPluginFactory = require('ts-import-plugin')
 const os = require("os");
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
@@ -28,7 +29,31 @@ module.exports = {
     rules: [
       {
         test: /\.(tsx?)|(jsx?)$/,
-        use: ["happypack/loader?id=tsx"],
+        use: [
+          {
+            loader: "awesome-typescript-loader",
+            options: {
+              happyPackMode: true,
+              transpileOnly: true,
+              getCustomTransformers: () => ({
+                before: [
+                  tsImportPluginFactory({
+                    libraryName: "antd",
+                    libraryDirectory: "es",
+                    camel2DashComponentName: false, 
+                    camel2UnderlineComponentName: false, 
+                    style: 'css', 
+                  })
+                ]
+              }),
+              compilerOptions: {
+                module: "es2015"
+              },
+              happyPackMode: true,
+              configFile: path.join(__dirname, "../tsconfig.json")
+            }
+          }
+        ],
         exclude: /node_modules/
       },
       {
@@ -61,32 +86,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new HappyPack({
-      id: "tsx",
-      use: [
-        {
-          loader: "ts-loader",
-          options: {
-            transpileOnly: true,
-            getCustomTransformers: () => ({
-              before: [
-                tsImportPluginFactory({
-                  libraryName: "antd",
-                  libraryDirectory: "lib",
-                  style: "css"
-                })
-              ]
-            }),
-            compilerOptions: {
-              module: "es2015"
-            },
-            happyPackMode: true,
-            configFile: path.join(__dirname, "../tsconfig.json")
-          }
-        }
-      ],
-      threadPool: happyThreadPool
-    }),
     new ForkTsCheckerWebpackPlugin({
       tsconfig: path.join(__dirname, "../tsconfig.json")
     }),

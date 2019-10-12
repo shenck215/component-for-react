@@ -1,5 +1,3 @@
-const outputModule = process.env.OUTPUT_MODULE
-
 module.exports = {
   plugins: [
     // 为api提供沙箱的垫片方案，不会污染全局的 api
@@ -8,7 +6,7 @@ module.exports = {
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     ["@babel/plugin-proposal-class-properties"],
     // asyn await 支持
-    ["@babel/plugin-transform-async-to-generator"]
+    ["@babel/plugin-transform-async-to-generator"],
   ],
   presets: [
     "@babel/preset-react", 

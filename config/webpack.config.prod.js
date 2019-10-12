@@ -120,7 +120,13 @@ const prodConfig = {
       commonjs2: "react-dom",
       commonjs: "react-dom",
       amd: "react-dom"
-    }
+    },
+    antd: {
+      root: "Antd",
+      commonjs2: "antd",
+      commonjs: "antd",
+      amd: "antd"
+    },
   },
   optimization: {
     minimizer: [

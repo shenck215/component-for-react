@@ -1,12 +1,13 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import { Head } from '../components'
-import '../components/head/style'
+import { Calendar } from '../components'
+import '../components/calendar/style'
 
 const App = () => (
   <div>
-    <Head title='呵呵' />
+    <Calendar
+    />
   </div>
 )
 

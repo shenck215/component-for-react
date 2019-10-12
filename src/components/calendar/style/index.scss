@@ -1,0 +1,47 @@
+@import "../../style/theme/default.scss";
+
+$calendar-prefix-cls: "#{$nextlc-prefix}-calendar";
+
+.#{$calendar-prefix-cls} {
+  width: 279px;
+  background-color: #fff;
+  border-radius: 4px;
+  padding-bottom: 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  user-select: none;
+  position: relative;
+  .monthSelect {
+    position: absolute;
+    width: 279px;
+    height: 249px;
+    top: 40px;
+    background-color: #fff;
+    z-index: 1;
+    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    .monthTd {
+      flex: 0 0 58px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      margin: 0 10px 36px;
+      .monthItem {
+        display: inline-block;
+        height: 24px;
+        text-align: center;
+        padding: 0 8px;
+        cursor: pointer;
+        &:hover {
+          background-color: #d2f1ec;
+        }
+        &.active {
+          border-radius: 2px;
+          background-color: #22baa0;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
