@@ -33,7 +33,7 @@ const devConfig = {
   },
   devServer: {
     hot: true,
-    host: getIPAddress(),
+    host: '0.0.0.0',
     contentBase: path.join(__dirname, "../dev/"),
     compress: true,
     port: 3001,

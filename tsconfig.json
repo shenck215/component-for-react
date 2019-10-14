@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
     "outDir": "es/",
-    "module": "es6",
-    "target": "es5",
-    "lib": ["es5", "dom"],
+    "target": "es6",
+    "lib": ["es2017", "dom"],
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
@@ -12,10 +11,10 @@
     "noImplicitReturns": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
-    "allowJs": true,
     "experimentalDecorators": true,
     "strictNullChecks": true,
-    // "declaration": true,
+    "declaration": true,
+    "sourceMap": true,
     "typeRoots": [
       "node_modules/@types",
       "global.d.ts"

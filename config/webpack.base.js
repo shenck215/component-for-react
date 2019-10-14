@@ -31,7 +31,7 @@ module.exports = {
         test: /\.(tsx?)|(jsx?)$/,
         use: [
           {
-            loader: "awesome-typescript-loader",
+            loader: "ts-loader",
             options: {
               happyPackMode: true,
               transpileOnly: true,

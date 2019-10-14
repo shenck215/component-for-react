@@ -44,9 +44,9 @@ const prodConfig = {
   mode: "production",
   entry: path.join(__dirname, "../src/components/index.ts"),
   output: {
-    library: name,
+    library: 'nextlcrc',
     libraryTarget: "umd",
-    filename: "[name].min.js",
+    filename: "nextlcrc.min.js",
     umdNamedDefine: true, // 是否将模块名称作为 AMD 输出的命名空间
     path: path.join(__dirname, "../dist")
   },
@@ -100,8 +100,7 @@ const prodConfig = {
     }),
     // new CleanWebpackPlugin(), // 默认清除output.path下生成的目录
     new MiniCssExtractPlugin({
-      filename: "[name].min.css",
-      chunkFilename: "[id].min.css"
+      filename: "nextlcrc.min.css",
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
@@ -144,9 +143,9 @@ const prodConfig = {
       })
     ],
     noEmitOnErrors: true,
-    splitChunks: {
-      chunks: "all" // 所有的 chunks 代码公共的部分分离出来成为一个单独的文件
-    }
+    // splitChunks: {
+    //   chunks: "all" // 所有的 chunks 代码公共的部分分离出来成为一个单独的文件
+    // }
   }
 };
 
