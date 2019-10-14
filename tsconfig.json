@@ -10,8 +10,6 @@
     "rootDirs": ["/src"],
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "allowJs": true,
@@ -23,9 +21,6 @@
       "global.d.ts"
     ],
     "baseUrl": ".",
-    "paths": {
-       "@/*": ["src/*"]
-    }
   },
   "include": ["src/components"],
   "exclude": [

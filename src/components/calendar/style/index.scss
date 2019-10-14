@@ -10,7 +10,7 @@ $calendar-prefix-cls: "#{$nextlc-prefix}-calendar";
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   user-select: none;
   position: relative;
-  .monthSelect {
+  &--monthSelect {
     position: absolute;
     width: 279px;
     height: 249px;
@@ -21,13 +21,13 @@ $calendar-prefix-cls: "#{$nextlc-prefix}-calendar";
     display: flex;
     flex-wrap: wrap;
     padding: 20px;
-    .monthTd {
+    &--monthTd {
       flex: 0 0 58px;
       height: 24px;
       line-height: 24px;
       text-align: center;
       margin: 0 10px 36px;
-      .monthItem {
+      &--monthItem {
         display: inline-block;
         height: 24px;
         text-align: center;

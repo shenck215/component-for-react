@@ -9,64 +9,53 @@ $calendarHeader-prefix-cls: "#{$nextlc-prefix}-calendar-header";
   align-items: center;
   border-bottom: 1px solid #e8e8e8;
   padding: 0 13px;
-  .doubleLeft {
+  &--doubleLeft {
     font-size: 12px;
-    position: relative;
-    height: 17px;
-    line-height: 20px;
     cursor: pointer;
     &:hover {
       color: #22baa0;
     }
   }
-  .left {
-    font-size: 24px;
+  &--left {
+    font-size: 12px;
     margin-left: 12px;
     cursor: pointer;
-    height: 17px;
-    display: inline-block;
-    line-height: 10px;
     &:hover {
       color: #22baa0;
     }
   }
-  .dateInfo {
+  &--dateInfo {
     font-size: 14px;
     color: rgba(0, 0, 0, 0.65);
-    .year {
+    &--year {
       margin-right: 5px;
-    }
-    .yearSelect {
-      cursor: pointer;
-      &:hover {
-        color: #22baa0;
+      &Select {
+        cursor: pointer;
+        &:hover {
+          color: #22baa0;
+        }
       }
     }
-    .month {
-    }
-    .monthSelect {
-      cursor: pointer;
-      &:hover {
-        color: #22baa0;
+    &--month {
+      &Select {
+        cursor: pointer;
+        &:hover {
+          color: #22baa0;
+        }
       }
     }
   }
-  .right {
-    font-size: 24px;
+  &--right {
+    font-size: 12px;
     margin-right: 12px;
     cursor: pointer;
-    height: 17px;
-    display: inline-block;
-    line-height: 10px;
+    
     &:hover {
       color: #22baa0;
     }
   }
-  .doubleRight {
+  &--doubleRight {
     font-size: 12px;
-    position: relative;
-    height: 17px;
-    line-height: 20px;
     cursor: pointer;
     &:hover {
       color: #22baa0;

@@ -7,6 +7,7 @@ module.exports = {
     ["@babel/plugin-proposal-class-properties"],
     // asyn await 支持
     ["@babel/plugin-transform-async-to-generator"],
+    ["react-hot-loader/babel"]
   ],
   presets: [
     "@babel/preset-react", 

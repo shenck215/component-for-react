@@ -1,4 +1,5 @@
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
+import { EventFunction, WaitNumber, ImmediateType } from './baseType'
 
 /** 划分日期区间 */
 export const dateToString = (dates: string[]) => {
@@ -17,7 +18,8 @@ export const dateToString = (dates: string[]) => {
     const d = new Date(item);
     const newDate = d.setDate(d.getDate() - newIndex);
     if (
-      dayjs(dayjs(newDate).format('YYYY-MM-DD')).unix() === dayjs(diffArr[diffIndex][0]).unix()
+      dayjs(dayjs(newDate).format("YYYY-MM-DD")).unix() ===
+      dayjs(diffArr[diffIndex][0]).unix()
     ) {
       diffArr[diffIndex][1] = item;
       newIndex += 1;
@@ -29,7 +31,7 @@ export const dateToString = (dates: string[]) => {
     newIndex = 1;
   });
 
-  const formatMD = (d: string) => dayjs(d).format('MM-DD');
+  const formatMD = (d: string) => dayjs(d).format("MM-DD");
 
   const dateString = diffArr
     .map(item => {
@@ -38,7 +40,7 @@ export const dateToString = (dates: string[]) => {
       }
       return `${formatMD(item[0])}至${formatMD(item[1])}`;
     })
-    .join(',');
+    .join(",");
 
   return dateString;
 };
@@ -47,4 +49,70 @@ export const dateToString = (dates: string[]) => {
 export const formatNumber = (n: string | number) => {
   const str = n.toString();
   return str[1] ? str : `0${str}`;
+};
+
+/** 去抖 */
+export const debounce = (fn: EventFunction, wait: WaitNumber, immediate: ImmediateType = false) => {
+  let timer,
+    startTimeStamp = 0;
+  let context, args;
+
+  const run = timerInterval => {
+    timer = setTimeout(() => {
+      const now = new Date().getTime();
+      const interval = now - startTimeStamp;
+      if (interval < timerInterval) {
+        // the timer start time has been reset，so the interval is less than timerInterval
+        startTimeStamp = now;
+        run(timerInterval - interval); // reset timer for left time
+      } else {
+        if (!immediate) {
+          fn.apply(context, args);
+        }
+        clearTimeout(timer);
+        timer = null;
+      }
+    }, timerInterval);
+  };
+
+  return function() {
+    context = this;
+    args = arguments;
+    const now = new Date().getTime();
+    startTimeStamp = now; // set timer start time
+
+    if (!timer) {
+      if (immediate) {
+        fn.apply(context, args);
+      }
+      run(wait); // last timer alreay executed, set a new timer
+    }
+  };
+};
+
+/** 节流 */
+export const throttling = (fn: EventFunction, wait: WaitNumber, immediate: ImmediateType = false) => {
+  let timer;
+  let context, args;
+
+  const run = () => {
+    timer = setTimeout(() => {
+      if (!immediate) {
+        fn.apply(context, args);
+      }
+      clearTimeout(timer);
+      timer = null;
+    }, wait);
+  };
+
+  return function() {
+    context = this;
+    args = arguments;
+    if (!timer) {
+      if (immediate) {
+        fn.apply(context, args);
+      }
+      run();
+    }
+  };
 };

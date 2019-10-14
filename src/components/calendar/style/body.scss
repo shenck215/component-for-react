@@ -5,7 +5,7 @@ $calendarBody-prefix-cls: "#{$nextlc-prefix}-calendar-body";
 .#{$calendarBody-prefix-cls}{
   position: relative;
   margin: 0 auto;
-  .week {
+  &--week {
     display: flex;
     th {
       display: inline-block;
@@ -14,10 +14,10 @@ $calendarBody-prefix-cls: "#{$nextlc-prefix}-calendar-body";
       line-height: 20px;
       flex: 1;
       text-align: center;
-      margin: 9px 0 -3px;
+      margin-top: 9px;
     }
   }
-  .dayBlock {
+  &--dayBlock {
     display: inline-block;
     width: 24px;
     height: 24px;
@@ -30,26 +30,26 @@ $calendarBody-prefix-cls: "#{$nextlc-prefix}-calendar-body";
       background-color: #d2f1ec;
     }
   }
-  .thisMonth {
+  &--thisMonth {
     color: #333;
   }
-  .prevMonth {
+  &--prevMonth {
     color: rgba(0, 0, 0, 0.25);
   }
-  .nextMonth {
+  &--nextMonth {
     color: rgba(0, 0, 0, 0.25);
   }
-  .today {
+  &--today {
     color: #22baa0;
     border: 1px solid #22baa0;
     background-color: #d2f1ec;
   }
-  .active {
+  &--active {
     background-color: #22baa0 !important;
     color: #fff;
     line-height: 20px;
   }
-  .disable {
+  &--disable {
     cursor: not-allowed;
     background-color: #eee;
     color: #bbb;

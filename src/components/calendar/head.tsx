@@ -57,27 +57,25 @@ export default class CalendarHeader extends React.Component<PagaProps, {}> {
         <span style={{ display: 'flex' }}>
           {!showYearQuickSelect && (
             <Icon
-              className='doubleLeft'
+              className='nextlc-calendar-header--doubleLeft'
               key="double-left"
               type="double-left"
               onClick={() => prevYear()}
             />
           )}
           {!showMonthQuickSelect && (
-            <span className='left' key="left" onClick={() => prevMonth()}>
-              ‹
-            </span>
+            <Icon className='nextlc-calendar-header--left' type="left" onClick={() => prevMonth()} />
           )}
         </span>
-        <span className='dateInfo'>
+        <span className='nextlc-calendar-header--dateInfo'>
           <span
-            className={classnames('year', selectYear ? 'yearSelect' : '')}
+            className={classnames('nextlc-calendar-header--dateInfo--year', selectYear ? 'nextlc-calendar-header--dateInfo--yearSelect' : '')}
             onClick={this.onSelectYear}
           >
             <span style={{ fontWeight: 'bold' }}>{year}</span>年
           </span>
           <span
-            className={classnames('month', selectMonth ? 'monthSelect' : '')}
+            className={classnames('nextlc-calendar-header--dateInfo--month', selectMonth ? 'nextlc-calendar-header--dateInfo--monthSelect' : '')}
             onClick={this.onSelectMonth}
           >
             <span style={{ fontWeight: 'bold' }}>{month + 1}</span>月
@@ -85,13 +83,11 @@ export default class CalendarHeader extends React.Component<PagaProps, {}> {
         </span>
         <span style={{ display: 'flex' }}>
           {!showMonthQuickSelect && (
-            <span className='right' key="right" onClick={() => nextMonth()}>
-              ›
-            </span>
+            <Icon className='nextlc-calendar-header--right' type="right" onClick={() => nextMonth()} />
           )}
           {!showYearQuickSelect && (
             <Icon
-              className='doubleRight'
+              className='nextlc-calendar-header--doubleRight'
               key="double-right"
               type="double-right"
               onClick={() => nextYear()}

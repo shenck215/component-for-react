@@ -22,7 +22,7 @@ module.exports = {
       ".html"
     ],
     alias: {
-      "@": path.join(__dirname, "../src"),
+      'react-dom': '@hot-loader/react-dom'
     }
   },
   module: {

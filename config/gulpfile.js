@@ -107,7 +107,7 @@ gulp.task('copyIndexScssEs', () => {
 gulp.task('createCssLib', () => {
   return gulp
     .src(DIR.styleLibJS)
-    .pipe(replace(/\.scss/, '.css'))
+    .pipe(replace(/\.scss/g, '.css'))
     .pipe(rename({ basename: 'css' }))
     .pipe(gulp.dest(DIR.lib))
 });
@@ -116,7 +116,7 @@ gulp.task('createCssLib', () => {
 gulp.task('createCssEs', () => {
   return gulp
     .src(DIR.styleEsJS)
-    .pipe(replace(/\.scss/, '.css'))
+    .pipe(replace(/\.scss/g, '.css'))
     .pipe(rename({ basename: 'css' }))
     .pipe(gulp.dest(DIR.es))
 });
