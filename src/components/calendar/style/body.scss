@@ -1,4 +1,4 @@
-@import "../../style/theme/default.scss";
+@import "../../style/theme/variable.scss";
 
 $calendarBody-prefix-cls: "#{$nextlc-prefix}-calendar-body";
 
@@ -21,7 +21,7 @@ $calendarBody-prefix-cls: "#{$nextlc-prefix}-calendar-body";
     display: inline-block;
     width: 24px;
     height: 24px;
-    line-height: 20px;
+    line-height: 24px;
     margin: 6px;
     border-radius: 2px;
     text-align: center;
@@ -41,13 +41,16 @@ $calendarBody-prefix-cls: "#{$nextlc-prefix}-calendar-body";
   }
   &--today {
     color: #22baa0;
+    width: 22px;
+    height: 22px;
     border: 1px solid #22baa0;
     background-color: #d2f1ec;
+    line-height: 22px !important;
   }
   &--active {
     background-color: #22baa0 !important;
     color: #fff;
-    line-height: 20px;
+    line-height: 24px;
   }
   &--disable {
     cursor: not-allowed;

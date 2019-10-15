@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Icon } from 'antd';
 import * as classnames from 'classnames';
 
 export interface PagaProps {
@@ -56,15 +55,13 @@ export default class CalendarHeader extends React.Component<PagaProps, {}> {
       <div className='nextlc-calendar-header'>
         <span style={{ display: 'flex' }}>
           {!showYearQuickSelect && (
-            <Icon
-              className='nextlc-calendar-header--doubleLeft'
-              key="double-left"
-              type="double-left"
+            <i
+              className='iconfont icon-angle-double-left nextlc-calendar-header--doubleLeft'
               onClick={() => prevYear()}
             />
           )}
           {!showMonthQuickSelect && (
-            <Icon className='nextlc-calendar-header--left' type="left" onClick={() => prevMonth()} />
+            <i className='iconfont icon-angle-left nextlc-calendar-header--left' onClick={() => prevMonth()} />
           )}
         </span>
         <span className='nextlc-calendar-header--dateInfo'>
@@ -83,13 +80,11 @@ export default class CalendarHeader extends React.Component<PagaProps, {}> {
         </span>
         <span style={{ display: 'flex' }}>
           {!showMonthQuickSelect && (
-            <Icon className='nextlc-calendar-header--right' type="right" onClick={() => nextMonth()} />
+            <i className='iconfont icon-angle-right nextlc-calendar-header--right' onClick={() => nextMonth()} />
           )}
           {!showYearQuickSelect && (
-            <Icon
-              className='nextlc-calendar-header--doubleRight'
-              key="double-right"
-              type="double-right"
+            <i
+              className='iconfont icon-angle-double-right nextlc-calendar-header--doubleRight'
               onClick={() => nextYear()}
             />
           )}

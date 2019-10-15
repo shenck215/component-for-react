@@ -37,13 +37,13 @@ module.exports = {
               transpileOnly: true,
               getCustomTransformers: () => ({
                 before: [
-                  tsImportPluginFactory({
-                    libraryName: "antd",
-                    libraryDirectory: "es",
-                    camel2DashComponentName: false, 
-                    camel2UnderlineComponentName: false, 
-                    style: 'css', 
-                  })
+                  // tsImportPluginFactory({
+                  //   libraryName: "antd",
+                  //   libraryDirectory: "es",
+                  //   camel2DashComponentName: false, 
+                  //   camel2UnderlineComponentName: false, 
+                  //   style: 'css', 
+                  // })
                 ]
               }),
               compilerOptions: {
@@ -57,32 +57,13 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg)/,
+        test: /\.(png|jpg|jpeg|gif|svg|eot|woff2?|ttf)/,
         use: [
           {
             loader: "url-loader",
-            options: {
-              publicPath: "images/",
-              outputPath: "images/",
-              limit: 1 * 1024
-            }
           }
         ]
       },
-      {
-        test: /\.(eot|woff2?|ttf|svg)$/,
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              name: "[name]-[hash:5].min.[ext]",
-              limit: 5000, // fonts file size <= 5KB, use 'base64'; else, output svg file
-              publicPath: "fonts/",
-              outputPath: "fonts/"
-            }
-          }
-        ]
-      }
     ]
   },
   plugins: [
