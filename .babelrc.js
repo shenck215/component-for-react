@@ -11,6 +11,11 @@ module.exports = {
   ],
   presets: [
     "@babel/preset-react", 
-    "@babel/preset-env",
+    [
+      "@babel/preset-env",
+      {
+        modules: process.env.OUTPUT_MODULE || false,
+      }
+    ]
   ]
 }

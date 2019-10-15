@@ -1,9 +1,9 @@
-import React from 'react';
-import moment from 'moment';
-import classnames from 'classnames';
+import * as React from 'react';
+import * as dayjs from 'dayjs';
+import * as classnames from 'classnames';
 import { formatNumber } from '../util/util';
 
-interface PageProps {
+export interface PageProps {
   /** 选择日期的事件 */
   datePick: Function;
   /** 选择上一月的事件 */
@@ -94,16 +94,16 @@ export default class CalendarBody extends React.Component<PageProps, {}> {
                   const disable =
                     (minDate &&
                       typeof minDate === 'string' &&
-                      moment(currentDateString).unix() < moment(minDate).unix()) ||
+                      dayjs(currentDateString).unix() < dayjs(minDate).unix()) ||
                     (maxDate &&
                       typeof maxDate === 'string' &&
-                      moment(currentDateString).unix() > moment(maxDate).unix());
+                      dayjs(currentDateString).unix() > dayjs(maxDate).unix());
                   return (
                     <td
                       className={classnames(
                         'nextlc-calendar-body--dayBlock',
                         styleName,
-                        currentDateString === moment().format('YYYY-MM-DD') ? 'nextlc-calendar-body--today' : '',
+                        currentDateString === dayjs().format('YYYY-MM-DD') ? 'nextlc-calendar-body--today' : '',
                         dates.indexOf(currentDateString) > -1 ? 'nextlc-calendar-body--active' : '',
                         disable ? 'nextlc-calendar-body--disable' : ''
                       )}

@@ -1,11 +1,11 @@
-import React from "react";
-import classnames from "classnames";
+import * as React from "react";
+import * as classnames from "classnames";
 import { dateToString, formatNumber } from "../util/util";
 import CalendarHeader from "./head";
 import CalendarBody from "./body";
 import CalendarFooter from "./footer";
 
-interface PageProps {
+export interface PageProps {
   /** 默认选中的日期 */
   defaultDates?: string[];
   /** 是否开启年快速选择功能 */
@@ -25,7 +25,7 @@ interface PageProps {
   maxDate?: string;
 }
 
-interface PageStates {
+export interface PageStates {
   year: number;
   month: number;
   day: number;

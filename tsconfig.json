@@ -1,25 +1,28 @@
 {
   "compilerOptions": {
     "outDir": "es/",
-    "target": "es6",
-    "lib": ["es2017", "dom"],
+    "module": "es6",
+    "target": "es5",
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "jsx": "react",
-    "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "rootDirs": ["/src"],
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
+    "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
-    "experimentalDecorators": true,
-    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
     "declaration": true,
-    "sourceMap": true,
     "typeRoots": [
       "node_modules/@types",
       "global.d.ts"
     ],
-    "baseUrl": ".",
+    "baseUrl": "."
   },
   "include": ["src/components"],
   "exclude": [

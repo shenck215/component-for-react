@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import * as dayjs from "dayjs";
 import { EventFunction, WaitNumber, ImmediateType } from './baseType'
 
 /** 划分日期区间 */

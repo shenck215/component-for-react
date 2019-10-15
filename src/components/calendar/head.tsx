@@ -1,8 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import { Icon } from 'antd';
-import classnames from 'classnames';
+import * as classnames from 'classnames';
 
-interface PagaProps {
+export interface PagaProps {
   /** 点击上一年的事件 */
   prevYear: Function;
   /** 点击下一年的事件 */
