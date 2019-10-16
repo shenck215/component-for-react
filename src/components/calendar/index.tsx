@@ -374,8 +374,8 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
         <div className="nextlc-calendar--main">
           <CalendarHeader
             prevYear={this.prevYear}
-            nextYear={this.nextYear}
             prevMonth={this.prevMonth}
+            nextYear={this.nextYear}
             nextMonth={this.nextMonth}
             selectYear={selectYear}
             selectMonth={selectMonth}

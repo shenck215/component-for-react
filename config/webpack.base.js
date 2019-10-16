@@ -31,19 +31,17 @@ module.exports = {
         test: /\.(tsx?)|(jsx?)$/,
         use: [
           {
-            loader: "ts-loader",
+            loader: "awesome-typescript-loader",
             options: {
               happyPackMode: true,
               transpileOnly: true,
               getCustomTransformers: () => ({
                 before: [
-                  // tsImportPluginFactory({
-                  //   libraryName: "antd",
-                  //   libraryDirectory: "es",
-                  //   camel2DashComponentName: false, 
-                  //   camel2UnderlineComponentName: false, 
-                  //   style: 'css', 
-                  // })
+                  tsImportPluginFactory({
+                    libraryName: "antd",
+                    libraryDirectory: "es",
+                    style: 'css', 
+                  })
                 ]
               }),
               compilerOptions: {
