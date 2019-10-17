@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Spin, Input } from "antd";
+import { Spin, Input, ConfigProvider } from "antd";
+import zhCN from "antd/es/locale/zh_CN";
 import {
   parseAddress,
   parseAddressName,
-  throttle,
   matchSearch
 } from "../util/util";
 import fetchFn from "../util/request";
@@ -74,6 +74,8 @@ export default class SelectCity extends React.Component<
     searchResult: {}
   };
 
+  debounceTimer: any;
+
   constructor(props: SelectCityProps) {
     super(props);
     const {
@@ -131,10 +133,19 @@ export default class SelectCity extends React.Component<
         selectValLength === deepMap.length &&
         typeof onChange === "function"
       ) {
-        onChange(selectVal, state.selectName, code);
+        onChange(selectVal, Array.from(new Set(state.selectName)), code);
       }
     }
   }
+
+  debounce = (fn: any, delay: number) => {
+    return () => {
+      clearTimeout(this.debounceTimer);
+      this.debounceTimer = setTimeout(() => {
+        fn();
+      }, delay);
+    };
+  };
 
   getAddress = async () => {
     const {
@@ -168,7 +179,7 @@ export default class SelectCity extends React.Component<
         selectValLength === deepMap.length &&
         typeof onChange === "function"
       ) {
-        onChange(selectVal, tempSelectName, code);
+        onChange(selectVal, Array.from(new Set(tempSelectName)), code);
       }
     }
   };
@@ -189,12 +200,16 @@ export default class SelectCity extends React.Component<
   }
 
   show(e: React.SyntheticEvent<any>) {
+    const { selectVal } = this.state
+    const selectValLength = selectVal.length
     /* 阻止冒泡 */
     e.nativeEvent.stopImmediatePropagation();
     this.fireEvent(document, "click");
     this.setState({
       show: true,
-      input: this.input()
+      input: this.input(),
+      index: selectValLength > 0 ? selectValLength - 1 : 0,
+      valIndex: selectValLength > 0 ? selectValLength - 2 : 0,
     });
   }
 
@@ -232,7 +247,7 @@ export default class SelectCity extends React.Component<
     const {
       params: {
         popupStyle = {
-          width: 400
+          width: 380
         }
       }
     } = this.props;
@@ -327,11 +342,12 @@ export default class SelectCity extends React.Component<
     let max = deepMap.length;
 
     let { index, selectVal } = params;
-
+    
     /* index不能大于max */
     if (index >= max) {
       params.index = max - 1;
       params.valIndex = max - 2;
+      params.searching = false
       this.hide();
     }
     if (selectVal) {
@@ -355,9 +371,9 @@ export default class SelectCity extends React.Component<
 
     /* onChange */
     if (index === max && typeof onChange === "function") {
-      onChange(selectVal, params.selectName, code);
+      onChange(selectVal, Array.from(new Set(params.selectName)), code);
     }
-    this.triggerChange({ selectVal, selectName: params.selectName });
+    this.triggerChange({ selectVal, selectName: Array.from(new Set(params.selectName)) });
   }
 
   clear = () => {
@@ -394,9 +410,9 @@ export default class SelectCity extends React.Component<
     });
 
     /**
-     * 节流阀
+     * 防抖动
      */
-    throttle(async () => {
+    this.debounce(async () => {
       if (searchName === "") return;
       this.setState({
         loading: true
@@ -429,10 +445,11 @@ export default class SelectCity extends React.Component<
     this.setState({
       selectVal,
       selectName,
-      searchName: selectName.join(" "),
-      show: false
+      searchName: Array.from(new Set(selectName)).join("-"),
+      show: false,
+      searching: false,
     });
-    typeof onChange === "function" && onChange(selectVal, selectName, code);
+    typeof onChange === "function" && onChange(selectVal, Array.from(new Set(selectName)), code);
   };
 
   getData() {
@@ -449,7 +466,7 @@ export default class SelectCity extends React.Component<
       params: { style, placeholder, search }
     } = this.props;
     const props: any = {
-      // className: "city-input",
+      className: "city-input",
       ref: node => (this.inputCity = node),
       onClick: (e: React.SyntheticEvent<any>) => this.show(e),
       placeholder: placeholder || "支持中文/拼音/简拼",
@@ -466,7 +483,7 @@ export default class SelectCity extends React.Component<
 
     searching
       ? (props.value = searchName)
-      : (props.value = selectName.join(" "));
+      : (props.value = Array.from(new Set(selectName)).join("-"));
 
     return props;
   };
@@ -477,32 +494,34 @@ export default class SelectCity extends React.Component<
     } = this.props;
     const { addressLoading, show } = this.state;
     return (
-      <div
-        className="select-city"
-        style={{ width: style.width, zIndex: 999, ...style }}
-      >
-        {addressLoading ? (
-          <div style={{ width: style.width, display: "inline-block" }}>
-            <Spin spinning={addressLoading}>
+      <ConfigProvider locale={zhCN}>
+        <div
+          className="select-city"
+          style={{ width: style.width, zIndex: 999, ...style }}
+        >
+          {addressLoading ? (
+            <div style={{ width: style.width, display: "inline-block" }}>
+              <Spin spinning={addressLoading}>
+                <div className="input-city-wrap" style={{ width: style.width }}>
+                  <Input {...this.inputCityProps()} />
+                </div>
+              </Spin>
+            </div>
+          ) : (
+            <>
               <div className="input-city-wrap" style={{ width: style.width }}>
                 <Input {...this.inputCityProps()} />
+                <span className="allow-clear" onClick={() => this.clear()}>
+                  x
+                </span>
               </div>
-            </Spin>
-          </div>
-        ) : (
-          <>
-            <div className="input-city-wrap" style={{ width: style.width }}>
-              <Input {...this.inputCityProps()} />
-              <span className="allow-clear" onClick={() => this.clear()}>
-                x
-              </span>
-            </div>
-            {!addressLoading && show && (
-              <PostionContainer {...this.postionContainerProps()} />
-            )}
-          </>
-        )}
-      </div>
+              {!addressLoading && show && (
+                <PostionContainer {...this.postionContainerProps()} />
+              )}
+            </>
+          )}
+        </div>
+      </ConfigProvider>
     );
   }
 }

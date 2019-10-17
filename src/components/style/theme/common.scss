@@ -3,3 +3,11 @@ body{
   font-size: 13px;
   font-variant: tabular-nums;
 }
+.ant-input:focus {
+  border-color: #42c7ac;
+  box-shadow: 0 0 0 2px rgba(32, 186, 160, 0.2);
+}
+
+.ant-input:hover {
+  border-color: #42c7ac;
+}

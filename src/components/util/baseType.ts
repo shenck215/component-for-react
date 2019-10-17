@@ -1,9 +1,18 @@
-/** 触发的事件函数 */
-export type EventFunction = Function;
-/** 等待的事件 */
-export type WaitNumber = number;
-/** 是否前缘触发 */
-export type ImmediateType = boolean;
+/** 防抖动 节流阀 参数options */
+export type debounceOptionType = {
+  /** 指定在延迟开始前调用 默认值false */
+  leading?: boolean;
+  /** 允许被延迟的最大值 */
+  maxWait?: number;
+  /** 指定在延迟结束后调用 默认值true */
+  trailing?: boolean;
+}
+export type throttleOptionType = {
+  /** 指定调用在节流开始前 默认值true */
+  leading?: boolean;
+  /** 指定调用在节流开始后 默认值true */
+  trailing?: boolean;
+}
 /**
  * 模糊匹配结果
  * @param q {string} 搜索关键字

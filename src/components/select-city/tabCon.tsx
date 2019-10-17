@@ -83,7 +83,14 @@ class TabCon extends Component<TabConProps, {}> {
       );
     }
 
-    return <div className="citys-wrap">{items}</div>;
+    return <div className="citys-wrap">
+    {
+      items.length > 0 ?
+      items
+      :
+      <div className="citys-wrap-none">{`请先选择${index === 1 ? '省份' : '城市'}~`}</div>
+    }
+    </div>;
   }
   render() {
     let items = this.getItems();

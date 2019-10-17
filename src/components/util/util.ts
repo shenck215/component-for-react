@@ -1,8 +1,7 @@
 import * as dayjs from "dayjs";
 import {
-  EventFunction,
-  WaitNumber,
-  ImmediateType,
+  debounceOptionType,
+  throttleOptionType,
   searchResultArr,
   searchSourceData
 } from "./baseType";
@@ -57,78 +56,215 @@ export const formatNumber = (n: string | number) => {
   return str[1] ? str : `0${str}`;
 };
 
-/** 去抖 */
-export const debounce = (
-  fn: EventFunction,
-  wait: WaitNumber,
-  immediate: ImmediateType = false
-) => {
-  let timer,
-    startTimeStamp = 0;
-  let context, args;
-
-  const run = timerInterval => {
-    timer = setTimeout(() => {
-      const now = new Date().getTime();
-      const interval = now - startTimeStamp;
-      if (interval < timerInterval) {
-        // the timer start time has been reset，so the interval is less than timerInterval
-        startTimeStamp = now;
-        run(timerInterval - interval); // reset timer for left time
-      } else {
-        if (!immediate) {
-          fn.apply(context, args);
-        }
-        clearTimeout(timer);
-        timer = null;
-      }
-    }, timerInterval);
-  };
-
-  return function() {
-    context = this;
-    args = arguments;
-    const now = new Date().getTime();
-    startTimeStamp = now; // set timer start time
-
-    if (!timer) {
-      if (immediate) {
-        fn.apply(context, args);
-      }
-      run(wait); // last timer alreay executed, set a new timer
-    }
-  };
+export const isObject = value => {
+  const type = typeof value;
+  return value != null && (type === "object" || type === "function");
 };
 
-/** 节流 */
-export const throttling = (
-  fn: EventFunction,
-  wait: WaitNumber,
-  immediate: ImmediateType = false
+/** 从Node.js中检测变量global */
+const freeGlobal =
+  typeof global === "object" &&
+  global !== null &&
+  global.Object === Object &&
+  global;
+
+/** 检测变量globalThis */
+const freeGlobalThis =
+  typeof globalThis === "object" &&
+  globalThis !== null &&
+  globalThis.Object == Object &&
+  globalThis;
+
+/** 检测变量self */
+const freeSelf =
+  typeof self === "object" && self !== null && self.Object === Object && self;
+
+/** 用作对全局对象的引用 */
+const root =
+  freeGlobalThis || freeGlobal || freeSelf || Function("return this")();
+
+/**
+ * 创建一个 debounced（防抖动）函数，该函数会从上一次被调用后，延迟 wait 毫秒后调用 func 方法。 debounced（防抖动）函数提供一个 cancel 方法取消延迟的函数调用以及 flush 方法立即调用。 可以提供一个 options（选项） 对象决定如何调用 func 方法，options.leading 与|或 options.trailing 决定延迟前后如何触发（是 先调用后等待 还是 先等待后调用）。 func 调用时会传入最后一次提供给 debounced（防抖动）函数 的参数。 后续调用的 debounced（防抖动）函数返回是最后一次 func 调用的结果。
+ * 注意: 如果 leading 和 trailing 选项为 true, 则 func 允许 trailing 方式调用的条件为: 在 wait 期间多次调用防抖方法。
+ * 如果 wait 为 0 并且 leading 为 false, func调用将被推迟到下一个点，类似setTimeout为0的超时。
+ */
+export const debounce = (
+  func: Function,
+  wait: number,
+  options: debounceOptionType = {}
 ) => {
-  let timer;
-  let context, args;
+  let lastArgs, lastThis, maxWait, result, timerId, lastCallTime;
 
-  const run = () => {
-    timer = setTimeout(() => {
-      if (!immediate) {
-        fn.apply(context, args);
-      }
-      clearTimeout(timer);
-      timer = null;
-    }, wait);
-  };
+  let lastInvokeTime = 0;
+  let leading = false;
+  let maxing = false;
+  let trailing = true;
 
-  return function() {
-    context = this;
-    args = arguments;
-    if (!timer) {
-      if (immediate) {
-        fn.apply(context, args);
-      }
-      run();
+  // Bypass `requestAnimationFrame` by explicitly setting `wait=0`.
+  const useRAF =
+    !wait && wait !== 0 && typeof root.requestAnimationFrame === "function";
+
+  if (typeof func !== "function") {
+    throw new TypeError("Expected a function");
+  }
+  wait = +wait || 0;
+  if (isObject(options)) {
+    leading = !!options.leading;
+    maxing = "maxWait" in options;
+    maxWait = maxing ? Math.max(options.maxWait || 0, wait) : maxWait;
+    trailing = "trailing" in options ? !!options.trailing : trailing;
+  }
+
+  function invokeFunc(time) {
+    const args = lastArgs;
+    const thisArg = lastThis;
+
+    lastArgs = lastThis = undefined;
+    lastInvokeTime = time;
+    result = func.apply(thisArg, args);
+    return result;
+  }
+
+  function startTimer(pendingFunc, wait) {
+    if (useRAF) {
+      root.cancelAnimationFrame(timerId);
+      return root.requestAnimationFrame(pendingFunc);
     }
-  };
+    return setTimeout(pendingFunc, wait);
+  }
+
+  function cancelTimer(id) {
+    if (useRAF) {
+      return root.cancelAnimationFrame(id);
+    }
+    clearTimeout(id);
+  }
+
+  function leadingEdge(time) {
+    // Reset any `maxWait` timer.
+    lastInvokeTime = time;
+    // Start the timer for the trailing edge.
+    timerId = startTimer(timerExpired, wait);
+    // Invoke the leading edge.
+    return leading ? invokeFunc(time) : result;
+  }
+
+  function remainingWait(time) {
+    const timeSinceLastCall = time - lastCallTime;
+    const timeSinceLastInvoke = time - lastInvokeTime;
+    const timeWaiting = wait - timeSinceLastCall;
+
+    return maxing
+      ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke)
+      : timeWaiting;
+  }
+
+  function shouldInvoke(time) {
+    const timeSinceLastCall = time - lastCallTime;
+    const timeSinceLastInvoke = time - lastInvokeTime;
+
+    // Either this is the first call, activity has stopped and we're at the
+    // trailing edge, the system time has gone backwards and we're treating
+    // it as the trailing edge, or we've hit the `maxWait` limit.
+    return (
+      lastCallTime === undefined ||
+      timeSinceLastCall >= wait ||
+      timeSinceLastCall < 0 ||
+      (maxing && timeSinceLastInvoke >= maxWait)
+    );
+  }
+
+  function timerExpired() {
+    const time = Date.now();
+    if (shouldInvoke(time)) {
+      return trailingEdge(time);
+    }
+    // Restart the timer.
+    timerId = startTimer(timerExpired, remainingWait(time));
+  }
+
+  function trailingEdge(time) {
+    timerId = undefined;
+
+    // Only invoke if we have `lastArgs` which means `func` has been
+    // debounced at least once.
+    if (trailing && lastArgs) {
+      return invokeFunc(time);
+    }
+    lastArgs = lastThis = undefined;
+    return result;
+  }
+
+  function cancel() {
+    if (timerId !== undefined) {
+      cancelTimer(timerId);
+    }
+    lastInvokeTime = 0;
+    lastArgs = lastCallTime = lastThis = timerId = undefined;
+  }
+
+  function flush() {
+    return timerId === undefined ? result : trailingEdge(Date.now());
+  }
+
+  function pending() {
+    return timerId !== undefined;
+  }
+
+  function debounced(...args) {
+    const time = Date.now();
+    const isInvoking = shouldInvoke(time);
+
+    lastArgs = args;
+    lastThis = this;
+    lastCallTime = time;
+
+    if (isInvoking) {
+      if (timerId === undefined) {
+        return leadingEdge(lastCallTime);
+      }
+      if (maxing) {
+        // Handle invocations in a tight loop.
+        timerId = startTimer(timerExpired, wait);
+        return invokeFunc(lastCallTime);
+      }
+    }
+    if (timerId === undefined) {
+      timerId = startTimer(timerExpired, wait);
+    }
+    return result;
+  }
+  debounced.cancel = cancel;
+  debounced.flush = flush;
+  debounced.pending = pending;
+  return debounced;
+};
+
+/** 
+ * 创建一个节流函数，在 wait 秒内最多执行 func 一次的函数。 该函数提供一个 cancel 方法取消延迟的函数调用以及 flush 方法立即调用。 可以提供一个 options 对象决定如何调用 func 方法， options.leading 与|或 options.trailing 决定 wait 前后如何触发。 func 会传入最后一次传入的参数给这个函数。 随后调用的函数返回是最后一次 func 调用的结果。
+ * 注意: 如果 leading 和 trailing 都设定为 true 则 func 允许 trailing 方式调用的条件为: 在 wait 期间多次调用。
+ * 如果 wait 为 0 并且 leading 为 false, func调用将被推迟到下一个点，类似setTimeout为0的超时。
+ */
+export const throttle = (
+  func: Function,
+  wait: number,
+  options: throttleOptionType = {}
+) => {
+  let leading = true;
+  let trailing = true;
+
+  if (typeof func !== "function") {
+    throw new TypeError("Expected a function");
+  }
+  if (isObject(options)) {
+    leading = "leading" in options ? !!options.leading : leading;
+    trailing = "trailing" in options ? !!options.trailing : trailing;
+  }
+  return debounce(func, wait, {
+    leading,
+    trailing,
+    maxWait: wait
+  });
 };
 
 /**
@@ -140,7 +276,6 @@ export const parseAddress: (
   data: Object,
   max: number
 ) => { addressMap: Map<any, any>[]; addressMapSearch: any[] } = (data, max) => {
-  console.time("selectCity: parseAddress run times");
   let addressMap: Map<any, any>[] = [];
   let index = 0;
   let addressMapSearch: any[] = [];
@@ -245,7 +380,7 @@ export const parseAddress: (
   };
 
   fn(data);
-  console.timeEnd("selectCity: parseAddress run times");
+
   return {
     addressMap,
     addressMapSearch
@@ -265,7 +400,7 @@ export const matchSearch = (
    * 小写
    */
   q = q.toLocaleLowerCase();
-  console.time("mathQ");
+
   searchSource.forEach(data => {
     const { firstOfAll, name, totalPY } = data;
     /**
@@ -293,8 +428,7 @@ export const matchSearch = (
       });
     }
   });
-  console.timeEnd("mathQ");
-  console.log(searchResult);
+
   if (searchResult.length === 0) {
     return [];
   }
@@ -413,14 +547,4 @@ export const parseAddressName: (
   });
 
   return arr;
-};
-
-let throttleTimer: any;
-export const throttle = (fn: any, delay: number) => {
-  return () => {
-    clearTimeout(throttleTimer);
-    throttleTimer = setTimeout(() => {
-      fn();
-    }, delay);
-  };
 };

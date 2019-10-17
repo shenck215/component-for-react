@@ -4,8 +4,8 @@ import * as classnames from "classnames";
 import { Table } from "antd";
 import { searchResultArr } from "../util/baseType";
 import { ParamsProps } from "./index";
-import Tab from './tab'
-import TabCon from './tabCon'
+import Tab from "./tab";
+import TabCon from "./tabCon";
 
 export interface PostionContainerProps {
   matchQ: string;
@@ -95,14 +95,18 @@ export default class PostionContainer extends React.Component<
       {
         key: "city",
         render: (text: {}, record: {}) => {
+          const hasName: string[] = []
           const arr: React.ReactElement<HTMLSpanElement>[] = [];
           for (let key in record) {
             const data = record[key];
-            arr.push(<span key={data.value}>{this.highlight(data)} </span>);
+            if(!hasName.includes(data.name)){
+              hasName.push(data.name)
+              arr.push(<span key={data.value}>{this.highlight(data)} </span>);
+            }
           }
           return (
             <div>
-              {arr.map((value, index) => {
+              {Array.from(new Set(arr)).map((value, index) => {
                 return (
                   <span key={index}>
                     {value}
@@ -138,13 +142,13 @@ export default class PostionContainer extends React.Component<
       locale: {
         emptyText: "找不到你要的结果，换个试试"
       },
-      pagination: {
-        size: "small",
-        defaultPageSize: 8,
-        showQuickJumper: true,
-        showTotal: (total: number, range: [number, number]) =>
-          `${range[0]}-${range[1]} of ${total}`
-      },
+      pagination:
+        searchDataSource.length > 8
+          ? {
+              defaultPageSize: 8,
+              simple: true
+            }
+          : false,
       loading,
       dataSource: searchDataSource,
       onRow: (record: {}) => {
