@@ -548,3 +548,14 @@ export const parseAddressName: (
 
   return arr;
 };
+
+export default {
+  dateToString,
+  formatNumber,
+  isObject,
+  debounce,
+  throttle,
+  parseAddress,
+  matchSearch,
+  parseAddressName,
+}

@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import { SelectCity } from '../components'
 import '../components/select-city/style'
-import address from '../components/select-city/address.json'
+import address from '../components/assets/address.json'
 
 const App = () => (
   <div>
