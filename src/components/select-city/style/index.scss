@@ -1,11 +1,40 @@
 @import "../../style/theme/variable.scss";
 
 $selectcity-prefix-cls: "#{$nextlc-prefix}-selectcity";
+$selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
 
 .#{$selectcity-prefix-cls} {
+  position: relative;
+  &--input{
+    &--clear{
+      position: absolute;
+      display: none;
+      right: 5px;
+      top: 7px;
+      width: 15px;
+      height: 15px;
+      background-color: #ccc;
+      font-size: 12px;
+      line-height: 1em;
+      border-radius: 14px;
+      text-align: center;
+      opacity: 0.7;
+      transition: all 0.3s;
+      cursor: pointer;
+      &:hover{
+        opacity: 1;
+      }
+    }
+    &:hover{
+      .nextlc-selectcity--input--clear{
+        display: block;
+        z-index: 10000;
+      }
+    }
+  }
 }
 
-.postion-container {
+.#{$selectcity-prefix-cls2}{
   position: absolute;
   display: none;
   border: 1px solid #22baa0;
@@ -13,153 +42,19 @@ $selectcity-prefix-cls: "#{$nextlc-prefix}-selectcity";
   font-size: 14px;
   background-color: rgb(255, 255, 255);
   z-index: 1;
-}
-
-.postion-container.show {
-  display: block;
-}
-.postion-container
-  .ant-table-small
-  > .ant-table-content
-  > .ant-table-body
-  > table {
-  padding: 0;
-}
-
-.postion-container .ant-table-small {
-  border-radius: 0;
-  border-width: 0 0 1px 0;
-}
-.postion-container .ant-table-body .ant-table-row {
-  cursor: pointer;
-}
-.postion-container .ant-table-body .ant-table-row.active {
-  background: #eefaf8;
-}
-
-.select-city {
-  position: relative;
-  /*left: 50px;
-  top: 50px;*/
-}
-
-.select-city tr.active > td {
-  background: #eefaf8;
-}
-
-.input-city-wrap .allow-clear {
-  position: absolute;
-  display: none;
-  right: 5px;
-  top: 7px;
-  width: 15px;
-  height: 15px;
-  background-color: #ccc;
-  font-size: 12px;
-  line-height: 1em;
-  border-radius: 14px;
-  text-align: center;
-  opacity: 0.7;
-  transition: all 0.3s;
-  cursor: pointer;
-}
-
-.select-city .ant-table-pagination {
-  float: none;
-  text-align: center;
-}
-
-.select-city .ant-table-small .ant-table-body > table {
-  padding: 0;
-}
-
-.input-city-wrap:hover .allow-clear {
-  display: block;
-  z-index: 10000;
-}
-
-.input-city-wrap .allow-clear:hover {
-  opacity: 1;
-}
-
-.input-city-wrap {
-  position: relative;
-}
-
-.tab-btns {
-  margin: 0;
-  padding: 0;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.tab-btns .tab-btn {
-  position: relative;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  width: 100%;
-  text-align: center;
-  cursor: pointer;
-  height: 30px;
-  line-height: 30px;
-}
-
-.tab-btns .tab-btn.tab-btn:hover,
-.tab-btns .tab-btn.active {
-  background: linear-gradient(to top, #22baa0 2px, transparent 0);
-  background: -moz-linear-gradient(to top, #22baa0 2px, transparent 0);
-  background: -webkit-linear-gradient(to top, #22baa0 2px, transparent 0);
-}
-
-.citys-wrap {
-  overflow: hidden;
-  padding: 10px;
-  &-none {
-    color: #bfbfbf;
-    text-align: center;
+  &--show{
+    display: block;
   }
-}
-
-.citys-wrap .area-item-group {
-  display: flex;
-}
-
-.citys-wrap .city-item-group {
-  flex: 1;
-}
-
-.citys-wrap .city-item {
-  display: inline-block;
-  padding: 2px 4px;
-  margin-left: 10px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.citys-wrap .city-item:hover,
-.citys-wrap .city-item.active {
-  display: inline-block;
-  background-color: #22baa0;
-  color: #fff;
-}
-
-.citys-wrap .area-item {
-  display: inline-block;
-  padding: 2px;
-  width: 34px;
-  font-weight: 700;
-}
-
-.postion-container {
-  .ant-table {
-    .ant-table-content {
-      .ant-table-body {
+  .ant-table-small{
+    border-radius: 0;
+    border-width: 0 0 1px 0;
+    .ant-table-content{
+      .ant-table-body{
         margin: 0;
-        .ant-table-tbody {
-          .ant-table-row {
+        table{
+          padding: 0;
+          .ant-table-row{
+            cursor: pointer;
             font-size: 14px;
             td {
               padding: 6px 11px;
@@ -169,6 +64,9 @@ $selectcity-prefix-cls: "#{$nextlc-prefix}-selectcity";
                 background: rgba(113, 223, 204, 0.2);
               }
             }
+          }
+          .nextlc-selectcity-container--active{
+            background: #1fd6b6;
           }
         }
       }
@@ -204,6 +102,66 @@ $selectcity-prefix-cls: "#{$nextlc-prefix}-selectcity";
         display: flex;
         align-items: center;
         justify-content: center;
+      }
+    }
+  }
+  &--tab{
+    &--btns{
+      margin: 0;
+      padding: 0;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      &--btn{
+        position: relative;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 100%;
+        text-align: center;
+        cursor: pointer;
+        height: 30px;
+        line-height: 30px;
+        &:hover,&--active{
+          background: linear-gradient(to top, #22baa0 2px, transparent 0);
+          background: -moz-linear-gradient(to top, #22baa0 2px, transparent 0);
+          background: -webkit-linear-gradient(to top, #22baa0 2px, transparent 0);
+        }
+      }
+    }
+  }
+  &--tabCon{
+    &--citys{
+      overflow: hidden;
+      padding: 10px;
+      &--none {
+        color: #bfbfbf;
+        text-align: center;
+      }
+      &--areaGroup{
+        display: flex;
+        &--areaItem{
+          display: inline-block;
+          padding: 2px;
+          width: 34px;
+          font-weight: 700;
+        }
+      }
+      &--cityGroup{
+        flex: 1;
+        &--cityItem{
+          display: inline-block;
+          padding: 2px 4px;
+          margin-left: 10px;
+          cursor: pointer;
+          transition: all 0.15s;
+          &:hover,&--active{
+            display: inline-block;
+            background-color: #22baa0;
+            color: #fff;
+          }
+        }
       }
     }
   }

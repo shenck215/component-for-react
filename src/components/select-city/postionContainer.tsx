@@ -27,22 +27,116 @@ export interface PostionContainerProps {
   searching: boolean;
 }
 
+export interface PostionContainerStates {
+  selectedIndex: number;
+  current: number;
+  pageSize: number;
+  totalPage: number;
+}
+
 export default class PostionContainer extends React.Component<
   PostionContainerProps,
-  {}
+  PostionContainerStates
 > {
   private _container: HTMLDivElement;
+  private prevBtn: HTMLDivElement;
+  private nextBtn: HTMLDivElement;
   constructor(props: PostionContainerProps) {
     super(props);
+    const { searchDataSource } = props
+    this.state = {
+      selectedIndex: 0,
+      current: 1,
+      pageSize: 8,
+      totalPage: Math.ceil(searchDataSource.length / 8),
+    }
     this._container = document.createElement("div");
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps: PostionContainerProps){
+    const { searchDataSource } = nextProps
+    if(JSON.stringify(searchDataSource) !== JSON.stringify(this.props.searchDataSource)){
+      this.setState({
+        selectedIndex: 0,
+        current: 1,
+        pageSize: 8,
+        totalPage: Math.ceil(searchDataSource.length / 8),
+      })
+    }
   }
 
   componentDidMount() {
     document.body.appendChild(this._container);
+    window.addEventListener('keydown', this.listenKeydown)
   }
 
   componentWillUnmount() {
     document.body.removeChild(this._container);
+    window.removeEventListener('keydown', this.listenKeydown)
+  }
+
+  /** 监听键盘上下方向键 */
+  listenKeydown = e => {
+    const { keyCode } = e
+    const { searchDataSource } = this.props
+    const { selectedIndex, current, totalPage, pageSize } = this.state
+    if(totalPage){
+      if(keyCode === 37){// ←
+        if(current > 1){
+          this.prevBtn.click()
+          this.setState({
+            current: current - 1,
+            selectedIndex: 0
+          })
+        }
+      }else if(keyCode === 38){// ↑
+        let newSelectedIndex = selectedIndex - 1
+        let newCurrent = current
+        if(newSelectedIndex < 0){
+          if(current > 1){
+            newSelectedIndex = 7
+            newCurrent = newCurrent - 1
+            this.prevBtn.click()
+          }else{
+            newSelectedIndex = 0
+          }
+        }
+        this.setState({
+          selectedIndex: newSelectedIndex,
+          current: newCurrent,
+        })
+      }else if(keyCode === 39){// →
+        if(current < totalPage){
+          this.nextBtn.click()
+          this.setState({
+            current: current + 1,
+            selectedIndex: 0
+          })
+        }
+      }else if(keyCode === 40){// ↓
+        let newSelectedIndex = selectedIndex + 1
+        let newCurrent = current
+        if(newCurrent < totalPage){
+          if(newSelectedIndex > pageSize - 1){
+            newSelectedIndex = 0
+            newCurrent = newCurrent + 1
+            this.nextBtn.click()
+          }
+        }else if(newCurrent === totalPage){
+          const max = searchDataSource.length % pageSize
+          if(newSelectedIndex > max - 1){
+            newSelectedIndex = max - 1
+          }
+        }
+        this.setState({
+          selectedIndex: newSelectedIndex,
+          current: newCurrent,
+        })
+      }else if(keyCode === 13){
+        const node = document.querySelector('.nextlc-selectcity-container--active')
+        node && (node as any).click()
+      }
+    }
   }
 
   highlightReplace(data: string, matchQ: string) {
@@ -127,7 +221,13 @@ export default class PostionContainer extends React.Component<
   }
 
   tableProps = () => {
-    const { loading, searchDataSource, setInputValue, selectVal } = this.props;
+    const { 
+      loading, 
+      searchDataSource, 
+      setInputValue, 
+      // selectVal
+    } = this.props;
+    const { pageSize, totalPage } = this.state
     let props = {
       size: "small",
       rowKey: (record: {}) => {
@@ -143,10 +243,13 @@ export default class PostionContainer extends React.Component<
         emptyText: "找不到你要的结果，换个试试"
       },
       pagination:
-        searchDataSource.length > 8
+      totalPage > 1
           ? {
-              defaultPageSize: 8,
-              simple: true
+              pageSize,
+              simple: true,
+              itemRender: (page, type: 'page' | 'prev' | 'next', originalElement) => {
+                return <div ref={node => this[`${type === 'prev' ? 'prevBtn' : type === 'next' ? 'nextBtn' : ''}`] = node}>{originalElement}</div>
+              }
             }
           : false,
       loading,
@@ -165,23 +268,26 @@ export default class PostionContainer extends React.Component<
           }
         };
       },
-      rowClassName: (record: {}) => {
-        if (selectVal.length <= 0) {
-          return "";
-        }
-        let rowId: any[] = [];
-        for (let key in record) {
-          const data: any = record[key];
-          rowId.push(data.value);
-        }
-        let className = "active";
-        for (let i = 0, l = selectVal.length; i < l; i++) {
-          if (selectVal[i] !== rowId[i]) {
-            className = "";
-            break;
-          }
-        }
-        return className;
+      rowClassName: (record: {}, index) => {
+        const className = 'nextlc-selectcity-container'
+        // if (selectVal.length <= 0) {
+        //   return "";
+        // }
+        // let rowId: any[] = [];
+        // for (let key in record) {
+        //   const data: any = record[key];
+        //   rowId.push(data.value);
+        // }
+        // let className2 = `${className}--active`;
+        // for (let i = 0, l = selectVal.length; i < l; i++) {
+        //   if (selectVal[i] !== rowId[i]) {
+        //     className2 = "";
+        //     break;
+        //   }
+        // }
+        const { selectedIndex } = this.state
+        let className2 = selectedIndex === index ? `${className}--active` : ''
+        return className2;
       }
     } as any;
     return props;
@@ -207,15 +313,16 @@ export default class PostionContainer extends React.Component<
   };
 
   render() {
+    const className = 'nextlc-selectcity-container'
     const {
       input,
       show,
       searching,
       params: { popupStyle }
     } = this.props;
-    const className = classnames({
-      show,
-      "postion-container": true
+    const className2 = classnames({
+      [`${className}--show`]: show,
+      [className]: true
     });
     /** 定位坐标 */
     const style = {
@@ -226,7 +333,7 @@ export default class PostionContainer extends React.Component<
     };
 
     return ReactDOM.createPortal(
-      <div className={className} style={style} onClick={this.handClick}>
+      <div className={className2} style={style} onClick={this.handClick}>
         {searching ? (
           <Table {...this.tableProps()} />
         ) : (

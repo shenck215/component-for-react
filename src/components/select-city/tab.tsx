@@ -1,27 +1,31 @@
 import * as React from "react";
 import * as classnames from 'classnames';
+import { PostionContainerProps } from './postionContainer'
 
-export interface TabProps {}
-
-class Tab extends React.Component<TabProps, {}> {
-  constructor(props: TabProps) {
+class Tab extends React.Component<PostionContainerProps, {}> {
+  constructor(props: PostionContainerProps) {
     super(props);
   }
   render() {
+    const className = 'nextlc-selectcity-container--tab'
     return (
-      <div className="tab">
-        <TabBtns {...this.props} />
+      <div className={className}>
+        <TabBtns {...this.props} parentClassName={className} />
       </div>
     );
   }
 }
 
-class TabBtns extends React.Component<any, any> {
+export interface TabBtnsProps extends PostionContainerProps{
+  parentClassName: string;
+}
+
+class TabBtns extends React.Component<TabBtnsProps, any> {
   constructor(props: any) {
     super(props);
   }
   render() {
-    let { params, index } = this.props;
+    let { params, index, parentClassName} = this.props;
 
     /**
      * [max 最大联动的层级]
@@ -44,11 +48,12 @@ class TabBtns extends React.Component<any, any> {
           key={i}
           name={v.name}
           {...this.props}
+          parentClassName={`${parentClassName}--btns`}
         />
       );
     });
 
-    return <ul className="tab-btns">{btnList}</ul>;
+    return <ul className={`${parentClassName}--btns`}>{btnList}</ul>;
   }
 }
 
@@ -66,7 +71,7 @@ class OneTabBtn extends React.Component<any, any> {
     });
   }
   render() {
-    let { name, active, selectName, dataKey } = this.props;
+    let { name, active, selectName, dataKey, parentClassName } = this.props;
     if (selectName[dataKey]) {
       // if(dataKey === 2) {
       //     name = `${selectName[dataKey]}`;
@@ -77,8 +82,8 @@ class OneTabBtn extends React.Component<any, any> {
       name = `${selectName[dataKey]}`;
     }
     let className = classnames({
-      "tab-btn": true,
-      active: active
+      [`${parentClassName}--btn`]: true,
+      [`${parentClassName}--btn--active`]: active
     });
     return (
       <li onClick={e => this.handleClick(e)} className={className}>

@@ -17,9 +17,10 @@ export interface ParamsProps {
     zIndex: number;
   } /* 弹窗样式 */;
   search?: boolean /* 搜索 */;
+  level?: 1 | 2 | 3;/** 级别 1省 2省市 3省市区 */
   address?: any /* json方式 方式城市基本数据，与addressApi选项2选1， 优先 address */;
   addressApi?: string /* fetch api方式城市基本数据 */;
-  addressFetchData?: any /* fetch api方式城市请求参数 */;
+  addressFetchData?: object /* fetch api方式城市请求参数 */;
   /* input 的样式 */
   style?: {
     width: number;
@@ -62,6 +63,7 @@ export interface SelectCityState {
   addressMap: Map<any, any>[];
   addressMapSearch: any[];
   addressLoading: boolean;
+  deepMap: Array<{ name: string; value?: number }>;
 }
 
 export default class SelectCity extends React.Component<
@@ -80,7 +82,7 @@ export default class SelectCity extends React.Component<
     super(props);
     const {
       code,
-      params: { deepMap, onChange, address, addressApi }
+      params: { deepMap, onChange, address, addressApi, level = 3 }
     } = this.props;
     let addressMap: Map<string, any>[] = [];
     let addressMapSearch: any[] = [];
@@ -89,11 +91,11 @@ export default class SelectCity extends React.Component<
       addressMap = data.addressMap;
       addressMapSearch = data.addressMapSearch;
     }
-
+    const newDeepMap = this.kickWithLevel(deepMap, level)
     /* 构建默认数据的选中值 */
     let selectVal: Array<any> = [];
 
-    deepMap.forEach((v, i) => {
+    newDeepMap.forEach((v, i) => {
       let value = v.value;
       if (value !== undefined) {
         selectVal.push(value);
@@ -122,7 +124,8 @@ export default class SelectCity extends React.Component<
       loading: true,
       addressMap,
       addressMapSearch,
-      addressLoading: !address || address.length <= 0
+      addressLoading: !address || address.length <= 0,
+      deepMap: newDeepMap,
     };
     this.state = state;
 
@@ -130,7 +133,7 @@ export default class SelectCity extends React.Component<
       this.getAddress();
     } else {
       if (
-        selectValLength === deepMap.length &&
+        selectValLength === newDeepMap.length &&
         typeof onChange === "function"
       ) {
         onChange(selectVal, Array.from(new Set(state.selectName)), code);
@@ -147,18 +150,31 @@ export default class SelectCity extends React.Component<
     };
   };
 
+  /** 根据级别剔除数据 */
+  kickWithLevel = (deepMap: Array<{ name: string; value?: number }>, level: 1 | 2 | 3) => {
+    if(level < 3){
+      // 去掉区
+      deepMap.pop()
+    }
+    if(level < 2){
+      // 去掉市
+      deepMap.pop()
+    }
+    return deepMap
+  }
+
   getAddress = async () => {
     const {
       params: {
         addressApi,
-        deepMap,
         onChange,
-        addressFetchData: { type }
+        addressFetchData,
       },
       code
     } = this.props;
+    const { deepMap } = this.state
     const { selectVal } = this.state;
-    const data: any = await fetchFn(addressApi, { type: type ? type : 1 });
+    const data: any = await fetchFn(addressApi, addressFetchData || { type: 1 });
     if (data.status === 0) {
       const { addressMap, addressMapSearch } = parseAddress(
         data.data,
@@ -268,6 +284,23 @@ export default class SelectCity extends React.Component<
     document.addEventListener("click", this.hide);
   }
 
+  /** 根据级别过滤城市数据 */
+  filtrationWithLevel = (data, level: 1 | 2 | 3) => {
+    const independent = Array.from(new Set(data.map(item => {
+      return Array.prototype.slice.apply({
+        ...item,
+        length: level
+      })
+    }).map((item: any[]) => JSON.stringify(item)))).map((item: string) => JSON.parse(item))
+    return independent.map(item => {
+      const result = {}
+      item.forEach((element, index) => {
+        result[index] = element
+      });
+      return result
+    })
+  }
+
   postionContainerProps = () => {
     const {
       addressMap,
@@ -279,7 +312,8 @@ export default class SelectCity extends React.Component<
       selectName,
       selectVal,
       index,
-      valIndex
+      valIndex,
+      deepMap,
     } = this.state;
     const { params } = this.props;
     return {
@@ -287,11 +321,11 @@ export default class SelectCity extends React.Component<
       matchQ: this._cache.searchName,
       changeState: (params: any) => this.changeState(params),
       addressMap,
-      params,
+      params: {...params, deepMap},
       input,
       show,
       searching,
-      searchDataSource,
+      searchDataSource: this.filtrationWithLevel(searchDataSource, params.level || 3),
       selectName,
       selectVal,
       index,
@@ -334,7 +368,8 @@ export default class SelectCity extends React.Component<
   changeState(params: any) {
     const props = this.props;
     const code = props.code;
-    const { onChange, onSelect, deepMap } = props.params;
+    const { onChange, onSelect } = props.params;
+    const { deepMap } = this.state
 
     /**
      * [max 最大联动的层级]
@@ -425,7 +460,7 @@ export default class SelectCity extends React.Component<
           searchName,
           this.state.addressMapSearch,
           this.state.addressMap,
-          this.props.params.deepMap
+          this.state.deepMap
         );
         this._cache[searchName] = searchResult;
       }
@@ -466,7 +501,6 @@ export default class SelectCity extends React.Component<
       params: { style, placeholder, search }
     } = this.props;
     const props: any = {
-      className: "city-input",
       ref: node => (this.inputCity = node),
       onClick: (e: React.SyntheticEvent<any>) => this.show(e),
       placeholder: placeholder || "支持中文/拼音/简拼",
@@ -493,25 +527,26 @@ export default class SelectCity extends React.Component<
       params: { style = { width: "100%" } }
     } = this.props;
     const { addressLoading, show } = this.state;
+    const className = 'nextlc-selectcity'
     return (
       <ConfigProvider locale={zhCN}>
         <div
-          className="select-city"
+          className={className}
           style={{ width: style.width, zIndex: 999, ...style }}
         >
           {addressLoading ? (
             <div style={{ width: style.width, display: "inline-block" }}>
               <Spin spinning={addressLoading}>
-                <div className="input-city-wrap" style={{ width: style.width }}>
+                <div className={`${className}--input`} style={{ width: style.width }}>
                   <Input {...this.inputCityProps()} />
                 </div>
               </Spin>
             </div>
           ) : (
             <>
-              <div className="input-city-wrap" style={{ width: style.width }}>
+              <div className={`${className}--input`} style={{ width: style.width }}>
                 <Input {...this.inputCityProps()} />
-                <span className="allow-clear" onClick={() => this.clear()}>
+                <span className={`${className}--input--clear`} onClick={() => this.clear()}>
                   x
                 </span>
               </div>

@@ -15,6 +15,7 @@ class TabCon extends Component<TabConProps, {}> {
     // this.displayName = 'TabCon';
   }
   getItems() {
+    const className = 'nextlc-selectcity-container--tabCon'
     let { index, selectVal, valIndex, params, addressMap } = this.props;
 
     /**
@@ -74,27 +75,27 @@ class TabCon extends Component<TabConProps, {}> {
     let items: JSX.Element[] = [];
     for (let key in data) {
       items.push(
-        <div className="area-item-group" key={++globalkey}>
+        <div className={`${className}--citys--areaGroup`} key={++globalkey}>
           {key !== "" && key !== "null" && key !== "undefined" && (
-            <span className="area-item">{key}</span>
+            <span className={`${className}--citys--areaGroup--areaItem`}>{key}</span>
           )}
-          <div className="city-item-group">{cityItem(data[key])}</div>
+          <div className={`${className}--citys--cityGroup`}>{cityItem(data[key])}</div>
         </div>
       );
     }
 
-    return <div className="citys-wrap">
+    return <div className={`${className}--citys`}>
     {
       items.length > 0 ?
       items
       :
-      <div className="citys-wrap-none">{`请先选择${index === 1 ? '省份' : '城市'}~`}</div>
+      <div className={`${className}--citys--none`}>{`请先选择${index === 1 ? '省份' : '城市'}~`}</div>
     }
     </div>;
   }
   render() {
     let items = this.getItems();
-    return <div>{items}</div>;
+    return <div className='nextlc-selectcity-container--tabCon'>{items}</div>;
   }
 }
 
@@ -144,17 +145,18 @@ class CityItem extends Component<CityItemProps, {}> {
     });
   }
   render() {
+    const className = 'nextlc-selectcity-container--tabCon'
     let { id, val, active } = this.props;
     const { name } = val[id];
 
-    let className = classnames({
-      "city-item": true,
-      active: active
+    let className2 = classnames({
+      [`${className}--citys--cityGroup--cityItem`]: true,
+      [`${className}--citys--cityGroup--cityItem--active`]: active
     });
 
     return (
       <span
-        className={className}
+        className={className2}
         data-id={id}
         onClick={e => this.handleClick()}
       >

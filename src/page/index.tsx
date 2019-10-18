@@ -11,6 +11,7 @@ const App = () => (
       params={{
         address,
         deepMap: [{name: '省',},{name: '市',},{name: '区',}],
+        level: 2,
         search: true,
         onChange: (cityIds: number[], cityNames: string[]) => {
           console.log(cityIds, cityNames)
