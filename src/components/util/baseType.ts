@@ -19,16 +19,16 @@ export type throttleOptionType = {
  * @param source {Array} source 数据集
  */
 export type searchSourceData = {
-  firstOfAll: string;
+  py: string;
   name: string;
-  totalPY: string;
+  pinyin: string;
   value: number;
   parentIds: any[];
 };
 
 export type searchResultArr = {
-  firstOfAll: string;
+  py: string;
   name: string;
-  totalPY: string;
+  pinyin: string;
   value: number;
 }

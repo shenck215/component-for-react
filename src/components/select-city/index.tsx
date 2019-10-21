@@ -376,39 +376,37 @@ export default class SelectCity extends React.Component<
      */
     let max = deepMap.length;
 
-    let { index, selectVal } = params;
-    
+    console.log(params)
     /* index不能大于max */
-    if (index >= max) {
+    if (params.index > max) {
       params.index = max - 1;
       params.valIndex = max - 2;
-      params.searching = false
-      this.hide();
     }
-    if (selectVal) {
-      this.autoSelect(params);
+    console.log(params)
+    if (params.selectVal) {
+      params.index < max && this.autoSelect(params);
       params.selectName = parseAddressName(
         params.selectVal,
         this.state.addressMap
-      );
+      ).filter(item => item);
     }
-
+    console.log(params)
     const trigger = params.trigger;
     delete params.trigger;
 
     /* 更新state */
     this.setState(params);
-
     /* onSelect */
-    if (trigger && index !== max && typeof onSelect === "function") {
-      onSelect(selectVal, params.selectName, code);
+    if (trigger && params.index !== max && typeof onSelect === "function") {
+      onSelect(params.selectVal, params.selectName, code);
     }
-
     /* onChange */
-    if (index === max && typeof onChange === "function") {
-      onChange(selectVal, Array.from(new Set(params.selectName)), code);
+    if (params.index === max && typeof onChange === "function") {
+      params.searching = false
+      this.hide();
+      onChange(params.selectVal, Array.from(new Set(params.selectName)), code);
     }
-    this.triggerChange({ selectVal, selectName: Array.from(new Set(params.selectName)) });
+    this.triggerChange({ selectVal: params.selectVal, selectName: Array.from(new Set(params.selectName)) });
   }
 
   clear = () => {

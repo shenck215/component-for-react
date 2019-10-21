@@ -293,7 +293,7 @@ export const parseAddress: (
         list.forEach((v: any, i: number) => {
           let name = v.name;
           let value = parseInt(v.value, 10);
-          const { totalPY, firstOfAll } = v;
+          const { pinyin, py } = v;
 
           /* 创建对应的哈希表 */
           if (addressMap[index] === undefined) {
@@ -317,10 +317,10 @@ export const parseAddress: (
             let obj = addressMap[index].get(area) || {};
 
             if (obj[area]) {
-              obj[area][value] = { name, totalPY, firstOfAll };
+              obj[area][value] = { name, pinyin, py };
             } else {
               obj[area] = {};
-              obj[area][value] = { name, totalPY, firstOfAll };
+              obj[area][value] = { name, pinyin, py };
             }
 
             addressMap[index].set(area, obj);
@@ -340,10 +340,10 @@ export const parseAddress: (
             let obj = addressMap[index].get(parentId) || {};
 
             if (obj[area]) {
-              obj[area][value] = { name, totalPY, firstOfAll };
+              obj[area][value] = { name, pinyin, py };
             } else {
               obj[area] = {};
-              obj[area][value] = { name, totalPY, firstOfAll };
+              obj[area][value] = { name, pinyin, py };
             }
 
             addressMap[index].set(parentId, obj);
@@ -359,14 +359,14 @@ export const parseAddress: (
           if (index <= max) {
             addressMapSearch.push({
               name,
-              totalPY,
-              firstOfAll,
+              pinyin,
+              py,
               parentIds: newParentIds,
               value
             });
           }
 
-          // addressMapSearch.push(`${name}|${totalPY}|${firstOfAll}|${parentIds.length > 0 ? `${parentIds.join('|')}|`:''}${value}`);
+          // addressMapSearch.push(`${name}|${pinyin}|${py}|${parentIds.length > 0 ? `${parentIds.join('|')}|`:''}${value}`);
           if (children && children.length > 0) {
             parentIds.push({ area, value });
             index++;
@@ -402,16 +402,16 @@ export const matchSearch = (
   q = q.toLocaleLowerCase();
 
   searchSource.forEach(data => {
-    const { firstOfAll, name, totalPY } = data;
+    const { py, name, pinyin } = data;
     /**
      * 匹配首字母，
      * 简拼，
      * 全拼
      */
     if (
-      firstOfAll.startsWith(q) ||
+      py.startsWith(q) ||
       name.startsWith(q) ||
-      totalPY.startsWith(q)
+      pinyin.startsWith(q)
     ) {
       const newData = getMatchData(data, addressMap, deepMap);
       newData.forEach((element: any[]) => {

@@ -116,15 +116,19 @@ export default class PostionContainer extends React.Component<
       }else if(keyCode === 40){// ↓
         let newSelectedIndex = selectedIndex + 1
         let newCurrent = current
+        const max = searchDataSource.length % pageSize
         if(newCurrent < totalPage){
           if(newSelectedIndex > pageSize - 1){
             newSelectedIndex = 0
             newCurrent = newCurrent + 1
             this.nextBtn.click()
           }
+        }else if(max === 0){
+          if(newSelectedIndex > pageSize - 1){
+            newSelectedIndex = pageSize - 1
+          }
         }else if(newCurrent === totalPage){
-          const max = searchDataSource.length % pageSize
-          if(newSelectedIndex > max - 1){
+          if(newSelectedIndex >= max - 1){
             newSelectedIndex = max - 1
           }
         }
@@ -155,25 +159,25 @@ export default class PostionContainer extends React.Component<
 
   highlight = (data: searchResultArr) => {
     let { matchQ } = this.props;
-    const { name, firstOfAll, totalPY } = data;
+    const { name, py, pinyin } = data;
     matchQ = matchQ.toLocaleLowerCase();
     if (name.indexOf(matchQ) >= 0) {
       return this.highlightReplace(name, matchQ);
     }
 
-    if (totalPY.indexOf(matchQ) >= 0) {
+    if (pinyin.indexOf(matchQ) >= 0) {
       return (
         <span>
-          {data.name}（{this.highlightReplace(totalPY, matchQ)}）
+          {data.name}（{this.highlightReplace(pinyin, matchQ)}）
         </span>
       );
     }
-    if (firstOfAll.indexOf(matchQ) >= 0) {
+    if (py.indexOf(matchQ) >= 0) {
       return (
         <span>
           {data.name}({" "}
           {this.highlightReplace(
-            firstOfAll.toUpperCase(),
+            py.toUpperCase(),
             matchQ.toUpperCase()
           )}{" "}
           )
@@ -227,7 +231,7 @@ export default class PostionContainer extends React.Component<
       setInputValue, 
       // selectVal
     } = this.props;
-    const { pageSize, totalPage } = this.state
+    const { current, pageSize, totalPage } = this.state
     let props = {
       size: "small",
       rowKey: (record: {}) => {
@@ -245,6 +249,7 @@ export default class PostionContainer extends React.Component<
       pagination:
       totalPage > 1
           ? {
+              current,
               pageSize,
               simple: true,
               itemRender: (page, type: 'page' | 'prev' | 'next', originalElement) => {
