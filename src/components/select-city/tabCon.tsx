@@ -8,6 +8,7 @@ export interface TabConProps {
   addressMap: any;
   valIndex: number;
   changeState: (data: any) => void;
+  clickHotCity: (provinceId: number, cityId: number) => void;
 }
 class TabCon extends Component<TabConProps, {}> {
   constructor(props: TabConProps) {
@@ -15,7 +16,7 @@ class TabCon extends Component<TabConProps, {}> {
     // this.displayName = 'TabCon';
   }
   getItems() {
-    const className = 'nextlc-selectcity-container--tabCon'
+    const className = "nextlc-selectcity-container--tabCon";
     let { index, selectVal, valIndex, params, addressMap } = this.props;
 
     /**
@@ -77,35 +78,38 @@ class TabCon extends Component<TabConProps, {}> {
       items.push(
         <div className={`${className}--citys--areaGroup`} key={++globalkey}>
           {key !== "" && key !== "null" && key !== "undefined" && (
-            <span className={`${className}--citys--areaGroup--areaItem`}>{key}</span>
+            <span className={`${className}--citys--areaGroup--areaItem`}>
+              {key}
+            </span>
           )}
-          <div className={`${className}--citys--cityGroup`}>{cityItem(data[key])}</div>
+          <div className={`${className}--citys--cityGroup`}>
+            {cityItem(data[key])}
+          </div>
         </div>
       );
     }
 
-    return <div className={`${className}--citys`}>
-    {
-      items.length > 0 ?
-      items
-      :
-      <div className={`${className}--citys--none`}>{`请先选择${index === 1 ? '省份' : '城市'}~`}</div>
-    }
-    </div>;
+    return (
+      <div className={`${className}--citys`}>
+        {items.length > 0 ? (
+          items
+        ) : (
+          <div className={`${className}--citys--none`}>{`请先选择${
+            index === 1 ? "省份" : "城市"
+          }~`}</div>
+        )}
+      </div>
+    );
   }
   render() {
     let items = this.getItems();
-    return <div className='nextlc-selectcity-container--tabCon'>{items}</div>;
+    return <div className="nextlc-selectcity-container--tabCon">{items}</div>;
   }
 }
 
-export interface CityItemProps {
-  index: number;
-  changeState: (data: any) => void;
+export interface CityItemProps extends TabConProps {
   id: any;
-  selectVal: any;
   selectName?: any;
-  valIndex: any;
   val: any;
   active: any;
 }
@@ -115,7 +119,14 @@ class CityItem extends Component<CityItemProps, {}> {
     // this.displayName = 'CityItem';
   }
   handleClick() {
-    let { index, changeState, id, selectVal, valIndex } = this.props;
+    let {
+      index,
+      changeState,
+      id,
+      selectVal,
+      valIndex,
+      clickHotCity
+    } = this.props;
 
     /* 记录当前点击的索引，用来记录值得位置 */
     valIndex = index;
@@ -136,6 +147,8 @@ class CityItem extends Component<CityItemProps, {}> {
      */
     selectVal[valIndex] = parseInt(id, 10);
 
+    clickHotCity(selectVal[0], selectVal[1]);
+
     /* 更新state */
     changeState({
       index: index,
@@ -145,7 +158,7 @@ class CityItem extends Component<CityItemProps, {}> {
     });
   }
   render() {
-    const className = 'nextlc-selectcity-container--tabCon'
+    const className = "nextlc-selectcity-container--tabCon";
     let { id, val, active } = this.props;
     const { name } = val[id];
 

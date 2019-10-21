@@ -21,11 +21,12 @@ $calendarBody-prefix-cls: "#{$nextlc-prefix}-calendar-body";
     display: inline-block;
     width: 24px;
     height: 24px;
-    line-height: 24px;
+    line-height: 22px;
     margin: 6px;
     border-radius: 2px;
     text-align: center;
     cursor: pointer;
+    font-size: 14px;
     &:hover {
       background-color: #d2f1ec;
     }
@@ -41,16 +42,19 @@ $calendarBody-prefix-cls: "#{$nextlc-prefix}-calendar-body";
   }
   &--today {
     color: #22baa0;
-    width: 22px;
-    height: 22px;
     border: 1px solid #22baa0;
     background-color: #d2f1ec;
-    line-height: 22px !important;
+    line-height: 20px;
+    &:hover {
+      background-color: #d2f1ec;
+    }
   }
   &--active {
-    background-color: #22baa0 !important;
+    background-color: #22baa0;
     color: #fff;
-    line-height: 24px;
+    &:hover {
+      background-color: #22baa0;
+    }
   }
   &--disable {
     cursor: not-allowed;

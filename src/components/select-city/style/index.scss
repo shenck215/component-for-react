@@ -5,28 +5,29 @@ $selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
 
 .#{$selectcity-prefix-cls} {
   position: relative;
-  &--input{
-    &--clear{
+  &--input {
+    &--clear {
       position: absolute;
       display: none;
       right: 5px;
-      top: 7px;
+      top: 9px;
       width: 15px;
       height: 15px;
-      background-color: #ccc;
-      font-size: 12px;
+      font-size: 14px;
       line-height: 1em;
       border-radius: 14px;
       text-align: center;
       opacity: 0.7;
+      -webkit-transition: all 0.3s;
       transition: all 0.3s;
       cursor: pointer;
-      &:hover{
+      color: #aaa;
+      &:hover {
         opacity: 1;
       }
     }
-    &:hover{
-      .nextlc-selectcity--input--clear{
+    &:hover {
+      .nextlc-selectcity--input--clear {
         display: block;
         z-index: 10000;
       }
@@ -34,7 +35,7 @@ $selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
   }
 }
 
-.#{$selectcity-prefix-cls2}{
+.#{$selectcity-prefix-cls2} {
   position: absolute;
   display: none;
   border: 1px solid #22baa0;
@@ -42,18 +43,46 @@ $selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
   font-size: 14px;
   background-color: rgb(255, 255, 255);
   z-index: 1;
-  &--show{
+  &--show {
     display: block;
   }
-  .ant-table-small{
+  &--hotcity {
+    display: flex;
+    align-items: baseline;
+    border-bottom: 1px solid #ddd;
+    padding: 5px 15px;
+    &--title {
+      font-size: 15px;
+      font-weight: bold;
+      flex: 0 0 75px;
+    }
+    &--body {
+      line-height: 26px;
+      &--item {
+        cursor: pointer;
+        display: inline-block;
+        height: 26px;
+        line-height: 22px;
+        padding: 2px 4px;
+        margin-left: 5px;
+        -webkit-transition: all 0.15s;
+        transition: all 0.15s;
+        &--active {
+          color: #fff;
+          background-color: #22baa0;
+        }
+      }
+    }
+  }
+  .ant-table-small {
     border-radius: 0;
     border-width: 0 0 1px 0;
-    .ant-table-content{
-      .ant-table-body{
+    .ant-table-content {
+      .ant-table-body {
         margin: 0;
-        table{
+        table {
           padding: 0;
-          .ant-table-row{
+          .ant-table-row {
             cursor: pointer;
             font-size: 14px;
             td {
@@ -65,7 +94,7 @@ $selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
               }
             }
           }
-          .nextlc-selectcity-container--active{
+          .nextlc-selectcity-container--active {
             background: #1fd6b6;
           }
         }
@@ -105,15 +134,15 @@ $selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
       }
     }
   }
-  &--tab{
-    &--btns{
+  &--tab {
+    &--btns {
       margin: 0;
       padding: 0;
       display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;
       display: flex;
-      &--btn{
+      &--btn {
         position: relative;
         margin: 0;
         padding: 0;
@@ -123,40 +152,46 @@ $selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
         cursor: pointer;
         height: 30px;
         line-height: 30px;
-        &:hover,&--active{
+        &:hover,
+        &--active {
           background: linear-gradient(to top, #22baa0 2px, transparent 0);
           background: -moz-linear-gradient(to top, #22baa0 2px, transparent 0);
-          background: -webkit-linear-gradient(to top, #22baa0 2px, transparent 0);
+          background: -webkit-linear-gradient(
+            to top,
+            #22baa0 2px,
+            transparent 0
+          );
         }
       }
     }
   }
-  &--tabCon{
-    &--citys{
+  &--tabCon {
+    &--citys {
       overflow: hidden;
       padding: 10px;
       &--none {
         color: #bfbfbf;
         text-align: center;
       }
-      &--areaGroup{
+      &--areaGroup {
         display: flex;
-        &--areaItem{
+        &--areaItem {
           display: inline-block;
           padding: 2px;
           width: 34px;
           font-weight: 700;
         }
       }
-      &--cityGroup{
+      &--cityGroup {
         flex: 1;
-        &--cityItem{
+        &--cityItem {
           display: inline-block;
           padding: 2px 4px;
           margin-left: 10px;
           cursor: pointer;
           transition: all 0.15s;
-          &:hover,&--active{
+          &:hover,
+          &--active {
             display: inline-block;
             background-color: #22baa0;
             color: #fff;

@@ -33,14 +33,14 @@ export interface ResponeData {
  * @param data {Object<JSON>} 请求参数
  * @param option {Object<JSON>} 额外的fetch可配置参数
  */
-const request = (url: string = "", data: {}, option?: RequestInit) => {
+const request = (url: string = "", data?: {}, option?: RequestInit) => {
   let json: any = {
     method: "post",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded"
     },
     timeout: 10000,
-    body: queryString.stringify(data),
+    body: queryString.stringify(data || {}),
     credentials: "include"
   };
 

@@ -1,11 +1,7 @@
 import * as React from "react";
 import { Spin, Input, ConfigProvider } from "antd";
 import zhCN from "antd/es/locale/zh_CN";
-import {
-  parseAddress,
-  parseAddressName,
-  matchSearch
-} from "../util/util";
+import { parseAddress, parseAddressName, matchSearch } from "../util/util";
 import fetchFn from "../util/request";
 import PostionContainer from "./postionContainer";
 
@@ -17,9 +13,10 @@ export interface ParamsProps {
     zIndex: number;
   } /* 弹窗样式 */;
   search?: boolean /* 搜索 */;
-  level?: 1 | 2 | 3;/** 级别 1省 2省市 3省市区 */
+  level?: 1 | 2 | 3 /** 级别 1省 2省市 3省市区 */;
   address?: any /* json方式 方式城市基本数据，与addressApi选项2选1， 优先 address */;
   addressApi?: string /* fetch api方式城市基本数据 */;
+  hotCityApi?: string /** 热门城市 */;
   addressFetchData?: object /* fetch api方式城市请求参数 */;
   /* input 的样式 */
   style?: {
@@ -36,6 +33,8 @@ export interface ParamsProps {
     code: any
   ) => void /* 每层选择的回调，除了， 除了最后一层调用onChange */;
   placeholder?: string;
+  /** 禁用 */
+  disabled?: boolean;
 }
 
 export interface SelectCityProps {
@@ -64,6 +63,7 @@ export interface SelectCityState {
   addressMapSearch: any[];
   addressLoading: boolean;
   deepMap: Array<{ name: string; value?: number }>;
+  hotData: Array<{ name: string; provinceId: number; cityId: number }>;
 }
 
 export default class SelectCity extends React.Component<
@@ -91,7 +91,7 @@ export default class SelectCity extends React.Component<
       addressMap = data.addressMap;
       addressMapSearch = data.addressMapSearch;
     }
-    const newDeepMap = this.kickWithLevel(deepMap, level)
+    const newDeepMap = this.kickWithLevel(deepMap, level);
     /* 构建默认数据的选中值 */
     let selectVal: Array<any> = [];
 
@@ -126,6 +126,7 @@ export default class SelectCity extends React.Component<
       addressMapSearch,
       addressLoading: !address || address.length <= 0,
       deepMap: newDeepMap,
+      hotData: []
     };
     this.state = state;
 
@@ -151,30 +152,40 @@ export default class SelectCity extends React.Component<
   };
 
   /** 根据级别剔除数据 */
-  kickWithLevel = (deepMap: Array<{ name: string; value?: number }>, level: 1 | 2 | 3) => {
-    if(level < 3){
+  kickWithLevel = (
+    deepMap: Array<{ name: string; value?: number }>,
+    level: 1 | 2 | 3
+  ) => {
+    if (level < 3) {
       // 去掉区
-      deepMap.pop()
+      deepMap.pop();
     }
-    if(level < 2){
+    if (level < 2) {
       // 去掉市
-      deepMap.pop()
+      deepMap.pop();
     }
-    return deepMap
-  }
+    return deepMap;
+  };
 
   getAddress = async () => {
     const {
-      params: {
-        addressApi,
-        onChange,
-        addressFetchData,
-      },
+      params: { hotCityApi, addressApi, onChange, addressFetchData, level },
       code
     } = this.props;
-    const { deepMap } = this.state
+    const { deepMap } = this.state;
     const { selectVal } = this.state;
-    const data: any = await fetchFn(addressApi, addressFetchData || { type: 1 });
+    const data: any = await fetchFn(
+      addressApi,
+      addressFetchData || { type: 1 }
+    );
+    if (hotCityApi && level === 2) {
+      const hotData: any = await fetchFn(hotCityApi);
+      if (hotData.status === 0) {
+        this.setState({
+          hotData: hotData.data
+        });
+      }
+    }
     if (data.status === 0) {
       const { addressMap, addressMapSearch } = parseAddress(
         data.data,
@@ -216,8 +227,8 @@ export default class SelectCity extends React.Component<
   }
 
   show(e: React.SyntheticEvent<any>) {
-    const { selectVal } = this.state
-    const selectValLength = selectVal.length
+    const { selectVal } = this.state;
+    const selectValLength = selectVal.length;
     /* 阻止冒泡 */
     e.nativeEvent.stopImmediatePropagation();
     this.fireEvent(document, "click");
@@ -225,7 +236,7 @@ export default class SelectCity extends React.Component<
       show: true,
       input: this.input(),
       index: selectValLength > 0 ? selectValLength - 1 : 0,
-      valIndex: selectValLength > 0 ? selectValLength - 2 : 0,
+      valIndex: selectValLength > 0 ? selectValLength - 2 : 0
     });
   }
 
@@ -286,24 +297,31 @@ export default class SelectCity extends React.Component<
 
   /** 根据级别过滤城市数据 */
   filtrationWithLevel = (data, level: 1 | 2 | 3) => {
-    const independent = Array.from(new Set(data.map(item => {
-      return Array.prototype.slice.apply({
-        ...item,
-        length: level
-      })
-    }).map((item: any[]) => JSON.stringify(item)))).map((item: string) => JSON.parse(item))
+    const independent = Array.from(
+      new Set(
+        data
+          .map(item => {
+            return Array.prototype.slice.apply({
+              ...item,
+              length: level
+            });
+          })
+          .map((item: any[]) => JSON.stringify(item))
+      )
+    ).map((item: string) => JSON.parse(item));
     return independent.map(item => {
-      const result = {}
+      const result = {};
       item.forEach((element, index) => {
-        result[index] = element
+        result[index] = element;
       });
-      return result
-    })
-  }
+      return result;
+    });
+  };
 
   postionContainerProps = () => {
     const {
       addressMap,
+      hotData,
       input,
       show,
       searching,
@@ -313,19 +331,23 @@ export default class SelectCity extends React.Component<
       selectVal,
       index,
       valIndex,
-      deepMap,
+      deepMap
     } = this.state;
     const { params } = this.props;
     return {
       setInputValue: this.setInputValue,
       matchQ: this._cache.searchName,
       changeState: (params: any) => this.changeState(params),
+      hotData,
       addressMap,
-      params: {...params, deepMap},
+      params: { ...params, deepMap },
       input,
       show,
       searching,
-      searchDataSource: this.filtrationWithLevel(searchDataSource, params.level || 3),
+      searchDataSource: this.filtrationWithLevel(
+        searchDataSource,
+        params.level || 3
+      ),
       selectName,
       selectVal,
       index,
@@ -369,20 +391,18 @@ export default class SelectCity extends React.Component<
     const props = this.props;
     const code = props.code;
     const { onChange, onSelect } = props.params;
-    const { deepMap } = this.state
+    const { deepMap } = this.state;
 
     /**
      * [max 最大联动的层级]
      */
     let max = deepMap.length;
 
-    console.log(params)
     /* index不能大于max */
     if (params.index > max) {
       params.index = max - 1;
       params.valIndex = max - 2;
     }
-    console.log(params)
     if (params.selectVal) {
       params.index < max && this.autoSelect(params);
       params.selectName = parseAddressName(
@@ -390,7 +410,6 @@ export default class SelectCity extends React.Component<
         this.state.addressMap
       ).filter(item => item);
     }
-    console.log(params)
     const trigger = params.trigger;
     delete params.trigger;
 
@@ -402,11 +421,14 @@ export default class SelectCity extends React.Component<
     }
     /* onChange */
     if (params.index === max && typeof onChange === "function") {
-      params.searching = false
+      params.searching = false;
       this.hide();
       onChange(params.selectVal, Array.from(new Set(params.selectName)), code);
+      this.triggerChange({
+        selectVal: params.selectVal,
+        selectName: Array.from(new Set(params.selectName))
+      });
     }
-    this.triggerChange({ selectVal: params.selectVal, selectName: Array.from(new Set(params.selectName)) });
   }
 
   clear = () => {
@@ -480,9 +502,14 @@ export default class SelectCity extends React.Component<
       selectName,
       searchName: Array.from(new Set(selectName)).join("-"),
       show: false,
-      searching: false,
+      searching: false
     });
-    typeof onChange === "function" && onChange(selectVal, Array.from(new Set(selectName)), code);
+    typeof onChange === "function" &&
+      onChange(selectVal, Array.from(new Set(selectName)), code);
+    this.triggerChange({
+      selectVal,
+      selectName: Array.from(new Set(selectName))
+    });
   };
 
   getData() {
@@ -496,13 +523,14 @@ export default class SelectCity extends React.Component<
   inputCityProps = () => {
     const { searching, searchName, selectName } = this.state;
     const {
-      params: { style, placeholder, search }
+      params: { style, placeholder, search, disabled }
     } = this.props;
     const props: any = {
       ref: node => (this.inputCity = node),
       onClick: (e: React.SyntheticEvent<any>) => this.show(e),
       placeholder: placeholder || "支持中文/拼音/简拼",
-      style: style
+      style: style,
+      disabled
     };
 
     /**
@@ -522,10 +550,10 @@ export default class SelectCity extends React.Component<
 
   render() {
     const {
-      params: { style = { width: "100%" } }
+      params: { style = { width: "100%" }, disabled }
     } = this.props;
     const { addressLoading, show } = this.state;
-    const className = 'nextlc-selectcity'
+    const className = "nextlc-selectcity";
     return (
       <ConfigProvider locale={zhCN}>
         <div
@@ -535,18 +563,27 @@ export default class SelectCity extends React.Component<
           {addressLoading ? (
             <div style={{ width: style.width, display: "inline-block" }}>
               <Spin spinning={addressLoading}>
-                <div className={`${className}--input`} style={{ width: style.width }}>
+                <div
+                  className={`${className}--input`}
+                  style={{ width: style.width }}
+                >
                   <Input {...this.inputCityProps()} />
                 </div>
               </Spin>
             </div>
           ) : (
             <>
-              <div className={`${className}--input`} style={{ width: style.width }}>
+              <div
+                className={`${className}--input`}
+                style={{ width: style.width }}
+              >
                 <Input {...this.inputCityProps()} />
-                <span className={`${className}--input--clear`} onClick={() => this.clear()}>
-                  x
-                </span>
+                {!disabled && (
+                  <i
+                    className={`iconfont icon-clear ${className}--input--clear`}
+                    onClick={() => this.clear()}
+                  />
+                )}
               </div>
               {!addressLoading && show && (
                 <PostionContainer {...this.postionContainerProps()} />

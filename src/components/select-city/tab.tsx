@@ -1,13 +1,13 @@
 import * as React from "react";
-import * as classnames from 'classnames';
-import { PostionContainerProps } from './postionContainer'
+import * as classnames from "classnames";
+import { PostionContainerProps } from "./postionContainer";
 
 class Tab extends React.Component<PostionContainerProps, {}> {
   constructor(props: PostionContainerProps) {
     super(props);
   }
   render() {
-    const className = 'nextlc-selectcity-container--tab'
+    const className = "nextlc-selectcity-container--tab";
     return (
       <div className={className}>
         <TabBtns {...this.props} parentClassName={className} />
@@ -16,7 +16,7 @@ class Tab extends React.Component<PostionContainerProps, {}> {
   }
 }
 
-export interface TabBtnsProps extends PostionContainerProps{
+export interface TabBtnsProps extends PostionContainerProps {
   parentClassName: string;
 }
 
@@ -25,7 +25,7 @@ class TabBtns extends React.Component<TabBtnsProps, any> {
     super(props);
   }
   render() {
-    let { params, index, parentClassName} = this.props;
+    let { params, index, parentClassName } = this.props;
 
     /**
      * [max 最大联动的层级]
