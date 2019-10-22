@@ -131,6 +131,12 @@ const prodConfig = {
       commonjs: "dayjs",
       amd: "dayjs"
     },
+    classnames: {
+      root: "classnames",
+      commonjs2: "classnames",
+      commonjs: "classnames",
+      amd: "classnames"
+    },
   },
   optimization: {
     minimizer: [
