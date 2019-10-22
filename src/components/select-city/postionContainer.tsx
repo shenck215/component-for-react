@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as classnames from "classnames";
-import { Table } from "antd";
+import { Table } from 'antd'
 import { searchResultArr } from "../util/baseType";
 import { ParamsProps } from "./index";
 import Tab from "./tab";
@@ -72,12 +72,22 @@ export default class PostionContainer extends React.Component<
   }
 
   componentDidMount() {
-    document.body.appendChild(this._container);
+    const { params: { getPopupContainer } } = this.props
+    if(typeof getPopupContainer === 'function'){
+      getPopupContainer().appendChild(this._container);
+    }else{
+      document.body.appendChild(this._container);
+    }
     window.addEventListener("keydown", this.listenKeydown);
   }
 
   componentWillUnmount() {
-    document.body.removeChild(this._container);
+    const { params: { getPopupContainer } } = this.props
+    if(typeof getPopupContainer === 'function'){
+      getPopupContainer().removeChild(this._container);
+    }else{
+      document.body.removeChild(this._container);
+    }
     window.removeEventListener("keydown", this.listenKeydown);
   }
 

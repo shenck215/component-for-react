@@ -6,35 +6,39 @@ import fetchFn from "../util/request";
 import PostionContainer from "./postionContainer";
 
 export interface ParamsProps {
-  deepMap: Array<{ name: string; value?: number }>;
   // deepMap: [{name: '省'},{name: '市'},{name: '区'}],
+  deepMap: Array<{ name: string; value?: number }>;
+  /* 弹窗样式 */
   popupStyle?: {
     width: number;
     zIndex: number;
-  } /* 弹窗样式 */;
-  search?: boolean /* 搜索 */;
-  level?: 1 | 2 | 3 /** 级别 1省 2省市 3省市区 */;
-  address?: any /* json方式 方式城市基本数据，与addressApi选项2选1， 优先 address */;
-  addressApi?: string /* fetch api方式城市基本数据 */;
-  hotCityApi?: string /** 热门城市 */;
-  addressFetchData?: object /* fetch api方式城市请求参数 */;
+  };
+  /* 搜索 */
+  search?: boolean;
+  /** 级别 1省 2省市 3省市区 */
+  level?: 1 | 2 | 3;
+  /* json方式 方式城市基本数据，与addressApi选项2选1， 优先 address */
+  address?: any;
+  /* fetch api方式城市基本数据 */
+  addressApi?: string;
+  /** 热门城市 */
+  hotCityApi?: string;
+  /* fetch api方式城市请求参数 */
+  addressFetchData?: object;
   /* input 的样式 */
   style?: {
     width: number;
   };
-  onChange?: (
-    selectVal: number[],
-    selectName: string[],
-    code: any
-  ) => void /* 选择到最后一层的回调 */;
-  onSelect?: (
-    selectVal: number[],
-    selectName: string[],
-    code: any
-  ) => void /* 每层选择的回调，除了， 除了最后一层调用onChange */;
+  /* 选择到最后一层的回调 */
+  onChange?: (selectVal: number[], selectName: string[], code: any) => void;
+  /* 每层选择的回调，除了， 除了最后一层调用onChange */
+  onSelect?: (selectVal: number[], selectName: string[], code: any) => void;
+  /** 输入框提示文案 */
   placeholder?: string;
   /** 禁用 */
   disabled?: boolean;
+  /** 渲染父节点, 默认body */
+  getPopupContainer?: (trigger?:HTMLElement) => HTMLElement;
 }
 
 export interface SelectCityProps {
@@ -91,7 +95,7 @@ export default class SelectCity extends React.Component<
       addressMap = data.addressMap;
       addressMapSearch = data.addressMapSearch;
     }
-    const newDeepMap = this.kickWithLevel(deepMap, level);
+    const newDeepMap = deepMap.splice(0, level);
     /* 构建默认数据的选中值 */
     let selectVal: Array<any> = [];
 
@@ -149,22 +153,6 @@ export default class SelectCity extends React.Component<
         fn();
       }, delay);
     };
-  };
-
-  /** 根据级别剔除数据 */
-  kickWithLevel = (
-    deepMap: Array<{ name: string; value?: number }>,
-    level: 1 | 2 | 3
-  ) => {
-    if (level < 3) {
-      // 去掉区
-      deepMap.pop();
-    }
-    if (level < 2) {
-      // 去掉市
-      deepMap.pop();
-    }
-    return deepMap;
   };
 
   getAddress = async () => {
@@ -246,7 +234,7 @@ export default class SelectCity extends React.Component<
     });
   };
 
-  getOffsetRect(node: HTMLInputElement) {
+  getOffsetRect(node: HTMLElement) {
     const box = node.getBoundingClientRect();
     const body = document.body;
     const docElem = document.documentElement;
@@ -275,11 +263,17 @@ export default class SelectCity extends React.Component<
       params: {
         popupStyle = {
           width: 380
-        }
+        },
+        getPopupContainer
       }
     } = this.props;
     const input = this.inputCity.input;
-    const { left, top } = this.getOffsetRect(input);
+    let { left, top } = this.getOffsetRect(input);
+    if(typeof getPopupContainer === 'function'){
+      const positionForContainer = this.getOffsetRect(getPopupContainer())
+      left = left - positionForContainer.left
+      top = top - positionForContainer.top
+    }
     return {
       left,
       top: top + input.offsetHeight,
@@ -331,7 +325,7 @@ export default class SelectCity extends React.Component<
       selectVal,
       index,
       valIndex,
-      deepMap
+      deepMap,
     } = this.state;
     const { params } = this.props;
     return {
@@ -580,7 +574,7 @@ export default class SelectCity extends React.Component<
                 <Input {...this.inputCityProps()} />
                 {!disabled && (
                   <i
-                    className={`iconfont icon-clear ${className}--input--clear`}
+                    className={`nextlc nextlc-clear ${className}--input--clear`}
                     onClick={() => this.clear()}
                   />
                 )}

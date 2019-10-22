@@ -56,12 +56,12 @@ export default class CalendarHeader extends React.Component<PagaProps, {}> {
         <span style={{ display: 'flex' }}>
           {!showYearQuickSelect && (
             <i
-              className='iconfont icon-angle-double-left nextlc-calendar-header--doubleLeft'
+              className='nextlc nextlc-angle-double-left nextlc-calendar-header--doubleLeft'
               onClick={() => prevYear()}
             />
           )}
           {!showMonthQuickSelect && (
-            <i className='iconfont icon-angle-left nextlc-calendar-header--left' onClick={() => prevMonth()} />
+            <i className='nextlc nextlc-angle-left nextlc-calendar-header--left' onClick={() => prevMonth()} />
           )}
         </span>
         <span className='nextlc-calendar-header--dateInfo'>
@@ -80,11 +80,11 @@ export default class CalendarHeader extends React.Component<PagaProps, {}> {
         </span>
         <span style={{ display: 'flex' }}>
           {!showMonthQuickSelect && (
-            <i className='iconfont icon-angle-right nextlc-calendar-header--right' onClick={() => nextMonth()} />
+            <i className='nextlc nextlc-angle-right nextlc-calendar-header--right' onClick={() => nextMonth()} />
           )}
           {!showYearQuickSelect && (
             <i
-              className='iconfont icon-angle-double-right nextlc-calendar-header--doubleRight'
+              className='nextlc nextlc-angle-double-right nextlc-calendar-header--doubleRight'
               onClick={() => nextYear()}
             />
           )}

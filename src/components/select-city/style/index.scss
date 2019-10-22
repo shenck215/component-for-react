@@ -10,7 +10,7 @@ $selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
       position: absolute;
       display: none;
       right: 5px;
-      top: 9px;
+      top: calc(50% - 7px);
       width: 15px;
       height: 15px;
       font-size: 14px;
@@ -67,7 +67,7 @@ $selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
         margin-left: 5px;
         -webkit-transition: all 0.15s;
         transition: all 0.15s;
-        &--active {
+        &:hover,&--active {
           color: #fff;
           background-color: #22baa0;
         }

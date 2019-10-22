@@ -13,6 +13,7 @@ const App = () => (
         address,
         deepMap: [{ name: "省" }, { name: "市" }, { name: "区" }],
         search: true,
+        getPopupContainer: () => document.querySelector('.nextlc-calendar'),
         onChange: (cityIds: number[], cityNames: string[]) => {
           console.log(cityIds, cityNames);
         }

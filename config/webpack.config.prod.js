@@ -9,7 +9,6 @@ const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const HappyPack = require("happypack");
 const os = require("os");
-const { name } = require("../package.json");
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 /** 每次打包前要清空的文件夹 */
@@ -120,12 +119,12 @@ const prodConfig = {
       commonjs: "react-dom",
       amd: "react-dom"
     },
-    // antd: {
-    //   root: "antd",
-    //   commonjs2: "antd",
-    //   commonjs: "antd",
-    //   amd: "antd"
-    // },
+    antd: {
+      root: "antd",
+      commonjs2: "antd",
+      commonjs: "antd",
+      amd: "antd"
+    },
     dayjs: {
       root: "dayjs",
       commonjs2: "dayjs",
