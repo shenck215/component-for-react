@@ -137,6 +137,24 @@ const prodConfig = {
       commonjs: "classnames",
       amd: "classnames"
     },
+    omit: {
+      root: "omit",
+      commonjs2: "omit",
+      commonjs: "omit",
+      amd: "omit"
+    },
+    'prop-types': {
+      root: "PropTypes",
+      commonjs2: "prop-types",
+      commonjs: "prop-types",
+      amd: "prop-types"
+    },
+    'react-lifecycles-compat': {
+      root: "react-lifecycles-compat",
+      commonjs2: "react-lifecycles-compat",
+      commonjs: "react-lifecycles-compat",
+      amd: "react-lifecycles-compat"
+    },
   },
   optimization: {
     minimizer: [

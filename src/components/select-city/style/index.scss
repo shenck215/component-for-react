@@ -38,10 +38,11 @@ $selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
 .#{$selectcity-prefix-cls2} {
   position: absolute;
   display: none;
-  border: 1px solid #22baa0;
+  border: 1px solid $theme-color;
   font-family: "Microsoft Yahei";
   font-size: 14px;
   background-color: rgb(255, 255, 255);
+  box-sizing: border-box;
   z-index: 1;
   &--show {
     display: block;
@@ -69,69 +70,89 @@ $selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
         transition: all 0.15s;
         &:hover,&--active {
           color: #fff;
-          background-color: #22baa0;
+          background-color: $theme-color;
         }
       }
     }
   }
-  .ant-table-small {
-    border-radius: 0;
-    border-width: 0 0 1px 0;
-    .ant-table-content {
-      .ant-table-body {
-        margin: 0;
-        table {
-          padding: 0;
-          .ant-table-row {
-            cursor: pointer;
-            font-size: 14px;
-            td {
-              padding: 6px 11px;
-            }
-            &:hover {
-              td {
-                background: rgba(113, 223, 204, 0.2);
-              }
-            }
-          }
-          .nextlc-selectcity-container--active {
-            background: #1fd6b6;
-          }
-        }
-      }
-    }
-  }
-  .ant-pagination {
-    &-simple {
-      margin: 6px 0;
+  &--list{
+    width: 100%;
+    &--row{
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 32px;
       display: flex;
       align-items: center;
-      &-pager {
-        display: flex;
-        align-items: center;
-        input {
-          margin: 0;
-          padding: 0;
-          &:focus {
-            border-color: #42c7ac;
-            box-shadow: 0 0 0 2px rgba(32, 186, 160, 0.2);
-          }
-          &:hover {
-            border-color: #42c7ac;
-          }
-        }
-        .ant-pagination-slash {
-          margin: 0 4px;
+      padding: 6px 0 6px 12px;
+      border-bottom: 1px solid #e8e8e8;
+      cursor: pointer;
+      &:hover{
+        background-color: rgba(113, 223, 204, 0.4);
+      }
+      &--active{
+        background-color: #1fd6b6;
+        &:hover{
+          background-color: #1fd6b6;
         }
       }
     }
-    &-prev,
-    &-next {
-      .ant-pagination-item-link {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    &--pagination{
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 6px;
+      color: #666;
+      &--input{
+        width: 36px;
+        padding: 0;
+        height: 24px;
+        text-align: center;
       }
+      &--partition{
+        margin: 0 5px;
+      }
+      &--left{
+        font-size: 12px;
+        margin-right: 5px;
+        cursor: pointer;
+        &:hover{
+          color: $theme-color;
+        }
+        &--disabled{
+          color: #d1d1d1;
+          cursor: not-allowed;
+          &:hover{
+            color: #d1d1d1;
+          }
+        }
+      }
+      &--right{
+        font-size: 12px;
+        margin-left: 5px;
+        cursor: pointer;
+        &:hover{
+          color: $theme-color;
+        }
+        &--disabled{
+          color: #d1d1d1;
+          cursor: not-allowed;
+          &:hover{
+            color: #d1d1d1;
+          }
+        }
+      }
+    }
+    &--none{
+      position: relative;
+      z-index: 1;
+      margin-top: -1px;
+      padding: 16px 16px;
+      color: rgba(0, 0, 0, 0.25);
+      font-size: 14px;
+      text-align: center;
+      background: #fff;
+      border: none;
+      border-radius: 0 0 4px 4px;
     }
   }
   &--tab {
@@ -154,11 +175,11 @@ $selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
         line-height: 30px;
         &:hover,
         &--active {
-          background: linear-gradient(to top, #22baa0 2px, transparent 0);
-          background: -moz-linear-gradient(to top, #22baa0 2px, transparent 0);
+          background: linear-gradient(to top, $theme-color 2px, transparent 0);
+          background: -moz-linear-gradient(to top, $theme-color 2px, transparent 0);
           background: -webkit-linear-gradient(
             to top,
-            #22baa0 2px,
+            $theme-color 2px,
             transparent 0
           );
         }
@@ -193,7 +214,7 @@ $selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
           &:hover,
           &--active {
             display: inline-block;
-            background-color: #22baa0;
+            background-color: $theme-color;
             color: #fff;
           }
         }

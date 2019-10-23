@@ -1,9 +1,8 @@
 import * as React from "react";
-import { Spin, Input, ConfigProvider } from "antd";
-import zhCN from "antd/es/locale/zh_CN";
 import { parseAddress, parseAddressName, matchSearch } from "../util/util";
 import fetchFn from "../util/request";
 import PostionContainer from "./postionContainer";
+import { Spin, Input } from '../index'
 
 export interface ParamsProps {
   // deepMap: [{name: '省'},{name: '市'},{name: '区'}],
@@ -549,43 +548,28 @@ export default class SelectCity extends React.Component<
     const { addressLoading, show } = this.state;
     const className = "nextlc-selectcity";
     return (
-      <ConfigProvider locale={zhCN}>
-        <div
-          className={className}
-          style={{ width: style.width, zIndex: 999, ...style }}
-        >
-          {addressLoading ? (
-            <div style={{ width: style.width, display: "inline-block" }}>
-              <Spin spinning={addressLoading}>
-                <div
-                  className={`${className}--input`}
-                  style={{ width: style.width }}
-                >
-                  <Input {...this.inputCityProps()} />
-                </div>
-              </Spin>
-            </div>
-          ) : (
-            <>
-              <div
-                className={`${className}--input`}
-                style={{ width: style.width }}
-              >
-                <Input {...this.inputCityProps()} />
-                {!disabled && (
-                  <i
-                    className={`nextlc nextlc-clear ${className}--input--clear`}
-                    onClick={() => this.clear()}
-                  />
-                )}
-              </div>
-              {!addressLoading && show && (
-                <PostionContainer {...this.postionContainerProps()} />
-              )}
-            </>
+      <div
+        className={className}
+        style={{ width: style.width, zIndex: 999, ...style }}
+      >
+        <Spin loading={addressLoading}>
+          <div
+            className={`${className}--input`}
+            style={{ width: style.width }}
+          >
+            <Input {...this.inputCityProps()} />
+            {!disabled && (
+              <i
+                className={`nextlc nextlc-clear ${className}--input--clear`}
+                onClick={() => this.clear()}
+              />
+            )}
+          </div>
+          {!addressLoading && show && (
+            <PostionContainer {...this.postionContainerProps()} />
           )}
-        </div>
-      </ConfigProvider>
+        </Spin>
+      </div>
     );
   }
 }

@@ -2,12 +2,6 @@ body{
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-size: 13px;
   font-variant: tabular-nums;
-}
-.ant-input:focus {
-  border-color: #42c7ac;
-  box-shadow: 0 0 0 2px rgba(32, 186, 160, 0.2);
-}
-
-.ant-input:hover {
-  border-color: #42c7ac;
+  margin: 0;
+  padding: 0;
 }

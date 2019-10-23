@@ -41,8 +41,8 @@ $calendarBody-prefix-cls: "#{$nextlc-prefix}-calendar-body";
     color: rgba(0, 0, 0, 0.25);
   }
   &--today {
-    color: #22baa0;
-    border: 1px solid #22baa0;
+    color: $theme-color;
+    border: 1px solid $theme-color;
     background-color: #d2f1ec;
     line-height: 20px;
     &:hover {
@@ -50,10 +50,10 @@ $calendarBody-prefix-cls: "#{$nextlc-prefix}-calendar-body";
     }
   }
   &--active {
-    background-color: #22baa0;
+    background-color: $theme-color;
     color: #fff;
     &:hover {
-      background-color: #22baa0;
+      background-color: $theme-color;
     }
   }
   &--disable {

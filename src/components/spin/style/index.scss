@@ -1,0 +1,36 @@
+@import "../../style/theme/variable.scss";
+
+$spin-prefix-cls: "#{$nextlc-prefix}-spin";
+
+.#{$spin-prefix-cls} {
+  position: relative;
+  &--mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: progress;
+    &--loading {
+      animation-name: rotato;
+      animation-duration: 1.5s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      color: $theme-color;
+      font-size: 20px;
+    }
+  }
+}
+
+@keyframes rotato {
+  form {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

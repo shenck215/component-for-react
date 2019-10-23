@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as classnames from "classnames";
-import { Table } from 'antd'
 import { searchResultArr } from "../util/baseType";
 import { ParamsProps } from "./index";
+import List from "./list";
 import Tab from "./tab";
 import TabCon from "./tabCon";
 
@@ -41,8 +41,7 @@ export default class PostionContainer extends React.Component<
   PostionContainerStates
 > {
   private _container: HTMLDivElement;
-  private prevBtn: HTMLDivElement;
-  private nextBtn: HTMLDivElement;
+  list: List;
   constructor(props: PostionContainerProps) {
     super(props);
     const { searchDataSource, selectVal } = props;
@@ -72,20 +71,24 @@ export default class PostionContainer extends React.Component<
   }
 
   componentDidMount() {
-    const { params: { getPopupContainer } } = this.props
-    if(typeof getPopupContainer === 'function'){
+    const {
+      params: { getPopupContainer }
+    } = this.props;
+    if (typeof getPopupContainer === "function") {
       getPopupContainer().appendChild(this._container);
-    }else{
+    } else {
       document.body.appendChild(this._container);
     }
     window.addEventListener("keydown", this.listenKeydown);
   }
 
   componentWillUnmount() {
-    const { params: { getPopupContainer } } = this.props
-    if(typeof getPopupContainer === 'function'){
+    const {
+      params: { getPopupContainer }
+    } = this.props;
+    if (typeof getPopupContainer === "function") {
       getPopupContainer().removeChild(this._container);
-    }else{
+    } else {
       document.body.removeChild(this._container);
     }
     window.removeEventListener("keydown", this.listenKeydown);
@@ -99,13 +102,7 @@ export default class PostionContainer extends React.Component<
     if (totalPage) {
       if (keyCode === 37) {
         // ←
-        if (current > 1) {
-          this.prevBtn.click();
-          this.setState({
-            current: current - 1,
-            selectedIndex: 0
-          });
-        }
+        this.prevBtn();
       } else if (keyCode === 38) {
         // ↑
         let newSelectedIndex = selectedIndex - 1;
@@ -114,7 +111,7 @@ export default class PostionContainer extends React.Component<
           if (current > 1) {
             newSelectedIndex = 7;
             newCurrent = newCurrent - 1;
-            this.prevBtn.click();
+            this.prevBtn();
           } else {
             newSelectedIndex = 0;
           }
@@ -125,13 +122,7 @@ export default class PostionContainer extends React.Component<
         });
       } else if (keyCode === 39) {
         // →
-        if (current < totalPage) {
-          this.nextBtn.click();
-          this.setState({
-            current: current + 1,
-            selectedIndex: 0
-          });
-        }
+        this.nextBtn();
       } else if (keyCode === 40) {
         // ↓
         let newSelectedIndex = selectedIndex + 1;
@@ -141,7 +132,7 @@ export default class PostionContainer extends React.Component<
           if (newSelectedIndex > pageSize - 1) {
             newSelectedIndex = 0;
             newCurrent = newCurrent + 1;
-            this.nextBtn.click();
+            this.nextBtn;
           }
         } else if (max === 0) {
           if (newSelectedIndex > pageSize - 1) {
@@ -157,9 +148,8 @@ export default class PostionContainer extends React.Component<
           current: newCurrent
         });
       } else if (keyCode === 13) {
-        const node = document.querySelector(
-          ".nextlc-selectcity-container--active"
-        );
+        console.log(this.list)
+        const node = document.querySelector(`.${this.list.classNameForSelected}`);
         node && (node as any).click();
       }
     }
@@ -206,134 +196,31 @@ export default class PostionContainer extends React.Component<
     return data.name;
   };
 
-  columns = () => {
-    return [
-      {
-        key: "city",
-        render: (text: {}, record: {}) => {
-          const hasName: string[] = [];
-          const arr: React.ReactElement<HTMLSpanElement>[] = [];
-          for (let key in record) {
-            const data = record[key];
-            if (!hasName.includes(data.name)) {
-              hasName.push(data.name);
-              arr.push(<span key={data.value}>{this.highlight(data)} </span>);
-            }
-          }
-          return (
-            <div>
-              {Array.from(new Set(arr)).map((value, index) => {
-                return (
-                  <span key={index}>
-                    {value}
-                    {index < arr.length - 1 ? "，" : ""}
-                  </span>
-                );
-              })}
-            </div>
-          );
-        }
-      }
-    ];
-  };
-
   handClick(e: React.SyntheticEvent<HTMLDivElement>) {
     /* 阻止冒泡 */
     e.nativeEvent.stopImmediatePropagation();
   }
 
-  tableProps = () => {
-    const {
-      loading,
-      searchDataSource,
-      setInputValue
-      // selectVal
-    } = this.props;
-    const { current, pageSize, totalPage } = this.state;
-    let props = {
-      size: "small",
-      rowKey: (record: {}) => {
-        let key = "";
-        for (let i in record) {
-          key += record[i].value;
-        }
-        return key;
-      },
-      columns: this.columns(),
-      showHeader: false,
-      locale: {
-        emptyText: "找不到你要的结果，换个试试"
-      },
-      pagination:
-        totalPage > 1
-          ? {
-              current,
-              pageSize,
-              simple: true,
-              itemRender: (
-                page,
-                type: "page" | "prev" | "next",
-                originalElement
-              ) => {
-                return (
-                  <div
-                    ref={node =>
-                      (this[
-                        `${
-                          type === "prev"
-                            ? "prevBtn"
-                            : type === "next"
-                            ? "nextBtn"
-                            : ""
-                        }`
-                      ] = node)
-                    }
-                  >
-                    {originalElement}
-                  </div>
-                );
-              }
-            }
-          : false,
-      loading,
-      dataSource: searchDataSource,
-      onRow: (record: {}) => {
-        return {
-          onClick: () => {
-            let selectVal: number[] = [];
-            let selectName: string[] = [];
-            for (let key in record) {
-              const data = record[key];
-              selectVal.push(data.value);
-              selectName.push(data.name);
-            }
-            setInputValue(selectVal, selectName);
-          }
-        };
-      },
-      rowClassName: (record: {}, index) => {
-        const className = "nextlc-selectcity-container";
-        // if (selectVal.length <= 0) {
-        //   return "";
-        // }
-        // let rowId: any[] = [];
-        // for (let key in record) {
-        //   const data: any = record[key];
-        //   rowId.push(data.value);
-        // }
-        // let className2 = `${className}--active`;
-        // for (let i = 0, l = selectVal.length; i < l; i++) {
-        //   if (selectVal[i] !== rowId[i]) {
-        //     className2 = "";
-        //     break;
-        //   }
-        // }
-        const { selectedIndex } = this.state;
-        let className2 = selectedIndex === index ? `${className}--active` : "";
-        return className2;
-      }
-    } as any;
-    return props;
+  /** prevBtn */
+  prevBtn = () => {
+    const { current } = this.state;
+    if (current > 1) {
+      this.setState({
+        current: current - 1,
+        selectedIndex: 0
+      });
+    }
+  };
+
+  /** nextBtn */
+  nextBtn = () => {
+    const { current, totalPage } = this.state;
+    if (current < totalPage) {
+      this.setState({
+        current: current + 1,
+        selectedIndex: 0
+      });
+    }
   };
 
   tabConProps = () => {
@@ -380,9 +267,17 @@ export default class PostionContainer extends React.Component<
       show,
       searching,
       params: { popupStyle },
-      hotData
+      hotData,
+      searchDataSource,
+      setInputValue
     } = this.props;
-    const { selectedHotCityId } = this.state;
+    const {
+      selectedHotCityId,
+      selectedIndex,
+      current,
+      pageSize,
+      totalPage
+    } = this.state;
     const className2 = classnames({
       [`${className}--show`]: show,
       [className]: true
@@ -420,7 +315,18 @@ export default class PostionContainer extends React.Component<
           </div>
         )}
         {searching ? (
-          <Table {...this.tableProps()} />
+          <List
+            ref={(node: List) => (this.list = node)}
+            searchDataSource={searchDataSource}
+            selectedIndex={selectedIndex}
+            setInputValue={setInputValue}
+            highlight={this.highlight}
+            current={current}
+            pageSize={pageSize}
+            totalPage={totalPage}
+            prevBtn={this.prevBtn}
+            nextBtn={this.nextBtn}
+          />
         ) : (
           <div>
             <Tab {...this.props} />

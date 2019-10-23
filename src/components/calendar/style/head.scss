@@ -13,7 +13,7 @@ $calendarHeader-prefix-cls: "#{$nextlc-prefix}-calendar-header";
     font-size: 12px;
     cursor: pointer;
     &:hover {
-      color: #22baa0;
+      color: $theme-color;
     }
   }
   &--left {
@@ -21,7 +21,7 @@ $calendarHeader-prefix-cls: "#{$nextlc-prefix}-calendar-header";
     margin-left: 12px;
     cursor: pointer;
     &:hover {
-      color: #22baa0;
+      color: $theme-color;
     }
   }
   &--dateInfo {
@@ -32,7 +32,7 @@ $calendarHeader-prefix-cls: "#{$nextlc-prefix}-calendar-header";
       &Select {
         cursor: pointer;
         &:hover {
-          color: #22baa0;
+          color: $theme-color;
         }
       }
     }
@@ -40,7 +40,7 @@ $calendarHeader-prefix-cls: "#{$nextlc-prefix}-calendar-header";
       &Select {
         cursor: pointer;
         &:hover {
-          color: #22baa0;
+          color: $theme-color;
         }
       }
     }
@@ -51,14 +51,14 @@ $calendarHeader-prefix-cls: "#{$nextlc-prefix}-calendar-header";
     cursor: pointer;
     
     &:hover {
-      color: #22baa0;
+      color: $theme-color;
     }
   }
   &--doubleRight {
     font-size: 12px;
     cursor: pointer;
     &:hover {
-      color: #22baa0;
+      color: $theme-color;
     }
   }
 }

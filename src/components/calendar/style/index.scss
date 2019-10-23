@@ -38,7 +38,7 @@ $calendar-prefix-cls: "#{$nextlc-prefix}-calendar";
         }
         &.active {
           border-radius: 2px;
-          background-color: #22baa0;
+          background-color: $theme-color;
           color: #fff;
         }
       }

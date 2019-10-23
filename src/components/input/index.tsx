@@ -1,0 +1,67 @@
+import * as React from "react";
+import * as classnames from "classnames";
+import { MouseEventHandler } from "../util/baseType";
+
+export interface PageProps {
+  ref?: (node: HTMLInputElement) => void;
+  /** 提示文案 */
+  placeholder?: string;
+  /** 类名 */
+  className?: string;
+  /** 样式 */
+  style?: React.CSSProperties;
+  /** 禁用 */
+  disabled?: boolean;
+  /** 点击事件 */
+  onClick?: MouseEventHandler<Element>;
+  defaultValue?: any;
+  value?: any;
+  /** onchange */
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface PageStates {
+  
+}
+
+export default class Input extends React.Component<PageProps, PageStates> {
+  
+  static defaultProps = {
+    overlayClassName: '',
+    placeholder: ''
+  }
+
+  input: HTMLElement;
+
+  saveInput = (node: HTMLInputElement) => {
+    this.input = node;
+  };
+
+  render() {
+    const {
+      className: overlayClassName = '',
+      style,
+      disabled,
+      placeholder,
+      value,
+      onClick,
+      onChange
+    } = this.props;
+    const className = "nextlc-input";
+    return (
+      <input
+        className={classnames({
+          [className]: true,
+          [overlayClassName]: !!overlayClassName
+        })}
+        ref={this.saveInput}
+        value={value}
+        style={style}
+        disabled={disabled}
+        placeholder={placeholder}
+        onClick={onClick}
+        onChange={onChange}
+      />
+    );
+  }
+}

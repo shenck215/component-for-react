@@ -32,3 +32,57 @@ export type searchResultArr = {
   pinyin: string;
   value: number;
 }
+
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+// https://stackoverflow.com/questions/46176165/ways-to-get-string-literal-type-of-array-values-without-enum-overhead
+export const tuple = <T extends string[]>(...args: T) => args;
+
+export const tupleNum = <T extends number[]>(...args: T) => args;
+
+interface BaseSyntheticEvent<E = object, C = any, T = any> {
+  nativeEvent: E;
+  currentTarget: C;
+  target: T;
+  bubbles: boolean;
+  cancelable: boolean;
+  defaultPrevented: boolean;
+  eventPhase: number;
+  isTrusted: boolean;
+  preventDefault(): void;
+  isDefaultPrevented(): boolean;
+  stopPropagation(): void;
+  isPropagationStopped(): boolean;
+  persist(): void;
+  timeStamp: number;
+  type: string;
+}
+
+type NativeMouseEvent = Event;
+
+type EventHandler<E extends SyntheticEvent<any>> = { bivarianceHack(event: E): void }["bivarianceHack"];
+
+interface SyntheticEvent<T = Element, E = Event> extends BaseSyntheticEvent<E, EventTarget & T, EventTarget> {}
+
+interface MouseEvent<T = Element, E = NativeMouseEvent> extends SyntheticEvent<T, E> {
+  altKey: boolean;
+  button: number;
+  buttons: number;
+  clientX: number;
+  clientY: number;
+  ctrlKey: boolean;
+  /**
+   * See [DOM Level 3 Events spec](https://www.w3.org/TR/uievents-key/#keys-modifier). for a list of valid (case-sensitive) arguments to this method.
+   */
+  getModifierState(key: string): boolean;
+  metaKey: boolean;
+  movementX: number;
+  movementY: number;
+  pageX: number;
+  pageY: number;
+  relatedTarget: EventTarget;
+  screenX: number;
+  screenY: number;
+  shiftKey: boolean;
+}
+
+export type MouseEventHandler<T = Element> = EventHandler<MouseEvent<T>>;
