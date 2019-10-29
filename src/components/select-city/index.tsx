@@ -523,6 +523,7 @@ export default class SelectCity extends React.Component<
       onClick: (e: React.SyntheticEvent<any>) => this.show(e),
       placeholder: placeholder || "支持中文/拼音/简拼",
       style: style,
+      className: disabled ? 'nextlc-selectcity--input--disabled' : '',
       disabled
     };
 

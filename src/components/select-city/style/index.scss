@@ -32,6 +32,13 @@ $selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
         z-index: 10000;
       }
     }
+    &--disabled{
+      background: #F5F5F5;
+      cursor: not-allowed;
+      &:hover{
+        border-color: #d9d9d9;
+      }
+    }
   }
 }
 
