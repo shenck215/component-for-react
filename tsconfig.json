@@ -21,7 +21,7 @@
     "declaration": true,
     "typeRoots": [
       "node_modules/@types",
-      "global.d.ts"
+      "src/components/global.d.ts"
     ],
     "baseUrl": "."
   },
