@@ -328,20 +328,20 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
                    ${month + 1} 月
                    ${day} 日`
     };
-
+    const className = 'nextlc-calendar'
     return (
-      <div className="nextlc-calendar">
+      <div className={className}>
         {showYearQuickSelect && (
-          <div className="nextlc-calendar--monthSelect">
+          <div className={`${className}--monthSelect`}>
             {monthArray.map(item => (
               <span
-                className="nextlc-calendar--monthSelect--monthTd"
+                className={`${className}--monthSelect--monthTd`}
                 key={item}
               >
                 <span
                   className={classnames(
-                    "nextlc-calendar--monthSelect--monthTd--monthItem",
-                    month + 1 === item ? "nextlc-calendar--active" : ""
+                    `${className}--monthSelect--monthTd--monthItem`,
+                    month + 1 === item ? `${className}--active` : ""
                   )}
                   onClick={() => this.changeMonth(item - 1)}
                 >
@@ -352,16 +352,16 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
           </div>
         )}
         {showMonthQuickSelect && (
-          <div className="nextlc-calendar--monthSelect">
+          <div className={`${className}--monthSelect`}>
             {monthArray.map(item => (
               <span
-                className="nextlc-calendar--monthSelect--monthTd"
+                className={`${className}--monthSelect--monthTd`}
                 key={item}
               >
                 <span
                   className={classnames(
-                    "nextlc-calendar--monthSelect--monthTd--monthItem",
-                    month + 1 === item ? "nextlc-calendar--active" : ""
+                    `${className}--monthSelect--monthTd--monthItem`,
+                    month + 1 === item ? `${className}--active` : ""
                   )}
                   onClick={() => this.changeMonth(item - 1)}
                 >
@@ -371,7 +371,7 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
             ))}
           </div>
         )}
-        <div className="nextlc-calendar--main">
+        <div className={`${className}--main`}>
           <CalendarHeader
             prevYear={this.prevYear}
             prevMonth={this.prevMonth}

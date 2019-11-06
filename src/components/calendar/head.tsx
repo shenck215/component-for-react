@@ -50,29 +50,29 @@ export default class CalendarHeader extends React.Component<PagaProps, {}> {
       year,
       month,
     } = this.props;
-
+    const className = 'nextlc-calendar-header'
     return (
-      <div className='nextlc-calendar-header'>
+      <div className={className}>
         <span style={{ display: 'flex' }}>
           {!showYearQuickSelect && (
             <i
-              className='nextlc nextlc-angle-double-left nextlc-calendar-header--doubleLeft'
+              className={`nextlc nextlc-angle-double-left ${className}--doubleLeft`}
               onClick={() => prevYear()}
             />
           )}
           {!showMonthQuickSelect && (
-            <i className='nextlc nextlc-angle-left nextlc-calendar-header--left' onClick={() => prevMonth()} />
+            <i className={`nextlc nextlc-angle-left ${className}--left`} onClick={() => prevMonth()} />
           )}
         </span>
-        <span className='nextlc-calendar-header--dateInfo'>
+        <span className={`${className}--dateInfo`}>
           <span
-            className={classnames('nextlc-calendar-header--dateInfo--year', selectYear ? 'nextlc-calendar-header--dateInfo--yearSelect' : '')}
+            className={classnames(`${className}--dateInfo--year`, selectYear ? `${className}--dateInfo--yearSelect` : '')}
             onClick={this.onSelectYear}
           >
             <span style={{ fontWeight: 'bold' }}>{year}</span>年
           </span>
           <span
-            className={classnames('nextlc-calendar-header--dateInfo--month', selectMonth ? 'nextlc-calendar-header--dateInfo--monthSelect' : '')}
+            className={classnames(`${className}--dateInfo--month`, selectMonth ? `${className}--dateInfo--monthSelect` : '')}
             onClick={this.onSelectMonth}
           >
             <span style={{ fontWeight: 'bold' }}>{month + 1}</span>月
@@ -80,11 +80,11 @@ export default class CalendarHeader extends React.Component<PagaProps, {}> {
         </span>
         <span style={{ display: 'flex' }}>
           {!showMonthQuickSelect && (
-            <i className='nextlc nextlc-angle-right nextlc-calendar-header--right' onClick={() => nextMonth()} />
+            <i className={`nextlc nextlc-angle-right ${className}--right`} onClick={() => nextMonth()} />
           )}
           {!showYearQuickSelect && (
             <i
-              className='nextlc nextlc-angle-double-right nextlc-calendar-header--doubleRight'
+              className={`nextlc nextlc-angle-double-right ${className}--doubleRight`}
               onClick={() => nextYear()}
             />
           )}

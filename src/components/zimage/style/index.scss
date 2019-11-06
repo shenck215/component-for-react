@@ -16,7 +16,7 @@ $zimage-prefix-cls: "#{$nextlc-prefix}-zimage";
   }
   &--mask{
     position: fixed;
-    background: rgba(0,0,0,0.65);
+    background: rgba(0, 0, 0, 0.65);
     width: 100%;
     height: 100%;
     top: 0;
@@ -33,17 +33,72 @@ $zimage-prefix-cls: "#{$nextlc-prefix}-zimage";
     align-items: flex-start;
     user-select: none;
     cursor: zoom-out;
-    &--img{
-      height: 100%;
-      cursor: zoom-in;
+    &--body{
+      position: relative;
       margin: auto;
-    }
-    &--original{
-      overflow: auto;
+      cursor: zoom-in;
       &--img{
+        height: 100%;
+      }
+      &--original--img{
         height: auto;
         cursor: zoom-out;
       }
+      &--progress{
+        position: absolute;
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        left: 0;
+        bottom: 30px;
+        &--yuanxing{
+          margin: 0 2px;
+          font-size: 14px;
+          color: #fff;
+          opacity: 0.3;
+          cursor: pointer;
+          &:hover{
+            opacity: 0.6;
+          }
+          &--active{
+            opacity: 1;
+          }
+        }
+      }
+      &--prevBtn{
+        display: none;
+      }
+      &--nextBtn{
+        display: none;
+      }
+      &:hover{
+        .#{$zimage-prefix-cls}--content--body--prevBtn{
+          display: block;
+          position: absolute;
+          left: -5px;
+          top: 50%;
+          color: #fff;
+          font-size: 50px;
+          transform: translateY(-50%);
+          opacity: 0.6;
+          cursor: pointer;
+        }
+        .#{$zimage-prefix-cls}--content--body--nextBtn{
+          display: block;
+          position: absolute;
+          right: -5px;
+          top: 50%;
+          color: #fff;
+          font-size: 50px;
+          transform: translateY(-50%);
+          opacity: 0.6;
+          cursor: pointer;
+        }
+      }
+    }
+    &--original{
+      overflow: auto;
     }
   }
 }

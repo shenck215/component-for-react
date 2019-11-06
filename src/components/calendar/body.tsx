@@ -25,19 +25,21 @@ export interface PageProps {
 export default class CalendarBody extends React.Component<PageProps, {}> {
   // 处理日期选择事件，如果是当月，触发日期选择；如果不是当月，切换月份
   handleDatePick = (day: number, styleName: string, disable: boolean) => {
+    const className = 'nextlc-calendar-body'
     if (!disable) {
       const { datePick, prevMonth, nextMonth } = this.props;
-      if (styleName === 'nextlc-calendar-body--thisMonth') {
+      if (styleName === `${className}--thisMonth`) {
         datePick(day);
-      } else if (styleName === 'nextlc-calendar-body--prevMonth') {
+      } else if (styleName === `${className}--prevMonth`) {
         prevMonth(day);
-      } else if (styleName === 'nextlc-calendar-body--nextMonth') {
+      } else if (styleName === `${className}--nextMonth`) {
         nextMonth(day);
       }
     }
   };
 
   render() {
+    const className = 'nextlc-calendar-body'
     const { viewData, year, month, dates, minDate, maxDate } = this.props;
     // 确定当前月数据中每一天所属的月份，以此赋予不同className
     const rMonth = viewData[month];
@@ -47,9 +49,9 @@ export default class CalendarBody extends React.Component<PageProps, {}> {
       i = rMonth.indexOf(1);
       const j = rMonth.indexOf(1, i + 1);
       const arr = new Array(42);
-      arr.fill('nextlc-calendar-body--prevMonth', 0, i);
-      arr.fill('nextlc-calendar-body--thisMonth', i, j);
-      arr.fill('nextlc-calendar-body--nextMonth', j);
+      arr.fill(`${className}--prevMonth`, 0, i);
+      arr.fill(`${className}--thisMonth`, i, j);
+      arr.fill(`${className}--nextMonth`, j);
       return arr;
     })();
 
@@ -59,11 +61,10 @@ export default class CalendarBody extends React.Component<PageProps, {}> {
         rowsInMonth.push(rMonth.slice(index, index + 7));
       }
     });
-
     return (
-      <table className='nextlc-calendar-body'>
+      <table className={className}>
         <thead>
-          <tr className='nextlc-calendar-body--week'>
+          <tr className={`${className}--week`}>
             <th>日</th>
             <th>一</th>
             <th>二</th>
@@ -82,11 +83,11 @@ export default class CalendarBody extends React.Component<PageProps, {}> {
                   let currentDateString = `${year}-${formatNumber(month + 1)}-${formatNumber(
                     rday
                   )}`;
-                  if (styleName === 'nextlc-calendar-body--prevMonth') {
+                  if (styleName === `${className}--prevMonth`) {
                     currentDateString = `${month === 0 ? year - 1 : year}-${formatNumber(
                       month === 0 ? 12 : month
                     )}-${formatNumber(rday)}`;
-                  } else if (styleName === 'nextlc-calendar-body--nextMonth') {
+                  } else if (styleName === `${className}--nextMonth`) {
                     currentDateString = `${month === 11 ? year + 1 : year}-${formatNumber(
                       month === 11 ? 1 : month + 2
                     )}-${formatNumber(rday)}`;
@@ -101,11 +102,11 @@ export default class CalendarBody extends React.Component<PageProps, {}> {
                   return (
                     <td
                       className={classnames(
-                        'nextlc-calendar-body--dayBlock',
+                        `${className}--dayBlock`,
                         styleName,
-                        currentDateString === dayjs().format('YYYY-MM-DD') ? 'nextlc-calendar-body--today' : '',
-                        dates.indexOf(currentDateString) > -1 ? 'nextlc-calendar-body--active' : '',
-                        disable ? 'nextlc-calendar-body--disable' : ''
+                        currentDateString === dayjs().format('YYYY-MM-DD') ? `${className}--today` : '',
+                        dates.indexOf(currentDateString) > -1 ? `${className}--active` : '',
+                        disable ? `${className}--disable` : ''
                       )}
                       onClick={() => this.handleDatePick(rday, styleName, disable || false)}
                       key={`${JSON.stringify(row)}${Math.random()}${rday}`}
