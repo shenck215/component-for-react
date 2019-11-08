@@ -16,14 +16,18 @@ export interface PageProps {
 
 export interface PageStates {
   /** 是否显示大图 */
-  visible: boolean;
+  visibleImg: boolean;
+  /** 是否显示遮罩 */
+  visibleMask: boolean;
   /** 是否显示原始大小 */
   original: boolean;
   /** 图片地址集合 */
   srcs: string[];
   /** 当前图片索引 */
   activeIndex: number;
-  key: number;
+  /** 展示图的样式 */
+  CSSProperties: React.CSSProperties;
+  CSSPropertiesSave: React.CSSProperties;
 }
 
 export default class Zimage extends React.Component<PageProps, PageStates> {
@@ -31,45 +35,42 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
     wrapperClassName: ''
   };
 
-  private _container: HTMLDivElement;
+  private _container: HTMLElement;
 
   constructor(props) {
     super(props);
     const { srcs } = props
+    const CSSProperties = {
+      left: 0,
+      right: 0,
+      transform: 'translate(-50%, -50%) scale(0)',
+      filter:'alpha(opacity=0)',
+      opacity: 0,
+    }
     this.state = {
-      visible: false,
+      visibleMask: false,
+      visibleImg: false,
       original: false,
       srcs,
       activeIndex: 0,
-      key: 1,
+      CSSProperties,
+      CSSPropertiesSave: CSSProperties
     };
-    this._container = document.createElement("div");
+    this._container = document.body;
   }
 
   componentDidMount() {
     window.addEventListener("keydown", this.switchoverPicture);
-    window.addEventListener("resize", this.resize);
-    document.body.appendChild(this._container);
   }
 
   componentWillUnmount() {
     window.removeEventListener("keydown", this.switchoverPicture);
-    window.removeEventListener("resize", this.resize);
-    document.body.removeChild(this._container);
-  }
-
-  /** 自适应 */
-  resize = () => {
-    const { key } = this.state
-    this.setState({
-      key: key + 1
-    })
   }
 
   /** 切换图片 */
   switchoverPicture = (e: KeyboardEvent, activeIndex?: number) => {
+    e.stopPropagation();
     if (typeof activeIndex === "number") {
-      e.stopPropagation();
       this.setState({
         activeIndex
       });
@@ -81,6 +82,12 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
       } else if (keyCode === 39) {
         // →
         this.nextBtn(e)
+      } else if (keyCode === 32) {
+        // 空格
+        this.original(e)
+      } else if (keyCode === 27) {
+        // 空格
+        this.shrink()
       }
     }
   };
@@ -93,10 +100,10 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
     this.setState({
       activeIndex: newActiveIndex >= 0 ? newActiveIndex : 0
     }, () => {
-      const { activeIndex, visible, original } = this.state
+      const { activeIndex, visibleImg, visibleMask, original } = this.state
       const { onPrev, onChange } = this.props
       onPrev && onPrev(activeIndex)
-      onChange && onChange(activeIndex, visible, original)
+      onChange && onChange(activeIndex, visibleImg && visibleMask, original)
     });
   }
 
@@ -109,63 +116,98 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
     this.setState({
       activeIndex: newActiveIndex <= max ? newActiveIndex : max
     }, () => {
-      const { activeIndex, visible, original } = this.state
+      const { activeIndex, visibleMask, visibleImg, original } = this.state
       const { onNext, onChange } = this.props
       onNext && onNext(activeIndex)
-      onChange && onChange(activeIndex, visible, original)
+      onChange && onChange(activeIndex, visibleMask && visibleImg, original)
     });
   }
 
   /** 放大图片 */
-  zoomImg = (activeIndex: number) => {
+  zoomImg = (e: React.MouseEvent<HTMLImageElement, MouseEvent>, activeIndex: number) => {
+    e.stopPropagation()
+    const CSSProperties = {
+      left: e.pageX,
+      top: e.pageY,
+      transform: 'translate(-50%, -50%) scale(0)',
+      filter:'alpha(opacity=0)',
+      opacity: 0,
+    }
     this.setState({
-      visible: true,
-      activeIndex
-    }, () => {
-      const { activeIndex, visible, original } = this.state
-      const { onChange } = this.props
-      onChange && onChange(activeIndex, visible, original)
+      visibleImg: true,
+      activeIndex,
+      CSSProperties,
+      CSSPropertiesSave: CSSProperties
     });
+    setTimeout(() => {
+      this.setState({
+        visibleMask: true,
+        CSSProperties: {
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%) scale(1)',
+          filter:'alpha(opacity=100)',
+          opacity: 1,
+        }
+      }, () => {
+        const { activeIndex, visibleImg, visibleMask, original } = this.state
+        const { onChange } = this.props
+        onChange && onChange(activeIndex, visibleImg && visibleMask, original)
+      })
+    }, 0)
   };
 
-  /** 缩小图片 */
-  shrink = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  /** 缩小图层 */
+  downsize = () => {
     const { original } = this.state;
     if (original) {
       this.setState({
         original: false
       }, () => {
-        const { activeIndex, visible, original } = this.state
+        const { activeIndex, visibleMask, visibleImg, original } = this.state
         const { onChange } = this.props
-        onChange && onChange(activeIndex, visible, original)
+        onChange && onChange(activeIndex, visibleMask && visibleImg, original)
       });
     } else {
-      this.setState({
-        visible: false
-      }, () => {
-        const { activeIndex, visible, original } = this.state
-        const { onChange } = this.props
-        onChange && onChange(activeIndex, visible, original)
-      });
+      this.shrink()
     }
   };
 
+  /** 缩小图片 */
+  shrink = () => {
+    const { CSSPropertiesSave } = this.state
+        this.setState({
+          original: false,
+          visibleMask: false,
+          CSSProperties: CSSPropertiesSave,
+        })
+        setTimeout(() => {
+          this.setState({
+            visibleImg: false,
+          }, () => {
+            const { activeIndex, visibleImg, visibleMask, original } = this.state
+            const { onChange } = this.props
+            onChange && onChange(activeIndex, visibleImg && visibleMask, original)
+          });
+        }, 100)
+  }
+
   /** 原始尺寸切换 */
-  original = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  original = (e: React.MouseEvent<HTMLDivElement, MouseEvent> | KeyboardEvent) => {
     e.stopPropagation();
     const { original } = this.state;
     this.setState({
       original: !original
     }, () => {
-      const { activeIndex, visible, original } = this.state
+      const { activeIndex, visibleImg, visibleMask, original } = this.state
       const { onChange } = this.props
-      onChange && onChange(activeIndex, visible, original)
+      onChange && onChange(activeIndex, visibleImg && visibleMask, original)
     });
   };
 
   render() {
     const className = "nextlc-zimage";
-    const { visible, original, activeIndex, srcs, key } = this.state;
+    const { visibleMask, visibleImg, original, activeIndex, srcs, CSSProperties } = this.state;
     const { wrapperClassName } = this.props
     return (
       <div className={className}>
@@ -179,21 +221,25 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
             })}
             src={src}
             alt=""
-            onClick={() => this.zoomImg(index)}
+            onClick={(e: React.MouseEvent<HTMLImageElement, MouseEvent>) => this.zoomImg(e, index)}
           />
         ))}
         {
-          visible && ReactDOM.createPortal(<div key={key}>
-            <div className={`${className}--mask`} />
+          (visibleImg || visibleMask) && ReactDOM.createPortal(<div>
+            {
+              visibleMask &&
+              <div className={`${className}--mask`} />
+            }
             <div
               className={classnames({
                 [`${className}--content`]: true,
                 [`${className}--content--original`]: original
               })}
-              onClick={this.shrink}
+              onClick={this.downsize}
             >
               <div
                 className={`${className}--content--body`}
+                style={CSSProperties}
                 onClick={this.original}
               >
                 <img
