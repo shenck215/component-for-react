@@ -1,0 +1,25 @@
+@import "../../style/theme/variable.scss";
+@import "../../spin/style/index.scss";
+
+$head-prefix-cls: "#{$nextlc-prefix}-head";
+
+.#{$head-prefix-cls} {
+  border-bottom: 2px solid #22baa0;
+  margin-bottom: 16px;
+  overflow: hidden;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &--title {
+    font-size: 18px;
+    color: #000;
+    font-weight: bold;
+  }
+  &--extraDom {
+    flex: 1;
+    margin-left: 30px;
+  }
+  &--btnDom {
+  }
+}

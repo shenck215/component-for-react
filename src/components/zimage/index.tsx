@@ -4,6 +4,7 @@ import classnames from "classnames";
 
 export interface PageProps {
   wrapperClassName?: string;
+  wrapperStyle?: React.CSSProperties;
   /** 图片地址集合 */
   srcs: string[];
   /** 前一张图片, 返回当前索引 */
@@ -32,7 +33,8 @@ export interface PageStates {
 
 export default class Zimage extends React.Component<PageProps, PageStates> {
   static defaultProps = {
-    wrapperClassName: ''
+    wrapperClassName: '',
+    wrapperStyle: {},
   };
 
   private _container: HTMLElement;
@@ -57,6 +59,14 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
       CSSPropertiesSave: CSSProperties
     };
     this._container = document.body;
+  }
+
+  componentWillReceiveProps(nextProps: PageProps){
+    if(this.props.srcs !== nextProps.srcs){
+      this.setState({
+        srcs: nextProps.srcs,
+      })
+    }
   }
 
   componentDidMount() {
@@ -86,6 +96,7 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
         // 空格
         this.original(e)
       } else if (keyCode === 27) {
+        e.preventDefault()
         // 空格
         this.shrink()
       }
@@ -124,18 +135,18 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
   }
 
   /** 放大图片 */
-  zoomImg = (e: React.MouseEvent<HTMLImageElement, MouseEvent>, activeIndex: number) => {
-    e.stopPropagation()
+  zoomImg = (e?: React.MouseEvent<HTMLImageElement, MouseEvent>, activeIndex?: number) => {
+    e && e.stopPropagation()
     const CSSProperties = {
-      left: e.pageX,
-      top: e.pageY,
+      left: e && e.pageX ? e.pageX : 0,
+      top: e && e.pageY ? e.pageY : 0,
       transform: 'translate(-50%, -50%) scale(0)',
       filter:'alpha(opacity=0)',
       opacity: 0,
     }
     this.setState({
       visibleImg: true,
-      activeIndex,
+      activeIndex: activeIndex || 0,
       CSSProperties,
       CSSPropertiesSave: CSSProperties
     });
@@ -150,6 +161,7 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
           opacity: 1,
         }
       }, () => {
+        document.body.style.overflow = 'hidden'
         const { activeIndex, visibleImg, visibleMask, original } = this.state
         const { onChange } = this.props
         onChange && onChange(activeIndex, visibleImg && visibleMask, original)
@@ -185,6 +197,7 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
           this.setState({
             visibleImg: false,
           }, () => {
+            document.body.style.overflow = ''
             const { activeIndex, visibleImg, visibleMask, original } = this.state
             const { onChange } = this.props
             onChange && onChange(activeIndex, visibleImg && visibleMask, original)
@@ -208,7 +221,8 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
   render() {
     const className = "nextlc-zimage";
     const { visibleMask, visibleImg, original, activeIndex, srcs, CSSProperties } = this.state;
-    const { wrapperClassName } = this.props
+    const { wrapperClassName, wrapperStyle } = this.props
+    const showOperation = !original && srcs && srcs.length > 1
     return (
       <div className={className}>
         {srcs.map((src, index) => (
@@ -219,6 +233,7 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
               [`${className}--img--last`]: index === srcs.length - 1,
               [wrapperClassName || '']: !!wrapperClassName,
             })}
+            style={wrapperStyle}
             src={src}
             alt=""
             onClick={(e: React.MouseEvent<HTMLImageElement, MouseEvent>) => this.zoomImg(e, index)}
@@ -250,7 +265,7 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
                   src={srcs[activeIndex]}
                   alt=""
                 />
-                {!original && (
+                {showOperation && (
                   <div className={`${className}--content--body--progress`}>
                     {srcs.map((item, index) => (
                       <i
@@ -266,7 +281,7 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
                   </div>
                 )}
                 {
-                  !original && (
+                  showOperation && (
                     <i
                       title='前一张'
                       className={`nextlc nextlc-left ${className}--content--body--prevBtn`}
@@ -275,7 +290,7 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
                   )
                 }
                 {
-                  !original && (
+                  showOperation && (
                     <i
                       title='后一张'
                       className={`nextlc nextlc-right ${className}--content--body--nextBtn`}

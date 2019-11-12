@@ -6,6 +6,7 @@ import CalendarBody from "./body";
 import CalendarFooter from "./footer";
 
 export interface PageProps {
+  wrapperClassName?: string;
   /** 默认选中的日期 */
   defaultDates?: string[];
   /** 是否开启年快速选择功能 */
@@ -117,6 +118,7 @@ const monthMap = {
 
 export default class Calendar extends React.Component<PageProps, PageStates> {
   static defaultProps = {
+    wrapperClassName: '',
     defaultDates: [],
     selectYear: true,
     selectMonth: true,
@@ -319,7 +321,7 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
       showMonthQuickSelect,
       showYearQuickSelect
     } = this.state;
-    const { minDate, maxDate } = this.props;
+    const { wrapperClassName,minDate, maxDate } = this.props;
     const props = {
       minDate,
       maxDate,
@@ -330,7 +332,10 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
     };
     const className = 'nextlc-calendar'
     return (
-      <div className={className}>
+      <div className={classnames({
+        [className]: true,
+        [wrapperClassName || '']: wrapperClassName,
+      })}>
         {showYearQuickSelect && (
           <div className={`${className}--monthSelect`}>
             {monthArray.map(item => (
