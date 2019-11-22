@@ -14,6 +14,8 @@ export interface ParamsProps {
   };
   /* 搜索 */
   search?: boolean;
+  /** 清空按钮 */
+  showClear?: boolean;
   /** 级别 1省 2省市 3省市区 */
   level?: 1 | 2 | 3;
   /* json方式 方式城市基本数据，与addressApi选项2选1， 优先 address */
@@ -29,7 +31,7 @@ export interface ParamsProps {
     width: number;
   };
   /* 选择到最后一层的回调 */
-  onChange?: (selectVal: number[], selectName: string[], code: any) => void;
+  onChange: (selectVal: number[], selectName: string[], code: any) => void;
   /* 每层选择的回调，除了， 除了最后一层调用onChange */
   onSelect?: (selectVal: number[], selectName: string[], code: any) => void;
   /** 输入框提示文案 */
@@ -534,17 +536,16 @@ export default class SelectCity extends React.Component<
       ? (props.onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
           this.onChange(e))
       : (props.readOnly = true);
-
     searching
       ? (props.value = searchName)
       : (props.value = Array.from(new Set(selectName)).join("-"));
-
     return props;
   };
 
   render() {
+    console.log(this.props)
     const {
-      params: { style = { width: "100%" }, disabled }
+      params: { style = { width: "100%" }, disabled, showClear = true }
     } = this.props;
     const { addressLoading, show } = this.state;
     const className = "nextlc-selectcity";
@@ -559,7 +560,7 @@ export default class SelectCity extends React.Component<
             style={{ width: style.width }}
           >
             <Input {...this.inputCityProps()} />
-            {!disabled && (
+            {!disabled && showClear && (
               <i
                 className={`nextlc nextlc-clear ${className}--input--clear`}
                 onClick={() => this.clear()}

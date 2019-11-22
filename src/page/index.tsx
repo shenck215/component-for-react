@@ -1,20 +1,12 @@
 import * as React from "react";
 import { render } from "react-dom";
 import { AppContainer } from "react-hot-loader";
-import { Head } from "../components";
-import "../components/head/style";
+import { RickEditor } from "../components";
+import "../components/rich-editor/style";
 
 const App = () => (
   <div>
-    <Head 
-      title='标题'
-      btnDom={<div>
-        <button>anniu</button>
-        <button>anniu</button>
-        <button>anniu</button>
-      </div>}
-      extraDom={<div>1</div>}
-    />
+    <RickEditor />
   </div>
 );
 

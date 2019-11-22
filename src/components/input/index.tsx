@@ -6,6 +6,8 @@ export interface PageProps {
   ref?: (node: HTMLInputElement) => void;
   /** 提示文案 */
   placeholder?: string;
+  /** 只读 */
+  readOnly?: boolean;
   /** 类名 */
   className?: string;
   /** 样式 */
@@ -28,7 +30,7 @@ export default class Input extends React.Component<PageProps, PageStates> {
   
   static defaultProps = {
     overlayClassName: '',
-    placeholder: ''
+    placeholder: '',
   }
 
   input: HTMLElement;
@@ -43,7 +45,9 @@ export default class Input extends React.Component<PageProps, PageStates> {
       style,
       disabled,
       placeholder,
+      defaultValue,
       value,
+      readOnly,
       onClick,
       onChange
     } = this.props;
@@ -55,6 +59,8 @@ export default class Input extends React.Component<PageProps, PageStates> {
           [overlayClassName]: !!overlayClassName
         })}
         ref={this.saveInput}
+        readOnly={readOnly}
+        defaultValue={defaultValue}
         value={value}
         style={style}
         disabled={disabled}

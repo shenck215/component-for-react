@@ -31,7 +31,7 @@ class TabBtns extends React.Component<TabBtnsProps, any> {
      * [max 最大联动的层级]
      */
     let deepMap = params.deepMap;
-    let max = deepMap.length;
+    let max = deepMap ? deepMap.length : 0;
 
     /* index不能大于max */
     if (index >= max) {
@@ -39,7 +39,7 @@ class TabBtns extends React.Component<TabBtnsProps, any> {
     }
 
     let btnList: React.ReactNode[] = [];
-    deepMap.forEach((v: any, i: number) => {
+    deepMap && deepMap.forEach((v: any, i: number) => {
       let active = i === index ? true : false;
       btnList.push(
         <OneTabBtn
