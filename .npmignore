@@ -6,6 +6,6 @@ src
 .eslintrc.js
 .gitignore
 .npmignore
-jsconfig.json
 package-lock.json
 postcss.config.js
+tsconfig.json

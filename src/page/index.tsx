@@ -6,7 +6,7 @@ import '../components/rich-editor/style'
 
 const App = () => (
   <div>
-    <RickEditor />
+    <RickEditor maxLength={5000} />
   </div>
 );
 

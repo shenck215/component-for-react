@@ -8,4 +8,13 @@
 $RichEditor-prefix-cls: "#{$nextlc-prefix}-rich-editor";
 
 .#{$RichEditor-prefix-cls} {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  &-count{
+    display: flex;
+    justify-content: flex-end;
+    font-size: 16px;
+    color: #999;
+    padding: 0 10px 6px 0;
+  }
 }
