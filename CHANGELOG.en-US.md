@@ -16,7 +16,7 @@ timeline: true
 ---
 
 #### Directory
-- [1.0.2](#102)
+- [1.0.3](#103)
   - [🔥Component library migration](#%f0%9f%94%a5component-library-migration)
 - [1.0.0](#100)
   - [🔥Enrich and optimize the component library](#%f0%9f%94%a5enrich-and-optimize-the-component-library)
@@ -29,13 +29,14 @@ timeline: true
 
 ---
 
-## 1.0.2
+## 1.0.3
 
 `2019-11-29`
 
 ### 🔥Component library migration
 
 - 💄@nextlc -> @xbzoom
+- 💄Icon library update
 
 
 ---
