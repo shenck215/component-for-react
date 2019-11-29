@@ -1,0 +1,67 @@
+.bf-dropdown.text-color-dropdown .braft-color-picker .footer {
+  padding: 10px 5px;
+  border-top: 1px solid hsla(0, 0%, 100%, 0.1);
+}
+.bf-dropdown.text-color-dropdown .braft-color-picker .footer .button {
+  display: inline-block;
+  width: 95px;
+  height: 26px;
+  margin: 0 5px;
+  padding: 0;
+  background-color: hsla(0, 0%, 100%, 0.1);
+  color: #fff;
+  font-size: 12px;
+}
+.bf-dropdown.text-color-dropdown .braft-color-picker .footer .button:hover {
+  background-color: hsla(0, 0%, 100%, 0.2);
+}
+.bf-dropdown.text-color-dropdown .braft-color-picker.light-theme .footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+.bf-dropdown.text-color-dropdown
+  .braft-color-picker.light-theme
+  .footer
+  .button {
+  background-color: #f1f1f1;
+  color: #919599;
+  font-size: 12px;
+}
+.bf-dropdown.text-color-dropdown
+  .braft-color-picker.light-theme
+  .footer
+  .button:hover {
+  background-color: #e1e1e1;
+}
+.bf-dropdown.text-color-dropdown
+  .braft-color-picker.dark-theme
+  .sketch-picker
+  .saturation-black {
+  outline: 1px solid hsla(0, 0%, 100%, 0.2);
+  outline-offset: -1px;
+}
+.bf-dropdown.text-color-dropdown
+  .braft-color-picker.dark-theme
+  .sketch-picker
+  input {
+  background-color: hsla(0, 0%, 100%, 0.05) !important;
+  box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.1) !important;
+  color: #999 !important;
+}
+.bf-dropdown.text-color-dropdown
+  .braft-color-picker.dark-theme
+  .sketch-picker
+  input
+  + span {
+  color: #818589 !important;
+}
+.bf-dropdown.text-color-dropdown
+  .braft-color-picker.dark-theme
+  .sketch-picker
+  .flexbox-fix:nth-child(4) {
+  border-top-color: hsla(0, 0%, 100%, 0.1) !important;
+}
+.bf-dropdown.text-color-dropdown .sketch-picker {
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}

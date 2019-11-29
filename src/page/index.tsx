@@ -2,7 +2,7 @@ import * as React from "react";
 import { render } from "react-dom";
 import { AppContainer } from "react-hot-loader";
 import { RickEditor } from "../components";
-import "../components/rich-editor/style";
+import '../components/rich-editor/style'
 
 const App = () => (
   <div>

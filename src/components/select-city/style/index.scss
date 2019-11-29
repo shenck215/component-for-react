@@ -197,6 +197,7 @@ $selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
       }
       &--areaGroup {
         display: flex;
+        margin-bottom: 5px;
         &--areaItem {
           display: inline-block;
           padding: 2px;

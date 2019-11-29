@@ -120,7 +120,7 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
   static defaultProps = {
     wrapperClassName: '',
     defaultDates: [],
-    selectYear: true,
+    selectYear: false,
     selectMonth: true,
     multiple: false,
     /** 选择日期回调 */

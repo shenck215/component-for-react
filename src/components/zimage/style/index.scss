@@ -16,7 +16,7 @@ $zimage-prefix-cls: "#{$nextlc-prefix}-zimage";
   }
   &--mask{
     position: fixed;
-    background: rgba(0, 0, 0, 0.65);
+    background: $mask-color;
     width: 100%;
     height: 100%;
     top: 0;

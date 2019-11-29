@@ -1,8 +1,11 @@
 @import "../../style/theme/variable.scss";
 @import "../../spin/style/index.scss";
+@import "./editor.scss";
+@import "./color-picker.scss";
+// @import "./code-highlighter.scss";
+@import "./table.scss";
 
 $RichEditor-prefix-cls: "#{$nextlc-prefix}-rich-editor";
 
-.#{$RichEditor-prefix-cls}{
-  
+.#{$RichEditor-prefix-cls} {
 }
