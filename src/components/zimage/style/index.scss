@@ -1,7 +1,7 @@
 @import "../../style/theme/variable.scss";
 @import "../../spin/style/index.scss";
 
-$zimage-prefix-cls: "#{$nextlc-prefix}-zimage";
+$zimage-prefix-cls: "#{$xbzoom-prefix}-zimage";
 
 .#{$zimage-prefix-cls} {
   &--img{
@@ -101,7 +101,7 @@ $zimage-prefix-cls: "#{$nextlc-prefix}-zimage";
     }
     &--original{
       overflow: auto;
-      .nextlc-zimage--content--body{
+      .xbzoom-zimage--content--body{
         height: auto;
       }
     }

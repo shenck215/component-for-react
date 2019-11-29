@@ -10,13 +10,13 @@ import HeaderId from "braft-extensions/dist/header-id";
 /** 加载高级颜色取色器扩展 */
 BraftEditor.use(
   ColorPicker({
-    includeEditors: ["nextlc-rich-editor"]
+    includeEditors: ["xbzoom-rich-editor"]
   })
 );
 
 /** 加载代码高亮扩展 */
 // BraftEditor.use(CodeHighlighter({
-//   includeEditors: ['nextlc-rich-editor'],
+//   includeEditors: ['xbzoom-rich-editor'],
 // }))
 
 /** 加载表格扩展 */
@@ -26,28 +26,28 @@ BraftEditor.use(
     defaultRows: 4, // 默认行数
     withDropdown: true, // 插入表格前是否弹出下拉菜单
     exportAttrString: "", // 指定输出HTML时附加到table标签上的属性字符串
-    includeEditors: ["nextlc-rich-editor"] // 指定该模块对哪些BraftEditor生效，不传此属性则对所有BraftEditor有效
+    includeEditors: ["xbzoom-rich-editor"] // 指定该模块对哪些BraftEditor生效，不传此属性则对所有BraftEditor有效
   })
 );
 
 /** 加载markdown支持扩展 */
 BraftEditor.use(
   Markdown({
-    includeEditors: ["nextlc-rich-editor"]
+    includeEditors: ["xbzoom-rich-editor"]
   })
 );
 
 /** 加载字数限制模块 */
 BraftEditor.use(
   MaxLength({
-    includeEditors: ["nextlc-rich-editor"]
+    includeEditors: ["xbzoom-rich-editor"]
   })
 );
 
 /** 加载h1-h6锚点扩展 */
 BraftEditor.use(
   HeaderId({
-    includeEditors: ["nextlc-rich-editor"]
+    includeEditors: ["xbzoom-rich-editor"]
   })
 );
 
@@ -105,14 +105,14 @@ export default class RickEditor extends React.Component<PageProps, PageStates> {
   };
 
   render() {
-    const className = "nextlc-rich-editor";
+    const className = "xbzoom-rich-editor";
     const { editorState } = this.state;
     const { maxLength } = this.props;
     /** 额外添加的功能 */
     const extendControls = [];
     let braftEditorProps: any = {
       ...this.props,
-      id: "nextlc-rich-editor",
+      id: "xbzoom-rich-editor",
       ref: node => (this.editor = node),
       value: editorState,
       extendControls,

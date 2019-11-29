@@ -261,7 +261,7 @@ export default class PostionContainer extends React.Component<
   };
 
   render() {
-    const className = "nextlc-selectcity-container";
+    const className = "xbzoom-selectcity-container";
     const {
       input,
       show,

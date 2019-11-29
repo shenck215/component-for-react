@@ -330,7 +330,7 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
                    ${month + 1} 月
                    ${day} 日`
     };
-    const className = 'nextlc-calendar'
+    const className = 'xbzoom-calendar'
     return (
       <div className={classnames({
         [className]: true,

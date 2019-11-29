@@ -525,7 +525,7 @@ export default class SelectCity extends React.Component<
       onClick: (e: React.SyntheticEvent<any>) => this.show(e),
       placeholder: placeholder || "支持中文/拼音/简拼",
       style: style,
-      className: disabled ? 'nextlc-selectcity--input--disabled' : '',
+      className: disabled ? 'xbzoom-selectcity--input--disabled' : '',
       disabled
     };
 
@@ -548,7 +548,7 @@ export default class SelectCity extends React.Component<
       params: { style = { width: "100%" }, disabled, showClear = true }
     } = this.props;
     const { addressLoading, show } = this.state;
-    const className = "nextlc-selectcity";
+    const className = "xbzoom-selectcity";
     return (
       <div
         className={className}
@@ -562,7 +562,7 @@ export default class SelectCity extends React.Component<
             <Input {...this.inputCityProps()} />
             {!disabled && showClear && (
               <i
-                className={`nextlc nextlc-clear ${className}--input--clear`}
+                className={`xbzoom xbzoom-clear ${className}--input--clear`}
                 onClick={() => this.clear()}
               />
             )}

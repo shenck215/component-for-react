@@ -18,7 +18,7 @@ export interface PageStates {}
 
 export default class List extends React.Component<PageProps, PageStates> {
   
-  classNameForSelected = "nextlc-selectcity-container--list--row--active";
+  classNameForSelected = "xbzoom-selectcity-container--list--row--active";
 
   renderRow = record => {
     const { highlight } = this.props;
@@ -56,7 +56,7 @@ export default class List extends React.Component<PageProps, PageStates> {
       prevBtn,
       nextBtn,
     } = this.props;
-    const className = "nextlc-selectcity-container--list";
+    const className = "xbzoom-selectcity-container--list";
     return (
       <div className={className}>
         {searchDataSource.length > 0 ? (
@@ -91,7 +91,7 @@ export default class List extends React.Component<PageProps, PageStates> {
             {totalPage > 1 && (
               <div className={`${className}--pagination`}>
                 <i
-                  className={`nextlc nextlc-angle-left ${className}--pagination--left ${
+                  className={`xbzoom xbzoom-angle-left ${className}--pagination--left ${
                     current === 1
                       ? `${className}--pagination--left--disabled`
                       : ""
@@ -102,7 +102,7 @@ export default class List extends React.Component<PageProps, PageStates> {
                 <span className={`${className}--pagination--partition`}>/</span>
                 {totalPage}
                 <i
-                  className={`nextlc nextlc-angle-right ${className}--pagination--right ${
+                  className={`xbzoom xbzoom-angle-right ${className}--pagination--right ${
                     current === totalPage
                       ? `${className}--pagination--right--disabled`
                       : ""

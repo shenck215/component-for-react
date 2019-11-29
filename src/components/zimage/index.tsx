@@ -219,7 +219,7 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
   };
 
   render() {
-    const className = "nextlc-zimage";
+    const className = "xbzoom-zimage";
     const { visibleMask, visibleImg, original, activeIndex, srcs, CSSProperties } = this.state;
     const { wrapperClassName, wrapperStyle } = this.props
     const showOperation = !original && srcs && srcs.length > 1
@@ -270,7 +270,7 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
                     {srcs.map((item, index) => (
                       <i
                         key={index}
-                        className={`nextlc nextlc-yuanxing ${className}--content--body--progress--yuanxing ${
+                        className={`xbzoom xbzoom-yuanxing ${className}--content--body--progress--yuanxing ${
                           activeIndex === index
                             ? `${className}--content--body--progress--yuanxing--active`
                             : ``
@@ -284,7 +284,7 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
                   showOperation && (
                     <i
                       title='前一张'
-                      className={`nextlc nextlc-left ${className}--content--body--prevBtn`}
+                      className={`xbzoom xbzoom-left ${className}--content--body--prevBtn`}
                       onClick={this.prevBtn}
                     />
                   )
@@ -293,7 +293,7 @@ export default class Zimage extends React.Component<PageProps, PageStates> {
                   showOperation && (
                     <i
                       title='后一张'
-                      className={`nextlc nextlc-right ${className}--content--body--nextBtn`}
+                      className={`xbzoom xbzoom-right ${className}--content--body--nextBtn`}
                       onClick={this.nextBtn}
                     />
                   )

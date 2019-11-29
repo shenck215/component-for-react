@@ -16,13 +16,13 @@ export default class Spin extends React.Component<PageProps, PageStates>{
 
   render(){
     const { loading } = this.props
-    const className = 'nextlc-spin'
+    const className = 'xbzoom-spin'
     return (
       <div className={className}>
         {
           loading &&
           <div className={`${className}--mask`}>
-            <i className={`nextlc nextlc-loading ${className}--mask--loading`} />
+            <i className={`xbzoom xbzoom-loading ${className}--mask--loading`} />
           </div>
         }
         {this.props.children}

@@ -1,7 +1,7 @@
 @import "../../style/theme/variable.scss";
 
-$selectcity-prefix-cls: "#{$nextlc-prefix}-selectcity";
-$selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
+$selectcity-prefix-cls: "#{$xbzoom-prefix}-selectcity";
+$selectcity-prefix-cls2: "#{$xbzoom-prefix}-selectcity-container";
 
 .#{$selectcity-prefix-cls} {
   position: relative;
@@ -27,7 +27,7 @@ $selectcity-prefix-cls2: "#{$nextlc-prefix}-selectcity-container";
       }
     }
     &:hover {
-      .nextlc-selectcity--input--clear {
+      .xbzoom-selectcity--input--clear {
         display: block;
         z-index: 10000;
       }

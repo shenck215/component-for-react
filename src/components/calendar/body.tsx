@@ -25,7 +25,7 @@ export interface PageProps {
 export default class CalendarBody extends React.Component<PageProps, {}> {
   // 处理日期选择事件，如果是当月，触发日期选择；如果不是当月，切换月份
   handleDatePick = (day: number, styleName: string, disable: boolean) => {
-    const className = 'nextlc-calendar-body'
+    const className = 'xbzoom-calendar-body'
     if (!disable) {
       const { datePick, prevMonth, nextMonth } = this.props;
       if (styleName === `${className}--thisMonth`) {
@@ -39,7 +39,7 @@ export default class CalendarBody extends React.Component<PageProps, {}> {
   };
 
   render() {
-    const className = 'nextlc-calendar-body'
+    const className = 'xbzoom-calendar-body'
     const { viewData, year, month, dates, minDate, maxDate } = this.props;
     // 确定当前月数据中每一天所属的月份，以此赋予不同className
     const rMonth = viewData[month];

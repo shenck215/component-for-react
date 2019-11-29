@@ -43,9 +43,9 @@ const prodConfig = {
   mode: "production",
   entry: path.join(__dirname, "../src/components/index.ts"),
   output: {
-    library: 'nextlcrc',
+    library: 'xbzoom',
     libraryTarget: "umd",
-    filename: "nextlcrc.min.js",
+    filename: "xbzoom.min.js",
     umdNamedDefine: true, // 是否将模块名称作为 AMD 输出的命名空间
     path: path.join(__dirname, "../dist")
   },
@@ -99,7 +99,7 @@ const prodConfig = {
     }),
     // new CleanWebpackPlugin(), // 默认清除output.path下生成的目录
     new MiniCssExtractPlugin({
-      filename: "nextlcrc.min.css",
+      filename: "xbzoom.min.css",
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true

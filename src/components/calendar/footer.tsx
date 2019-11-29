@@ -2,6 +2,6 @@ import * as React from 'react';
 
 export default class CalendarFooter extends React.Component<{}, {}> {
   render() {
-    return <div className='nextlc-calendar-footer' />;
+    return <div className='xbzoom-calendar-footer' />;
   }
 }

@@ -5,7 +5,7 @@ toc: false
 timeline: true
 ---
 
-`@nextlc/react-component` React component library 🔥 overall overview, new module, 💄 module 🌟 adjustment, 🐞 bug fixes
+`@xbzoom/react-component` React component library 🔥 overall overview, new module, 💄 module 🌟 adjustment, 🐞 bug fixes
 
 #### Release cycle
 
@@ -16,111 +16,71 @@ timeline: true
 ---
 
 #### Directory
-- [1.3.20](#1320)
-  - [🔥Picture viewer component optimization](#%f0%9f%94%a5picture-viewer-component-optimization)
-- [1.3.4](#134)
-  - [🔥Add a picture view component](#%f0%9f%94%a5add-a-picture-view-component)
-- [1.3.3](#133)
-  - [🔥Optimize the SelectCity style](#%f0%9f%94%a5optimize-the-selectcity-style)
-- [1.3.2](#132)
-  - [🔥Fixed SelectCity style errors under chorme](#%f0%9f%94%a5fixed-selectcity-style-errors-under-chorme)
-- [1.3.1](#131)
-  - [🔥Remove antd dependencies](#%f0%9f%94%a5remove-antd-dependencies)
-- [1.3.0](#130)
-  - [🔥Add city selection component](#%f0%9f%94%a5add-city-selection-component)
-- [1.2.0](#120)
-  - [🔥Add calendar component](#%f0%9f%94%a5add-calendar-component)
-- [1.1.0](#110)
-  - [🔥Implement load on demand](#%f0%9f%94%a5implement-load-on-demand)
+- [1.0.1](#101)
+  - [🔥Component library migration](#%f0%9f%94%a5component-library-migration)
 - [1.0.0](#100)
+  - [🔥Enrich and optimize the component library](#%f0%9f%94%a5enrich-and-optimize-the-component-library)
+- [0.9.0](#090)
+  - [🔥Add a calendar component](#%f0%9f%94%a5add-a-calendar-component)
+- [0.5.0](#050)
+  - [🔥Implement on-demand loading](#%f0%9f%94%a5implement-on-demand-loading)
+- [0.1.0](#010)
   - [🔥Preliminary construction of project scaffolding](#%f0%9f%94%a5preliminary-construction-of-project-scaffolding)
 
 ---
 
-## 1.3.20
+## 1.0.1
 
-`2019-11-12`
+`2019-11-29`
 
-### 🔥Picture viewer component optimization
+### 🔥Component library migration
 
-- 🌟Image view (Zimage) component code optimization and add animation
+- 💄@nextlc -> @xbzoom
 
----
-
-## 1.3.4
-
-`2019-11-06`
-
-### 🔥Add a picture view component
-
-- 🌟Image view component (Zimage) component
-
----
-
-## 1.3.3
-
-`2019-10-29`
-
-### 🔥Optimize the SelectCity style
-
----
-
-## 1.3.2
-
-`2019-10-24`
-
-### 🔥Fixed SelectCity style errors under chorme
-
----
-
-## 1.3.1
-
-`2019-10-24`
-
-### 🔥Remove antd dependencies
-
-- 🌟 Add Input (Input) box components
-- 🌟 Added load (Spin) components
-- 💄 For internal reference antd rely on, will lead to excessive packaging project, remove antd dependency
-- 🌟 Rich util
-
----
-
-## 1.3.0
-
-`2019-10-23`
-
-### 🔥Add city selection component
-
-- 🌟Add a SelectCity (SelectCity) component
-- 🌟Common type extraction
-- 🌟fetch encapsulation
-- 🌟Rich util
-
----
-
-## 1.2.0
-
-`2019-10-14`
-
-### 🔥Add calendar component
-
-- 🌟Add a Calendar (Calendar) component
-- 🌟Rich util
-
----
-
-## 1.1.0
-
-`2019-09-30`
-
-### 🔥Implement load on demand
-
-- 🌟Package as umd es lib and compatible with babel-import-plugin
 
 ---
 
 ## 1.0.0
+
+`2019-11-29`
+
+### 🔥Enrich and optimize the component library
+
+- 🌟 Added city choice (SelectCity) components
+- 🌟 Image view components (Zimage) components
+- 🌟 Add Input (Input) box components
+- 🌟 Added load (Spin) components
+- 💄 Extraction public type
+- 💄 Fetch account
+- 💄 Rich util
+- 💄 Optimization SelectCity style
+- 💄 For internal reference antd rely on, will lead to excessive packaging project, remove antd dependency
+- 🐞 Part repair SelectCity under chorme style errors
+
+---
+
+## 0.9.0
+
+`2019-10-14`
+
+### 🔥Add a calendar component
+
+- 🌟 Added Calendar (Calendar) components
+- 🌟 Rich util
+
+---
+
+## 0.5.0
+
+`2019-09-30`
+
+### 🔥Implement on-demand loading
+
+- 🌟Packaged as umd es lib and compatible with babel-import-plugin
+
+---
+
+## 0.1.0
 
 `2019-09-03`
 

@@ -16,7 +16,7 @@ class TabCon extends Component<TabConProps, {}> {
     // this.displayName = 'TabCon';
   }
   getItems() {
-    const className = "nextlc-selectcity-container--tabCon";
+    const className = "xbzoom-selectcity-container--tabCon";
     let { index, selectVal, valIndex, params, addressMap } = this.props;
 
     /**
@@ -103,7 +103,7 @@ class TabCon extends Component<TabConProps, {}> {
   }
   render() {
     let items = this.getItems();
-    return <div className="nextlc-selectcity-container--tabCon">{items}</div>;
+    return <div className="xbzoom-selectcity-container--tabCon">{items}</div>;
   }
 }
 
@@ -158,7 +158,7 @@ class CityItem extends Component<CityItemProps, {}> {
     });
   }
   render() {
-    const className = "nextlc-selectcity-container--tabCon";
+    const className = "xbzoom-selectcity-container--tabCon";
     let { id, val, active } = this.props;
     const { name } = val[id];
 

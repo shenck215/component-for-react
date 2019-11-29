@@ -20,7 +20,7 @@ export default class Head extends React.Component<PageProps, PageStates> {
 
   render() {
     const { wrapperClassName, title, btnDom, extraDom } = this.props;
-    const className = "nextlc-head";
+    const className = "xbzoom-head";
     return (
       <div className={classnames({
         [className]: true,

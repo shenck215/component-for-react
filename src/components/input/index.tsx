@@ -51,7 +51,7 @@ export default class Input extends React.Component<PageProps, PageStates> {
       onClick,
       onChange
     } = this.props;
-    const className = "nextlc-input";
+    const className = "xbzoom-input";
     return (
       <input
         className={classnames({

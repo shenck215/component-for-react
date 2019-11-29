@@ -7,7 +7,7 @@ class Tab extends React.Component<PostionContainerProps, {}> {
     super(props);
   }
   render() {
-    const className = "nextlc-selectcity-container--tab";
+    const className = "xbzoom-selectcity-container--tab";
     return (
       <div className={className}>
         <TabBtns {...this.props} parentClassName={className} />
