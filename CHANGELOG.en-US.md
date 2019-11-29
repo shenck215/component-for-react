@@ -16,7 +16,7 @@ timeline: true
 ---
 
 #### Directory
-- [1.0.1](#101)
+- [1.0.2](#102)
   - [🔥Component library migration](#%f0%9f%94%a5component-library-migration)
 - [1.0.0](#100)
   - [🔥Enrich and optimize the component library](#%f0%9f%94%a5enrich-and-optimize-the-component-library)
@@ -29,7 +29,7 @@ timeline: true
 
 ---
 
-## 1.0.1
+## 1.0.2
 
 `2019-11-29`
 

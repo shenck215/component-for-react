@@ -8,16 +8,16 @@
 
 ```js
 import React from "react"
-import { HelloWorld } from "reactcomponents"
-import "reactcomponents/dist/main.min.css"
+import { HelloWorld } from "@xbzoom/react-component"
+import "@xbzoom/react-component/dist/xbzoom.min.css"
 ```
 
 - 按需加载: 手动加载样式模块
 
 ```js
 import React from "react"
-import { HelloWorld } from "reactcomponents"
-import "reactcomponents/lib/HelloWorld/style"
+import { HelloWorld } from "@xbzoom/react-component"
+import "@xbzoom/react-component/lib/HelloWorld/style"
 ```
 
 - 按需加载: 通过 babel-plugin-import 实现
@@ -27,12 +27,12 @@ import "reactcomponents/lib/HelloWorld/style"
 module.exports = {
   plugins: [
     ["babel-plugin-import", {
-      libraryName: "reactcomponents",
+      libraryName: "@xbzoom/react-component",
       libraryDirectory: "es",
       camel2DashComponentName: false, // 是否需要驼峰转短线
       camel2UnderlineComponentName: false, // 是否需要驼峰转下划线
       style: true, // 动态加载相应组件的样式,'css'取css.js，true取index
-    },'reactcomponents'],
+    },'@xbzoom/react-component'],
   ]
 }
 ```
@@ -40,7 +40,7 @@ module.exports = {
 ```js
 // 按需引入组件
 import React from "react"
-import { HelloWorld } from "reactcomponents"
+import { HelloWorld } from "@xbzoom/react-component"
 ```
 
 ## 本地开发
