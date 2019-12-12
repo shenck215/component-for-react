@@ -18,8 +18,10 @@ React component library 🔥 overall overview, new module, 💄 module 🌟 adju
 ---
 
 #### Directory
-- [1.0.4](#104)
+- [1.0.5](#105)
   - [🔥Program to add specification( prettier, eslint, husky, precommit )](#%f0%9f%94%a5program-to-add-specification-prettier-eslint-husky-precommit)
+- [1.0.4](#104)
+  - [🔥Program to add specification( prettier, eslint, husky, precommit )](#%f0%9f%94%a5program-to-add-specification-prettier-eslint-husky-precommit--1)
 - [1.0.3](#103)
   - [🔥Component library migration](#%f0%9f%94%a5component-library-migration)
 - [1.0.0](#100)
@@ -31,6 +33,16 @@ React component library 🔥 overall overview, new module, 💄 module 🌟 adju
 - [0.1.0](#010)
   - [🔥Preliminary construction of project scaffolding](#%f0%9f%94%a5preliminary-construction-of-project-scaffolding)
 
+---
+
+## 1.0.5
+
+`2019-12-12`
+
+### 🔥Program to add specification( prettier, eslint, husky, precommit )
+
+- 💄 When improve project development rules, submit code standard inspection
+  
 ---
 
 ## 1.0.4
