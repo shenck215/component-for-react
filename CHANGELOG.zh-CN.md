@@ -5,7 +5,9 @@ toc: false
 timeline: true
 ---
 
-`@xbzoom/react-component` React组件库 🔥 整体概述、 🌟 新增模块、 💄 模块调整、 🐞 bug修复
+`@xbzoom/react-component` 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/) 语义化版本规范。
+
+React组件库 🔥 整体概述、 🌟 新增模块、 💄 模块调整、 🐞 bug修复
 
 #### 发布周期
 

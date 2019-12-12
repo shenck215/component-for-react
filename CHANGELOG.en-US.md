@@ -5,7 +5,9 @@ toc: false
 timeline: true
 ---
 
-`@xbzoom/react-component` React component library 🔥 overall overview, new module, 💄 module 🌟 adjustment, 🐞 bug fixes
+`@xbzoom/react-component` strictly follow [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/) semantic version specification.
+
+React component library 🔥 overall overview, new module, 💄 module 🌟 adjustment, 🐞 bug fixes
 
 #### Release cycle
 
