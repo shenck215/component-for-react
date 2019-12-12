@@ -1,0 +1,9 @@
+**/*.md
+**/*.svg
+**/*.html
+**/*.ejs
+package.json
+package-lock.json
+dist
+es
+lib
