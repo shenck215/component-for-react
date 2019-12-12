@@ -9,7 +9,9 @@
     ],
     "jsx": "react",
     "moduleResolution": "node",
-    "rootDirs": ["/src"],
+    "rootDirs": [
+      "/src"
+    ],
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "strictNullChecks": true,
@@ -25,7 +27,9 @@
     ],
     "baseUrl": "."
   },
-  "include": ["src/components"],
+  "include": [
+    "src/components"
+  ],
   "exclude": [
     "node_modules",
     "dist",
@@ -34,4 +38,3 @@
     "config"
   ]
 }
-

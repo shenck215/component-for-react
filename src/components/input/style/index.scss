@@ -1,7 +1,7 @@
-@import "../../style/theme/variable.scss";
-@import "../../spin/style/index.scss";
+@import '../../style/theme/variable.scss';
+@import '../../spin/style/index.scss';
 
-$input-prefix-cls: "#{$xbzoom-prefix}-input";
+$input-prefix-cls: '#{$xbzoom-prefix}-input';
 
 .#{$input-prefix-cls} {
   box-sizing: border-box;
@@ -9,7 +9,7 @@ $input-prefix-cls: "#{$xbzoom-prefix}-input";
   padding: 0;
   font-variant: tabular-nums;
   list-style: none;
-  font-feature-settings: "tnum";
+  font-feature-settings: 'tnum';
   position: relative;
   display: inline-block;
   width: 100%;
@@ -24,18 +24,18 @@ $input-prefix-cls: "#{$xbzoom-prefix}-input";
   border-radius: 4px;
   transition: all 0.3s;
   overflow: visible;
-  &::placeholder{
+  &::placeholder {
     color: #bfbfbf;
   }
-  &:placeholder-shown{
+  &:placeholder-shown {
     text-overflow: ellipsis;
   }
-  &:focus{
+  &:focus {
     outline: 0;
     border-color: #42c7ac;
     box-shadow: 0 0 0 2px rgba(32, 186, 160, 0.2);
   }
-  &:hover{
+  &:hover {
     border-color: #42c7ac;
   }
 }

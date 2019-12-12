@@ -1,6 +1,6 @@
-import * as React from "react";
-import * as classnames from "classnames";
-import { searchResultArr } from "../util/baseType";
+import * as React from 'react';
+import * as classnames from 'classnames';
+import { searchResultArr } from '../util/baseType';
 
 export interface PageProps {
   searchDataSource: any[];
@@ -10,21 +10,18 @@ export interface PageProps {
   current: number;
   pageSize: number;
   totalPage: number;
-  prevBtn: (e:React.MouseEvent<HTMLElement, MouseEvent>) => void;
-  nextBtn: (e:React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  prevBtn: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  nextBtn: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
-export interface PageStates {}
+export default class List extends React.Component<PageProps, {}> {
+  classNameForSelected = 'xbzoom-selectcity-container--list--row--active';
 
-export default class List extends React.Component<PageProps, PageStates> {
-  
-  classNameForSelected = "xbzoom-selectcity-container--list--row--active";
-
-  renderRow = record => {
+  renderRow = (record) => {
     const { highlight } = this.props;
     const hasName: string[] = [];
     const arr: React.ReactElement<HTMLSpanElement>[] = [];
-    for (let key in record) {
+    for (const key in record) {
       const data = record[key];
       if (!hasName.includes(data.name)) {
         hasName.push(data.name);
@@ -37,7 +34,7 @@ export default class List extends React.Component<PageProps, PageStates> {
           return (
             <span key={index}>
               {value}
-              {index < arr.length - 1 ? "，" : ""}
+              {index < arr.length - 1 ? '，' : ''}
             </span>
           );
         })}
@@ -56,35 +53,30 @@ export default class List extends React.Component<PageProps, PageStates> {
       prevBtn,
       nextBtn,
     } = this.props;
-    const className = "xbzoom-selectcity-container--list";
+    const className = 'xbzoom-selectcity-container--list';
     return (
       <div className={className}>
         {searchDataSource.length > 0 ? (
           <>
             {searchDataSource
-              .filter(
-                (item, index) =>
-                  index >= (current - 1) * pageSize &&
-                  index < current * pageSize
-              )
+              .filter((item, index) => index >= (current - 1) * pageSize && index < current * pageSize)
               .map((item, index) => (
                 <div
                   key={JSON.stringify(item)}
                   className={classnames({
                     [`${className}--row`]: true,
-                    [this.classNameForSelected]: selectedIndex === index
+                    [this.classNameForSelected]: selectedIndex === index,
                   })}
                   onClick={() => {
-                    let selectVal: number[] = [];
-                    let selectName: string[] = [];
+                    const selectVal: number[] = [];
+                    const selectName: string[] = [];
                     for (const key in item) {
                       const data = item[key];
                       selectVal.push(data.value);
                       selectName.push(data.name);
                     }
                     setInputValue(selectVal, selectName);
-                  }}
-                >
+                  }}>
                   {this.renderRow(item)}
                 </div>
               ))}
@@ -92,9 +84,7 @@ export default class List extends React.Component<PageProps, PageStates> {
               <div className={`${className}--pagination`}>
                 <i
                   className={`xbzoom xbzoom-angle-left ${className}--pagination--left ${
-                    current === 1
-                      ? `${className}--pagination--left--disabled`
-                      : ""
+                    current === 1 ? `${className}--pagination--left--disabled` : ''
                   }`}
                   onClick={prevBtn}
                 />
@@ -103,9 +93,7 @@ export default class List extends React.Component<PageProps, PageStates> {
                 {totalPage}
                 <i
                   className={`xbzoom xbzoom-angle-right ${className}--pagination--right ${
-                    current === totalPage
-                      ? `${className}--pagination--right--disabled`
-                      : ""
+                    current === totalPage ? `${className}--pagination--right--disabled` : ''
                   }`}
                   onClick={nextBtn}
                 />

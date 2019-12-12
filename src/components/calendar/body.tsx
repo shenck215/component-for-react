@@ -25,7 +25,7 @@ export interface PageProps {
 export default class CalendarBody extends React.Component<PageProps, {}> {
   // 处理日期选择事件，如果是当月，触发日期选择；如果不是当月，切换月份
   handleDatePick = (day: number, styleName: string, disable: boolean) => {
-    const className = 'xbzoom-calendar-body'
+    const className = 'xbzoom-calendar-body';
     if (!disable) {
       const { datePick, prevMonth, nextMonth } = this.props;
       if (styleName === `${className}--thisMonth`) {
@@ -39,7 +39,7 @@ export default class CalendarBody extends React.Component<PageProps, {}> {
   };
 
   render() {
-    const className = 'xbzoom-calendar-body'
+    const className = 'xbzoom-calendar-body';
     const { viewData, year, month, dates, minDate, maxDate } = this.props;
     // 确定当前月数据中每一天所属的月份，以此赋予不同className
     const rMonth = viewData[month];
@@ -80,9 +80,7 @@ export default class CalendarBody extends React.Component<PageProps, {}> {
               <tr key={`${JSON.stringify(row)}${Math.random()}`}>
                 {row.map((rday, dayIndex) => {
                   const styleName = styleOfDays[rowsInMonthIndex * 7 + dayIndex];
-                  let currentDateString = `${year}-${formatNumber(month + 1)}-${formatNumber(
-                    rday
-                  )}`;
+                  let currentDateString = `${year}-${formatNumber(month + 1)}-${formatNumber(rday)}`;
                   if (styleName === `${className}--prevMonth`) {
                     currentDateString = `${month === 0 ? year - 1 : year}-${formatNumber(
                       month === 0 ? 12 : month
@@ -96,9 +94,7 @@ export default class CalendarBody extends React.Component<PageProps, {}> {
                     (minDate &&
                       typeof minDate === 'string' &&
                       dayjs(currentDateString).unix() < dayjs(minDate).unix()) ||
-                    (maxDate &&
-                      typeof maxDate === 'string' &&
-                      dayjs(currentDateString).unix() > dayjs(maxDate).unix());
+                    (maxDate && typeof maxDate === 'string' && dayjs(currentDateString).unix() > dayjs(maxDate).unix());
                   return (
                     <td
                       className={classnames(
@@ -109,8 +105,7 @@ export default class CalendarBody extends React.Component<PageProps, {}> {
                         disable ? `${className}--disable` : ''
                       )}
                       onClick={() => this.handleDatePick(rday, styleName, disable || false)}
-                      key={`${JSON.stringify(row)}${Math.random()}${rday}`}
-                    >
+                      key={`${JSON.stringify(row)}${Math.random()}${rday}`}>
                       {rday}
                     </td>
                   );

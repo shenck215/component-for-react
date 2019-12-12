@@ -1,6 +1,6 @@
-import * as React from "react";
-import * as classnames from "classnames";
-import { MouseEventHandler } from "../util/baseType";
+import * as React from 'react';
+import * as classnames from 'classnames';
+import { MouseEventHandler } from '../util/baseType';
 
 export interface PageProps {
   ref?: (node: HTMLInputElement) => void;
@@ -22,16 +22,11 @@ export interface PageProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export interface PageStates {
-  
-}
-
-export default class Input extends React.Component<PageProps, PageStates> {
-  
+export default class Input extends React.Component<PageProps, {}> {
   static defaultProps = {
     overlayClassName: '',
     placeholder: '',
-  }
+  };
 
   input: HTMLElement;
 
@@ -49,14 +44,14 @@ export default class Input extends React.Component<PageProps, PageStates> {
       value,
       readOnly,
       onClick,
-      onChange
+      onChange,
     } = this.props;
-    const className = "xbzoom-input";
+    const className = 'xbzoom-input';
     return (
       <input
         className={classnames({
           [className]: true,
-          [overlayClassName]: !!overlayClassName
+          [overlayClassName]: !!overlayClassName,
         })}
         ref={this.saveInput}
         readOnly={readOnly}

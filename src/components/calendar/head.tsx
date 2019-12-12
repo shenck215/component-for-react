@@ -50,15 +50,12 @@ export default class CalendarHeader extends React.Component<PagaProps, {}> {
       year,
       month,
     } = this.props;
-    const className = 'xbzoom-calendar-header'
+    const className = 'xbzoom-calendar-header';
     return (
       <div className={className}>
         <span style={{ display: 'flex' }}>
           {!showYearQuickSelect && (
-            <i
-              className={`xbzoom xbzoom-angle-double-left ${className}--doubleLeft`}
-              onClick={() => prevYear()}
-            />
+            <i className={`xbzoom xbzoom-angle-double-left ${className}--doubleLeft`} onClick={() => prevYear()} />
           )}
           {!showMonthQuickSelect && (
             <i className={`xbzoom xbzoom-angle-left ${className}--left`} onClick={() => prevMonth()} />
@@ -66,15 +63,19 @@ export default class CalendarHeader extends React.Component<PagaProps, {}> {
         </span>
         <span className={`${className}--dateInfo`}>
           <span
-            className={classnames(`${className}--dateInfo--year`, selectYear ? `${className}--dateInfo--yearSelect` : '')}
-            onClick={this.onSelectYear}
-          >
+            className={classnames(
+              `${className}--dateInfo--year`,
+              selectYear ? `${className}--dateInfo--yearSelect` : ''
+            )}
+            onClick={this.onSelectYear}>
             <span style={{ fontWeight: 'bold' }}>{year}</span>年
           </span>
           <span
-            className={classnames(`${className}--dateInfo--month`, selectMonth ? `${className}--dateInfo--monthSelect` : '')}
-            onClick={this.onSelectMonth}
-          >
+            className={classnames(
+              `${className}--dateInfo--month`,
+              selectMonth ? `${className}--dateInfo--monthSelect` : ''
+            )}
+            onClick={this.onSelectMonth}>
             <span style={{ fontWeight: 'bold' }}>{month + 1}</span>月
           </span>
         </span>
@@ -83,10 +84,7 @@ export default class CalendarHeader extends React.Component<PagaProps, {}> {
             <i className={`xbzoom xbzoom-angle-right ${className}--right`} onClick={() => nextMonth()} />
           )}
           {!showYearQuickSelect && (
-            <i
-              className={`xbzoom xbzoom-angle-double-right ${className}--doubleRight`}
-              onClick={() => nextYear()}
-            />
+            <i className={`xbzoom xbzoom-angle-double-right ${className}--doubleRight`} onClick={() => nextYear()} />
           )}
         </span>
       </div>

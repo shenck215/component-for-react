@@ -1,6 +1,6 @@
-@import "../../style/theme/variable.scss";
+@import '../../style/theme/variable.scss';
 
-$spin-prefix-cls: "#{$xbzoom-prefix}-spin";
+$spin-prefix-cls: '#{$xbzoom-prefix}-spin';
 
 .#{$spin-prefix-cls} {
   position: relative;

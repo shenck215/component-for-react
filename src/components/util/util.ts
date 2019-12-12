@@ -1,10 +1,5 @@
-import * as dayjs from "dayjs";
-import {
-  debounceOptionType,
-  throttleOptionType,
-  searchResultArr,
-  searchSourceData
-} from "./baseType";
+import * as dayjs from 'dayjs';
+import { debounceOptionType, throttleOptionType, searchResultArr, searchSourceData } from './baseType';
 
 /** 划分日期区间 */
 export const dateToString = (dates: string[]) => {
@@ -22,10 +17,7 @@ export const dateToString = (dates: string[]) => {
 
     const d = new Date(item);
     const newDate = d.setDate(d.getDate() - newIndex);
-    if (
-      dayjs(dayjs(newDate).format("YYYY-MM-DD")).unix() ===
-      dayjs(diffArr[diffIndex][0]).unix()
-    ) {
+    if (dayjs(dayjs(newDate).format('YYYY-MM-DD')).unix() === dayjs(diffArr[diffIndex][0]).unix()) {
       diffArr[diffIndex][1] = item;
       newIndex += 1;
       return;
@@ -36,16 +28,16 @@ export const dateToString = (dates: string[]) => {
     newIndex = 1;
   });
 
-  const formatMD = (d: string) => dayjs(d).format("MM-DD");
+  const formatMD = (d: string) => dayjs(d).format('MM-DD');
 
   const dateString = diffArr
-    .map(item => {
+    .map((item) => {
       if (item[0] === item[1]) {
         return formatMD(item[0]);
       }
       return `${formatMD(item[0])}至${formatMD(item[1])}`;
     })
-    .join(",");
+    .join(',');
 
   return dateString;
 };
@@ -56,43 +48,30 @@ export const formatNumber = (n: string | number) => {
   return str[1] ? str : `0${str}`;
 };
 
-export const isObject = value => {
+export const isObject = (value) => {
   const type = typeof value;
-  return value != null && (type === "object" || type === "function");
+  return value != null && (type === 'object' || type === 'function');
 };
 
 /** 从Node.js中检测变量global */
-const freeGlobal =
-  typeof global === "object" &&
-  global !== null &&
-  global.Object === Object &&
-  global;
+const freeGlobal = typeof global === 'object' && global !== null && global.Object === Object && global;
 
 /** 检测变量globalThis */
 const freeGlobalThis =
-  typeof globalThis === "object" &&
-  globalThis !== null &&
-  globalThis.Object == Object &&
-  globalThis;
+  typeof globalThis === 'object' && globalThis !== null && globalThis.Object == Object && globalThis;
 
 /** 检测变量self */
-const freeSelf =
-  typeof self === "object" && self !== null && self.Object === Object && self;
+const freeSelf = typeof self === 'object' && self !== null && self.Object === Object && self;
 
 /** 用作对全局对象的引用 */
-const root =
-  freeGlobalThis || freeGlobal || freeSelf || Function("return this")();
+const root = freeGlobalThis || freeGlobal || freeSelf || Function('return this')();
 
 /**
  * 创建一个 debounced（防抖动）函数，该函数会从上一次被调用后，延迟 wait 毫秒后调用 func 方法。 debounced（防抖动）函数提供一个 cancel 方法取消延迟的函数调用以及 flush 方法立即调用。 可以提供一个 options（选项） 对象决定如何调用 func 方法，options.leading 与|或 options.trailing 决定延迟前后如何触发（是 先调用后等待 还是 先等待后调用）。 func 调用时会传入最后一次提供给 debounced（防抖动）函数 的参数。 后续调用的 debounced（防抖动）函数返回是最后一次 func 调用的结果。
  * 注意: 如果 leading 和 trailing 选项为 true, 则 func 允许 trailing 方式调用的条件为: 在 wait 期间多次调用防抖方法。
  * 如果 wait 为 0 并且 leading 为 false, func调用将被推迟到下一个点，类似setTimeout为0的超时。
  */
-export const debounce = (
-  func: Function,
-  wait: number,
-  options: debounceOptionType = {}
-) => {
+export const debounce = (func: Function, wait: number, options: debounceOptionType = {}) => {
   let lastArgs, lastThis, maxWait, result, timerId, lastCallTime;
 
   let lastInvokeTime = 0;
@@ -101,18 +80,25 @@ export const debounce = (
   let trailing = true;
 
   // Bypass `requestAnimationFrame` by explicitly setting `wait=0`.
-  const useRAF =
-    !wait && wait !== 0 && typeof root.requestAnimationFrame === "function";
+  const useRAF = !wait && wait !== 0 && typeof root.requestAnimationFrame === 'function';
 
-  if (typeof func !== "function") {
-    throw new TypeError("Expected a function");
+  if (typeof func !== 'function') {
+    throw new TypeError('Expected a function');
   }
   wait = +wait || 0;
   if (isObject(options)) {
     leading = !!options.leading;
-    maxing = "maxWait" in options;
+    maxing = 'maxWait' in options;
     maxWait = maxing ? Math.max(options.maxWait || 0, wait) : maxWait;
-    trailing = "trailing" in options ? !!options.trailing : trailing;
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
+  }
+
+  function remainingWait(time) {
+    const timeSinceLastCall = time - lastCallTime;
+    const timeSinceLastInvoke = time - lastInvokeTime;
+    const timeWaiting = wait - timeSinceLastCall;
+
+    return maxing ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke) : timeWaiting;
   }
 
   function invokeFunc(time) {
@@ -140,23 +126,16 @@ export const debounce = (
     clearTimeout(id);
   }
 
-  function leadingEdge(time) {
-    // Reset any `maxWait` timer.
-    lastInvokeTime = time;
-    // Start the timer for the trailing edge.
-    timerId = startTimer(timerExpired, wait);
-    // Invoke the leading edge.
-    return leading ? invokeFunc(time) : result;
-  }
+  function trailingEdge(time) {
+    timerId = undefined;
 
-  function remainingWait(time) {
-    const timeSinceLastCall = time - lastCallTime;
-    const timeSinceLastInvoke = time - lastInvokeTime;
-    const timeWaiting = wait - timeSinceLastCall;
-
-    return maxing
-      ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke)
-      : timeWaiting;
+    // Only invoke if we have `lastArgs` which means `func` has been
+    // debounced at least once.
+    if (trailing && lastArgs) {
+      return invokeFunc(time);
+    }
+    lastArgs = lastThis = undefined;
+    return result;
   }
 
   function shouldInvoke(time) {
@@ -183,16 +162,13 @@ export const debounce = (
     timerId = startTimer(timerExpired, remainingWait(time));
   }
 
-  function trailingEdge(time) {
-    timerId = undefined;
-
-    // Only invoke if we have `lastArgs` which means `func` has been
-    // debounced at least once.
-    if (trailing && lastArgs) {
-      return invokeFunc(time);
-    }
-    lastArgs = lastThis = undefined;
-    return result;
+  function leadingEdge(time) {
+    // Reset any `maxWait` timer.
+    lastInvokeTime = time;
+    // Start the timer for the trailing edge.
+    timerId = startTimer(timerExpired, wait);
+    // Invoke the leading edge.
+    return leading ? invokeFunc(time) : result;
   }
 
   function cancel() {
@@ -240,30 +216,26 @@ export const debounce = (
   return debounced;
 };
 
-/** 
+/**
  * 创建一个节流函数，在 wait 秒内最多执行 func 一次的函数。 该函数提供一个 cancel 方法取消延迟的函数调用以及 flush 方法立即调用。 可以提供一个 options 对象决定如何调用 func 方法， options.leading 与|或 options.trailing 决定 wait 前后如何触发。 func 会传入最后一次传入的参数给这个函数。 随后调用的函数返回是最后一次 func 调用的结果。
  * 注意: 如果 leading 和 trailing 都设定为 true 则 func 允许 trailing 方式调用的条件为: 在 wait 期间多次调用。
  * 如果 wait 为 0 并且 leading 为 false, func调用将被推迟到下一个点，类似setTimeout为0的超时。
  */
-export const throttle = (
-  func: Function,
-  wait: number,
-  options: throttleOptionType = {}
-) => {
+export const throttle = (func: Function, wait: number, options: throttleOptionType = {}) => {
   let leading = true;
   let trailing = true;
 
-  if (typeof func !== "function") {
-    throw new TypeError("Expected a function");
+  if (typeof func !== 'function') {
+    throw new TypeError('Expected a function');
   }
   if (isObject(options)) {
-    leading = "leading" in options ? !!options.leading : leading;
-    trailing = "trailing" in options ? !!options.trailing : trailing;
+    leading = 'leading' in options ? !!options.leading : leading;
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
   }
   return debounce(func, wait, {
     leading,
     trailing,
-    maxWait: wait
+    maxWait: wait,
   });
 };
 
@@ -273,17 +245,17 @@ export const throttle = (
  * @return {[type]}      [description]
  */
 export const parseAddress: (
-  data: Object,
+  data: Record<string, any>,
   max: number
 ) => { addressMap: Map<any, any>[]; addressMapSearch: any[] } = (data, max) => {
-  let addressMap: Map<any, any>[] = [];
+  const addressMap: Map<any, any>[] = [];
   let index = 0;
-  let addressMapSearch: any[] = [];
-  let parentIds: { area: string; value: string | number }[] = [];
+  const addressMapSearch: any[] = [];
+  const parentIds: { area: string; value: string | number }[] = [];
   const fn = (data: any, value?: any) => {
     data.forEach((v: any, i: number) => {
-      let area = v.area;
-      let list = v.list;
+      const area = v.area;
+      const list = v.list;
       let parentId: any;
 
       if (value !== undefined) {
@@ -291,8 +263,8 @@ export const parseAddress: (
       }
       if (list) {
         list.forEach((v: any, i: number) => {
-          let name = v.name;
-          let value = parseInt(v.value, 10);
+          const name = v.name;
+          const value = parseInt(v.value, 10);
           const { pinyin, py } = v;
 
           /* 创建对应的哈希表 */
@@ -314,7 +286,7 @@ export const parseAddress: (
              *  }
              */
 
-            let obj = addressMap[index].get(area) || {};
+            const obj = addressMap[index].get(area) || {};
 
             if (obj[area]) {
               obj[area][value] = { name, pinyin, py };
@@ -337,7 +309,7 @@ export const parseAddress: (
              *   }
              * }
              */
-            let obj = addressMap[index].get(parentId) || {};
+            const obj = addressMap[index].get(parentId) || {};
 
             if (obj[area]) {
               obj[area][value] = { name, pinyin, py };
@@ -350,10 +322,10 @@ export const parseAddress: (
           }
 
           /* 递归children */
-          let children = v.children;
+          const children = v.children;
 
-          let newParentIds: any[] = [];
-          parentIds.forEach(value => {
+          const newParentIds: any[] = [];
+          parentIds.forEach((value) => {
             newParentIds.push(value);
           });
           if (index <= max) {
@@ -362,7 +334,7 @@ export const parseAddress: (
               pinyin,
               py,
               parentIds: newParentIds,
-              value
+              value,
             });
           }
 
@@ -383,46 +355,104 @@ export const parseAddress: (
 
   return {
     addressMap,
-    addressMapSearch
+    addressMapSearch,
   };
 };
 
-export const matchSearch = (
-  q: string,
-  searchSource: searchSourceData[],
-  addressMap: any[],
-  deepMap: any[]
-) => {
-  let searchResult = {
-    length: 0
+export const matchSearch = (q: string, searchSource: searchSourceData[], addressMap: any[], deepMap: any[]) => {
+  const searchResult = {
+    length: 0,
   };
   /**
    * 小写
    */
   q = q.toLocaleLowerCase();
 
-  searchSource.forEach(data => {
+  searchSource.forEach((data) => {
+    const getMatchData = (data: searchSourceData, addressMap: Map<any, any>[], deepMap: any[]) => {
+      const { parentIds } = data;
+      const selfValue = data.value;
+      let index = parentIds.length;
+      const arr: any[] = [];
+      const deepGetMatchData = (id: number, initArr: {}[] = []) => {
+        index++;
+        if (index > 2) {
+          arr.push(initArr.slice(0, initArr.length));
+          initArr.pop();
+          return index--;
+        }
+        const children = addressMap[index].get(id);
+        for (const key in children) {
+          const tempData = children[key];
+          if (Object.prototype.toString.call(tempData) === '[object Object]') {
+            for (const key2 in tempData) {
+              initArr.push({
+                ...tempData[key2],
+                value: parseInt(key2, 10),
+              });
+              deepGetMatchData(parseInt(key2, 10), initArr);
+            }
+          }
+        }
+        initArr.pop();
+        index--;
+        return;
+      };
+      switch (index) {
+        //一级
+        case 0: {
+          const parent = { ...data };
+          delete parent.parentIds;
+          deepGetMatchData(selfValue, [parent]);
+          break;
+        }
+        //二级
+        case 1: {
+          const { area, value } = parentIds[0];
+          const parent = { ...addressMap[0].get(area)[area][value], value };
+          const parent2 = { ...data };
+          delete parent2.parentIds;
+          deepGetMatchData(selfValue, [parent, parent2]);
+          break;
+        }
+        //三级
+        case 2: {
+          const { area, value } = parentIds[0];
+          const parent = { ...addressMap[0].get(area)[area][value], value };
+          const area2 = parentIds[1].area;
+          const value2 = parentIds[1].value;
+          const parent2 = {
+            ...addressMap[1].get(value)[area2][value2],
+            value: value2,
+          };
+          const newData = { ...data };
+          delete newData.parentIds;
+          arr.push([parent, parent2, newData]);
+          break;
+        }
+        default: {
+          throw new Error('invalid index of parentIds at function getMatchData');
+        }
+      }
+      return arr;
+    };
     const { py, name, pinyin } = data;
     /**
      * 匹配首字母，
      * 简拼，
      * 全拼
      */
-    if (
-      py.startsWith(q) ||
-      name.startsWith(q) ||
-      pinyin.startsWith(q)
-    ) {
+    if (py.startsWith(q) || name.startsWith(q) || pinyin.startsWith(q)) {
       const newData = getMatchData(data, addressMap, deepMap);
       newData.forEach((element: any[]) => {
-        let key: number[] = [];
-        let newElement = {};
+        const key: number[] = [];
+        const newElement = {};
         element.forEach((data, index) => {
           key.push(data.value);
           newElement[index] = data;
         });
         if (!Object.prototype.hasOwnProperty.call(searchResult, key)) {
-          searchResult[key.join("|")] = newElement;
+          searchResult[key.join('|')] = newElement;
           searchResult.length++;
         }
       });
@@ -432,85 +462,13 @@ export const matchSearch = (
   if (searchResult.length === 0) {
     return [];
   }
-  let searchResultArr: searchResultArr[] = [];
-  for (let key in searchResult) {
-    if (key !== "length") {
+  const searchResultArr: searchResultArr[] = [];
+  for (const key in searchResult) {
+    if (key !== 'length') {
       searchResultArr.push(searchResult[key]);
     }
   }
   return searchResultArr;
-};
-
-const getMatchData = (
-  data: searchSourceData,
-  addressMap: Map<any, any>[],
-  deepMap: any[]
-) => {
-  const { parentIds } = data;
-  const selfValue = data.value;
-  let index = parentIds.length;
-  let arr: any[] = [];
-  const deepGetMatchData = (id: number, initArr: {}[] = []) => {
-    index++;
-    if (index > 2) {
-      arr.push(initArr.slice(0, initArr.length));
-      initArr.pop();
-      return index--;
-    }
-    const children = addressMap[index].get(id);
-    for (let key in children) {
-      const tempData = children[key];
-      if (Object.prototype.toString.call(tempData) === "[object Object]") {
-        for (let key2 in tempData) {
-          initArr.push({
-            ...tempData[key2],
-            value: parseInt(key2, 10)
-          });
-          deepGetMatchData(parseInt(key2, 10), initArr);
-        }
-      }
-    }
-    initArr.pop();
-    index--;
-    return;
-  };
-  switch (index) {
-    //一级
-    case 0: {
-      const parent = { ...data };
-      delete parent.parentIds;
-      deepGetMatchData(selfValue, [parent]);
-      break;
-    }
-    //二级
-    case 1: {
-      const { area, value } = parentIds[0];
-      const parent = { ...addressMap[0].get(area)[area][value], value };
-      const parent2 = { ...data };
-      delete parent2.parentIds;
-      deepGetMatchData(selfValue, [parent, parent2]);
-      break;
-    }
-    //三级
-    case 2: {
-      const { area, value } = parentIds[0];
-      const parent = { ...addressMap[0].get(area)[area][value], value };
-      const area2 = parentIds[1].area;
-      const value2 = parentIds[1].value;
-      const parent2 = {
-        ...addressMap[1].get(value)[area2][value2],
-        value: value2
-      };
-      const newData = { ...data };
-      delete newData.parentIds;
-      arr.push([parent, parent2, newData]);
-      break;
-    }
-    default: {
-      throw new Error("invalid index of parentIds at function getMatchData");
-    }
-  }
-  return arr;
 };
 
 /**
@@ -519,26 +477,23 @@ const getMatchData = (
  * @param  {Map} map  对照的Map
  * @return {Array}      中文地址
  */
-export const parseAddressName: (
-  data: any[],
-  map: Array<Map<any, any>>
-) => string[] = (data, map) => {
+export const parseAddressName: (data: any[], map: Array<Map<any, any>>) => string[] = (data, map) => {
   if (data.length <= 0) return [];
-  let arr = data.map((v, i) => {
+  const arr = data.map((v, i) => {
     if (i === 0) {
-      for (let val of map[i].values()) {
-        for (let key in val) {
-          let obj = val[key];
+      for (const val of map[i].values()) {
+        for (const key in val) {
+          const obj = val[key];
           if (obj[v]) {
             return obj[v].name;
           }
         }
       }
     } else {
-      let id = data[i - 1];
-      let obj = map[i].get(id);
-      for (let key in obj) {
-        let obj2 = obj[key];
+      const id = data[i - 1];
+      const obj = map[i].get(id);
+      for (const key in obj) {
+        const obj2 = obj[key];
         if (obj2[v]) {
           return obj2[v].name;
         }
@@ -558,4 +513,4 @@ export default {
   parseAddress,
   matchSearch,
   parseAddressName,
-}
+};

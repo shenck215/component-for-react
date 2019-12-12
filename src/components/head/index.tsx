@@ -1,5 +1,5 @@
-import * as React from "react";
-import classnames from "classnames";
+import * as React from 'react';
+import classnames from 'classnames';
 
 export interface PageProps {
   wrapperClassName?: string;
@@ -11,21 +11,20 @@ export interface PageProps {
   extraDom?: JSX.Element;
 }
 
-export interface PageStates {}
-
-export default class Head extends React.Component<PageProps, PageStates> {
+export default class Head extends React.Component<PageProps, {}> {
   static defaultProps = {
-    wrapperClassName: ''
+    wrapperClassName: '',
   };
 
   render() {
     const { wrapperClassName, title, btnDom, extraDom } = this.props;
-    const className = "xbzoom-head";
+    const className = 'xbzoom-head';
     return (
-      <div className={classnames({
-        [className]: true,
-        [wrapperClassName || '']: wrapperClassName,
-      })}>
+      <div
+        className={classnames({
+          [className]: true,
+          [wrapperClassName || '']: wrapperClassName,
+        })}>
         <span className={`${className}--title`}>{title}</span>
         <div className={`${className}--extraDom`}>{extraDom}</div>
         <div className={`${className}--btnDom`}>{btnDom}</div>

@@ -1,11 +1,11 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import * as classnames from "classnames";
-import { searchResultArr } from "../util/baseType";
-import { ParamsProps } from "./index";
-import List from "./list";
-import Tab from "./tab";
-import TabCon from "./tabCon";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import * as classnames from 'classnames';
+import { searchResultArr } from '../util/baseType';
+import { ParamsProps } from './index';
+import List from './list';
+import Tab from './tab';
+import TabCon from './tabCon';
 
 export interface PostionContainerProps {
   matchQ: string;
@@ -36,10 +36,7 @@ export interface PostionContainerStates {
   selectedHotCityId: number;
 }
 
-export default class PostionContainer extends React.Component<
-  PostionContainerProps,
-  PostionContainerStates
-> {
+export default class PostionContainer extends React.Component<PostionContainerProps, PostionContainerStates> {
   private _container: HTMLDivElement;
   list: List;
   constructor(props: PostionContainerProps) {
@@ -50,52 +47,49 @@ export default class PostionContainer extends React.Component<
       current: 1,
       pageSize: 8,
       totalPage: Math.ceil(searchDataSource.length / 8),
-      selectedHotCityId: selectVal[1] || 0
+      selectedHotCityId: selectVal[1] || 0,
     };
-    this._container = document.createElement("div");
+    this._container = document.createElement('div');
   }
 
   UNSAFE_componentWillReceiveProps(nextProps: PostionContainerProps) {
     const { searchDataSource } = nextProps;
-    if (
-      JSON.stringify(searchDataSource) !==
-      JSON.stringify(this.props.searchDataSource)
-    ) {
+    if (JSON.stringify(searchDataSource) !== JSON.stringify(this.props.searchDataSource)) {
       this.setState({
         selectedIndex: 0,
         current: 1,
         pageSize: 8,
-        totalPage: Math.ceil(searchDataSource.length / 8)
+        totalPage: Math.ceil(searchDataSource.length / 8),
       });
     }
   }
 
   componentDidMount() {
     const {
-      params: { getPopupContainer }
+      params: { getPopupContainer },
     } = this.props;
-    if (typeof getPopupContainer === "function") {
+    if (typeof getPopupContainer === 'function') {
       getPopupContainer().appendChild(this._container);
     } else {
       document.body.appendChild(this._container);
     }
-    window.addEventListener("keydown", this.listenKeydown);
+    window.addEventListener('keydown', this.listenKeydown);
   }
 
   componentWillUnmount() {
     const {
-      params: { getPopupContainer }
+      params: { getPopupContainer },
     } = this.props;
-    if (typeof getPopupContainer === "function") {
+    if (typeof getPopupContainer === 'function') {
       getPopupContainer().removeChild(this._container);
     } else {
       document.body.removeChild(this._container);
     }
-    window.removeEventListener("keydown", this.listenKeydown);
+    window.removeEventListener('keydown', this.listenKeydown);
   }
 
   /** 监听键盘上下方向键 */
-  listenKeydown = e => {
+  listenKeydown = (e) => {
     const { keyCode } = e;
     const { searchDataSource } = this.props;
     const { selectedIndex, current, totalPage, pageSize } = this.state;
@@ -118,7 +112,7 @@ export default class PostionContainer extends React.Component<
         }
         this.setState({
           selectedIndex: newSelectedIndex,
-          current: newCurrent
+          current: newCurrent,
         });
       } else if (keyCode === 39) {
         // →
@@ -145,10 +139,10 @@ export default class PostionContainer extends React.Component<
         }
         this.setState({
           selectedIndex: newSelectedIndex,
-          current: newCurrent
+          current: newCurrent,
         });
       } else if (keyCode === 13) {
-        console.log(this.list)
+        console.log(this.list);
         const node = document.querySelector(`.${this.list.classNameForSelected}`);
         node && (node as any).click();
       }
@@ -157,10 +151,10 @@ export default class PostionContainer extends React.Component<
 
   highlightReplace(data: string, matchQ: string) {
     const newData = data.replace(matchQ, `*&*${matchQ}*&*`);
-    return newData.split("*&*").map((value: any) => {
+    return newData.split('*&*').map((value: any) => {
       if (value === matchQ) {
         return (
-          <span style={{ color: "#ff6600" }} key={value}>
+          <span style={{ color: '#ff6600' }} key={value}>
             {value}
           </span>
         );
@@ -187,8 +181,7 @@ export default class PostionContainer extends React.Component<
     if (py.indexOf(matchQ) >= 0) {
       return (
         <span>
-          {data.name}({" "}
-          {this.highlightReplace(py.toUpperCase(), matchQ.toUpperCase())} )
+          {data.name}( {this.highlightReplace(py.toUpperCase(), matchQ.toUpperCase())} )
         </span>
       );
     }
@@ -207,7 +200,7 @@ export default class PostionContainer extends React.Component<
     if (current > 1) {
       this.setState({
         current: current - 1,
-        selectedIndex: 0
+        selectedIndex: 0,
       });
     }
   };
@@ -218,20 +211,13 @@ export default class PostionContainer extends React.Component<
     if (current < totalPage) {
       this.setState({
         current: current + 1,
-        selectedIndex: 0
+        selectedIndex: 0,
       });
     }
   };
 
   tabConProps = () => {
-    const {
-      index,
-      selectVal,
-      valIndex,
-      params,
-      addressMap,
-      changeState
-    } = this.props;
+    const { index, selectVal, valIndex, params, addressMap, changeState } = this.props;
     return {
       index,
       selectVal,
@@ -239,7 +225,7 @@ export default class PostionContainer extends React.Component<
       params,
       addressMap,
       changeState,
-      clickHotCity: this.clickHotCity
+      clickHotCity: this.clickHotCity,
     };
   };
 
@@ -252,16 +238,16 @@ export default class PostionContainer extends React.Component<
         index: selectVal.length,
         valIndex: selectVal.length - 1,
         selectVal,
-        trigger: true
+        trigger: true,
       });
     }
     this.setState({
-      selectedHotCityId: cityId || 0
+      selectedHotCityId: cityId || 0,
     });
   };
 
   render() {
-    const className = "xbzoom-selectcity-container";
+    const className = 'xbzoom-selectcity-container';
     const {
       input,
       show,
@@ -269,25 +255,19 @@ export default class PostionContainer extends React.Component<
       params: { popupStyle },
       hotData,
       searchDataSource,
-      setInputValue
+      setInputValue,
     } = this.props;
-    const {
-      selectedHotCityId,
-      selectedIndex,
-      current,
-      pageSize,
-      totalPage
-    } = this.state;
+    const { selectedHotCityId, selectedIndex, current, pageSize, totalPage } = this.state;
     const className2 = classnames({
       [`${className}--show`]: show,
-      [className]: true
+      [className]: true,
     });
     /** 定位坐标 */
     const style = {
       left: input.left,
       top: input.top,
       width: input.width,
-      ...popupStyle
+      ...popupStyle,
     };
 
     return ReactDOM.createPortal(
@@ -296,18 +276,14 @@ export default class PostionContainer extends React.Component<
           <div className={`${className}--hotcity`}>
             <div className={`${className}--hotcity--title`}>热门城市：</div>
             <div className={`${className}--hotcity--body`}>
-              {hotData.map(item => (
+              {hotData.map((item) => (
                 <span
                   key={item.cityId}
                   className={classnames({
                     [`${className}--hotcity--body--item`]: true,
-                    [`${className}--hotcity--body--item--active`]:
-                      selectedHotCityId === item.cityId
+                    [`${className}--hotcity--body--item--active`]: selectedHotCityId === item.cityId,
                   })}
-                  onClick={() =>
-                    this.clickHotCity(item.provinceId, item.cityId)
-                  }
-                >
+                  onClick={() => this.clickHotCity(item.provinceId, item.cityId)}>
                   {item.name}
                 </span>
               ))}

@@ -1,7 +1,7 @@
-@import "../../style/theme/variable.scss";
+@import '../../style/theme/variable.scss';
 
-$selectcity-prefix-cls: "#{$xbzoom-prefix}-selectcity";
-$selectcity-prefix-cls2: "#{$xbzoom-prefix}-selectcity-container";
+$selectcity-prefix-cls: '#{$xbzoom-prefix}-selectcity';
+$selectcity-prefix-cls2: '#{$xbzoom-prefix}-selectcity-container';
 
 .#{$selectcity-prefix-cls} {
   position: relative;
@@ -32,10 +32,10 @@ $selectcity-prefix-cls2: "#{$xbzoom-prefix}-selectcity-container";
         z-index: 10000;
       }
     }
-    &--disabled{
-      background: #F5F5F5;
+    &--disabled {
+      background: #f5f5f5;
       cursor: not-allowed;
-      &:hover{
+      &:hover {
         border-color: #d9d9d9;
       }
     }
@@ -46,7 +46,7 @@ $selectcity-prefix-cls2: "#{$xbzoom-prefix}-selectcity-container";
   position: absolute;
   display: none;
   border: 1px solid $theme-color;
-  font-family: "Microsoft Yahei";
+  font-family: 'Microsoft Yahei';
   font-size: 14px;
   background-color: rgb(255, 255, 255);
   box-sizing: border-box;
@@ -75,16 +75,17 @@ $selectcity-prefix-cls2: "#{$xbzoom-prefix}-selectcity-container";
         margin-left: 5px;
         -webkit-transition: all 0.15s;
         transition: all 0.15s;
-        &:hover,&--active {
+        &:hover,
+        &--active {
           color: #fff;
           background-color: $theme-color;
         }
       }
     }
   }
-  &--list{
+  &--list {
     width: 100%;
-    &--row{
+    &--row {
       box-sizing: border-box;
       width: 100%;
       min-height: 32px;
@@ -93,63 +94,63 @@ $selectcity-prefix-cls2: "#{$xbzoom-prefix}-selectcity-container";
       padding: 6px 0 6px 12px;
       border-bottom: 1px solid #e8e8e8;
       cursor: pointer;
-      &:hover{
+      &:hover {
         background-color: rgba(113, 223, 204, 0.4);
       }
-      &--active{
+      &--active {
         background-color: #1fd6b6;
-        &:hover{
+        &:hover {
           background-color: #1fd6b6;
         }
       }
     }
-    &--pagination{
+    &--pagination {
       display: flex;
       justify-content: flex-end;
       align-items: center;
       padding: 6px;
       color: #666;
-      &--input{
+      &--input {
         width: 36px;
         padding: 0;
         height: 24px;
         text-align: center;
       }
-      &--partition{
+      &--partition {
         margin: 0 5px;
       }
-      &--left{
+      &--left {
         font-size: 12px;
         margin-right: 5px;
         cursor: pointer;
-        &:hover{
+        &:hover {
           color: $theme-color;
         }
-        &--disabled{
+        &--disabled {
           color: #d1d1d1;
           cursor: not-allowed;
-          &:hover{
+          &:hover {
             color: #d1d1d1;
           }
         }
       }
-      &--right{
+      &--right {
         font-size: 12px;
         margin-left: 5px;
         cursor: pointer;
-        &:hover{
+        &:hover {
           color: $theme-color;
         }
-        &--disabled{
+        &--disabled {
           color: #d1d1d1;
           cursor: not-allowed;
-          &:hover{
+          &:hover {
             color: #d1d1d1;
           }
         }
       }
     }
-    &--none{
+    &--none {
       position: relative;
       z-index: 1;
       margin-top: -1px;
@@ -182,7 +183,7 @@ $selectcity-prefix-cls2: "#{$xbzoom-prefix}-selectcity-container";
         line-height: 30px;
         &:hover,
         &--active {
-          background: linear-gradient(0deg,$theme-color 2px,transparent 0)
+          background: linear-gradient(0deg, $theme-color 2px, transparent 0);
         }
       }
     }

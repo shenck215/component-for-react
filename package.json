@@ -15,6 +15,7 @@
     "react-dom": ">=16.8.0"
   },
   "scripts": {
+    "eslint": "eslint --ext .tsx,.ts,.jsx,.js --fix ./src",
     "start": "webpack-dev-server --config config/webpack.config.dev.js --color",
     "lib": "tsc --outDir lib/ --module commonjs",
     "es": "tsc",
@@ -22,6 +23,18 @@
     "gulp": "cd config && gulp",
     "build": "npm run umd && npm run lib && npm run es && npm run gulp",
     "pub": "npm run build && npm publish --access=public"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{tsx,ts,jsx,js}" : [
+      "npm run eslint",
+      "prettier .prettierrc.js --write",
+      "git add"
+    ]
   },
   "keywords": [
     "react",
@@ -35,7 +48,6 @@
   "author": "shenck",
   "license": "ISC",
   "devDependencies": {
-    "webpack-dev-server": "^3.8.1",
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.6.0",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
@@ -48,11 +60,17 @@
     "@types/classnames": "^2.2.9",
     "@types/react": "^16.9.5",
     "@types/react-dom": "^16.9.1",
-    "@types/webpack-env": "^1.14.0"
+    "@types/webpack-env": "^1.14.0",
+    "husky": "^3.1.0",
+    "lint-staged": "^9.5.0",
+    "webpack-dev-server": "^3.8.1"
   },
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.11.0",
+    "@typescript-eslint/parser": "^2.11.0",
     "autoprefixer": "^9.6.1",
     "awesome-typescript-loader": "^5.2.1",
+    "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "braft-editor": "^2.3.8",
     "braft-extensions": "0.0.20",
@@ -63,6 +81,11 @@
     "css-loader": "^3.2.0",
     "dayjs": "^1.8.16",
     "draft-js-prism": "1.0.6",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-jsx-control-statements": "^2.2.1",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.17.0",
     "file-loader": "^4.2.0",
     "fork-ts-checker-webpack-plugin": "^1.5.0",
     "gulp": "^4.0.2",
@@ -83,6 +106,7 @@
     "omit": "^1.0.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
+    "prettier": "^1.19.1",
     "prismjs": "1.15.0",
     "progress-bar-webpack-plugin": "^1.12.1",
     "prop-types": "^15.7.2",

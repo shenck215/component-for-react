@@ -1,4 +1,3 @@
-
 .bf-controlbar {
   margin: 0;
   padding: 0 5px;
@@ -6,7 +5,7 @@
 }
 .bf-controlbar:after {
   display: block;
-  content: "";
+  content: '';
   clear: both;
 }
 .bf-controlbar button {
@@ -35,7 +34,7 @@
   margin-top: 3px;
   border: 5px solid transparent;
   border-bottom-color: #21242a;
-  content: "";
+  content: '';
 }
 .bf-controlbar [data-title]:after {
   margin-top: 12px;
@@ -139,7 +138,7 @@
   height: inherit;
   text-align: initial;
 }
-.public-DraftEditor-content[contenteditable="true"] {
+.public-DraftEditor-content[contenteditable='true'] {
   -webkit-user-modify: read-write-plaintext-only;
 }
 .DraftEditor-root {
@@ -267,23 +266,23 @@
   width: 30px;
 }
 .public-DraftStyleDefault-orderedListItem:before {
-  content: counter(a) ". ";
+  content: counter(a) '. ';
   counter-increment: a;
 }
 .public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth1:before {
-  content: counter(b) ". ";
+  content: counter(b) '. ';
   counter-increment: b;
 }
 .public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth2:before {
-  content: counter(c) ". ";
+  content: counter(c) '. ';
   counter-increment: c;
 }
 .public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth3:before {
-  content: counter(d) ". ";
+  content: counter(d) '. ';
   counter-increment: d;
 }
 .public-DraftStyleDefault-orderedListItem.public-DraftStyleDefault-depth4:before {
-  content: counter(e) ". ";
+  content: counter(e) '. ';
   counter-increment: e;
 }
 .public-DraftStyleDefault-depth0.public-DraftStyleDefault-reset {
@@ -323,7 +322,7 @@
   height: 16px;
   border-radius: 8px;
   background-color: #eee;
-  content: "";
+  content: '';
   transform: scale(1.2);
   transition: 0.3s;
 }
@@ -333,10 +332,10 @@
   font-weight: 400;
   font-style: normal;
 }
-.bf-container [class*=" bfi-"],
-.bf-container [class^="bfi-"],
-.bf-modal-root [class*=" bfi-"],
-.bf-modal-root [class^="bfi-"] {
+.bf-container [class*=' bfi-'],
+.bf-container [class^='bfi-'],
+.bf-modal-root [class*=' bfi-'],
+.bf-modal-root [class^='bfi-'] {
   font-family: braft-icons !important;
   speak: none;
   font-style: normal;
@@ -348,291 +347,291 @@
 }
 .bf-container .bfi-table:before,
 .bf-modal-root .bfi-table:before {
-  content: "\E228";
+  content: '\E228';
 }
 .bf-container .bfi-clear_all:before,
 .bf-modal-root .bfi-clear_all:before {
-  content: "\E0B8";
+  content: '\E0B8';
 }
 .bf-container .bfi-format_clear:before,
 .bf-modal-root .bfi-format_clear:before {
-  content: "\E239";
+  content: '\E239';
 }
 .bf-container .bfi-hr:before,
 .bf-modal-root .bfi-hr:before {
-  content: "\E925";
+  content: '\E925';
 }
 .bf-container .bfi-colorize:before,
 .bf-modal-root .bfi-colorize:before {
-  content: "\E3B8";
+  content: '\E3B8';
 }
 .bf-container .bfi-crop_free:before,
 .bf-modal-root .bfi-crop_free:before {
-  content: "\E3C2";
+  content: '\E3C2';
 }
 .bf-container .bfi-pause:before,
 .bf-modal-root .bfi-pause:before {
-  content: "\E034";
+  content: '\E034';
 }
 .bf-container .bfi-play_arrow:before,
 .bf-modal-root .bfi-play_arrow:before {
-  content: "\E037";
+  content: '\E037';
 }
 .bf-container .bfi-bin:before,
 .bf-modal-root .bfi-bin:before {
-  content: "\E9AC";
+  content: '\E9AC';
 }
 .bf-container .bfi-replay:before,
 .bf-modal-root .bfi-replay:before {
-  content: "\E042";
+  content: '\E042';
 }
 .bf-container .bfi-tune:before,
 .bf-modal-root .bfi-tune:before {
-  content: "\E429";
+  content: '\E429';
 }
 .bf-container .bfi-close:before,
 .bf-modal-root .bfi-close:before {
-  content: "\E913";
+  content: '\E913';
 }
 .bf-container .bfi-align-center:before,
 .bf-modal-root .bfi-align-center:before {
-  content: "\E028";
+  content: '\E028';
 }
 .bf-container .bfi-align-justify:before,
 .bf-modal-root .bfi-align-justify:before {
-  content: "\E026";
+  content: '\E026';
 }
 .bf-container .bfi-align-left:before,
 .bf-modal-root .bfi-align-left:before {
-  content: "\E027";
+  content: '\E027';
 }
 .bf-container .bfi-align-right:before,
 .bf-modal-root .bfi-align-right:before {
-  content: "\E029";
+  content: '\E029';
 }
 .bf-container .bfi-image-right:before,
 .bf-modal-root .bfi-image-right:before {
-  content: "\E914";
+  content: '\E914';
 }
 .bf-container .bfi-image-left:before,
 .bf-modal-root .bfi-image-left:before {
-  content: "\E91E";
+  content: '\E91E';
 }
 .bf-container .bfi-music:before,
 .bf-modal-root .bfi-music:before {
-  content: "\E90E";
+  content: '\E90E';
 }
 .bf-container .bfi-camera:before,
 .bf-modal-root .bfi-camera:before {
-  content: "\E911";
+  content: '\E911';
 }
 .bf-container .bfi-copy:before,
 .bf-modal-root .bfi-copy:before {
-  content: "\E92C";
+  content: '\E92C';
 }
 .bf-container .bfi-file-text:before,
 .bf-modal-root .bfi-file-text:before {
-  content: "\E926";
+  content: '\E926';
 }
 .bf-container .bfi-film:before,
 .bf-modal-root .bfi-film:before {
-  content: "\E91C";
+  content: '\E91C';
 }
 .bf-container .bfi-github:before,
 .bf-modal-root .bfi-github:before {
-  content: "\EAB0";
+  content: '\EAB0';
 }
 .bf-container .bfi-ltr:before,
 .bf-modal-root .bfi-ltr:before {
-  content: "\EA74";
+  content: '\EA74';
 }
 .bf-container .bfi-page-break:before,
 .bf-modal-root .bfi-page-break:before {
-  content: "\EA68";
+  content: '\EA68';
 }
 .bf-container .bfi-pagebreak:before,
 .bf-modal-root .bfi-pagebreak:before {
-  content: "\EA6E";
+  content: '\EA6E';
 }
 .bf-container .bfi-paint-format:before,
 .bf-modal-root .bfi-paint-format:before {
-  content: "\E90C";
+  content: '\E90C';
 }
 .bf-container .bfi-paste:before,
 .bf-modal-root .bfi-paste:before {
-  content: "\E92D";
+  content: '\E92D';
 }
 .bf-container .bfi-pilcrow:before,
 .bf-modal-root .bfi-pilcrow:before {
-  content: "\EA73";
+  content: '\EA73';
 }
 .bf-container .bfi-pushpin:before,
 .bf-modal-root .bfi-pushpin:before {
-  content: "\E946";
+  content: '\E946';
 }
 .bf-container .bfi-redo:before,
 .bf-modal-root .bfi-redo:before {
-  content: "\E968";
+  content: '\E968';
 }
 .bf-container .bfi-rtl:before,
 .bf-modal-root .bfi-rtl:before {
-  content: "\EA75";
+  content: '\EA75';
 }
 .bf-container .bfi-spinner:before,
 .bf-modal-root .bfi-spinner:before {
-  content: "\E980";
+  content: '\E980';
 }
 .bf-container .bfi-subscript:before,
 .bf-modal-root .bfi-subscript:before {
-  content: "\EA6C";
+  content: '\EA6C';
 }
 .bf-container .bfi-superscript:before,
 .bf-modal-root .bfi-superscript:before {
-  content: "\EA6B";
+  content: '\EA6B';
 }
 .bf-container .bfi-undo:before,
 .bf-modal-root .bfi-undo:before {
-  content: "\E967";
+  content: '\E967';
 }
 .bf-container .bfi-media:before,
 .bf-modal-root .bfi-media:before {
-  content: "\E90F";
+  content: '\E90F';
 }
 .bf-container .bfi-add:before,
 .bf-modal-root .bfi-add:before {
-  content: "\E918";
+  content: '\E918';
 }
 .bf-container .bfi-bold:before,
 .bf-modal-root .bfi-bold:before {
-  content: "\E904";
+  content: '\E904';
 }
 .bf-container .bfi-code:before,
 .bf-modal-root .bfi-code:before {
-  content: "\E903";
+  content: '\E903';
 }
 .bf-container .bfi-done:before,
 .bf-modal-root .bfi-done:before {
-  content: "\E912";
+  content: '\E912';
 }
 .bf-container .bfi-drop-down:before,
 .bf-modal-root .bfi-drop-down:before {
-  content: "\E906";
+  content: '\E906';
 }
 .bf-container .bfi-drop-up:before,
 .bf-modal-root .bfi-drop-up:before {
-  content: "\E909";
+  content: '\E909';
 }
 .bf-container .bfi-emoji:before,
 .bf-modal-root .bfi-emoji:before {
-  content: "\E91B";
+  content: '\E91B';
 }
 .bf-container .bfi-font-size:before,
 .bf-modal-root .bfi-font-size:before {
-  content: "\E920";
+  content: '\E920';
 }
 .bf-container .bfi-fullscreen:before,
 .bf-modal-root .bfi-fullscreen:before {
-  content: "\E910";
+  content: '\E910';
 }
 .bf-container .bfi-fullscreen-exit:before,
 .bf-modal-root .bfi-fullscreen-exit:before {
-  content: "\E90D";
+  content: '\E90D';
 }
 .bf-container .bfi-help:before,
 .bf-modal-root .bfi-help:before {
-  content: "\E902";
+  content: '\E902';
 }
 .bf-container .bfi-indent-decrease:before,
 .bf-modal-root .bfi-indent-decrease:before {
-  content: "\E92F";
+  content: '\E92F';
 }
 .bf-container .bfi-indent-increase:before,
 .bf-modal-root .bfi-indent-increase:before {
-  content: "\E92E";
+  content: '\E92E';
 }
 .bf-container .bfi-info:before,
 .bf-modal-root .bfi-info:before {
-  content: "\E901";
+  content: '\E901';
 }
 .bf-container .bfi-italic:before,
 .bf-modal-root .bfi-italic:before {
-  content: "\E924";
+  content: '\E924';
 }
 .bf-container .bfi-link:before,
 .bf-modal-root .bfi-link:before {
-  content: "\E91A";
+  content: '\E91A';
 }
 .bf-container .bfi-link-off:before,
 .bf-modal-root .bfi-link-off:before {
-  content: "\E919";
+  content: '\E919';
 }
 .bf-container .bfi-list:before,
 .bf-modal-root .bfi-list:before {
-  content: "\E923";
+  content: '\E923';
 }
 .bf-container .bfi-list-numbered:before,
 .bf-modal-root .bfi-list-numbered:before {
-  content: "\E922";
+  content: '\E922';
 }
 .bf-container .bfi-menu:before,
 .bf-modal-root .bfi-menu:before {
-  content: "\E908";
+  content: '\E908';
 }
 .bf-container .bfi-more-horiz:before,
 .bf-modal-root .bfi-more-horiz:before {
-  content: "\E90B";
+  content: '\E90B';
 }
 .bf-container .bfi-more-vert:before,
 .bf-modal-root .bfi-more-vert:before {
-  content: "\E90A";
+  content: '\E90A';
 }
 .bf-container .bfi-not-disturb:before,
 .bf-modal-root .bfi-not-disturb:before {
-  content: "\E907";
+  content: '\E907';
 }
 .bf-container .bfi-print:before,
 .bf-modal-root .bfi-print:before {
-  content: "\E915";
+  content: '\E915';
 }
 .bf-container .bfi-quote:before,
 .bf-modal-root .bfi-quote:before {
-  content: "\E921";
+  content: '\E921';
 }
 .bf-container .bfi-search:before,
 .bf-modal-root .bfi-search:before {
-  content: "\E916";
+  content: '\E916';
 }
 .bf-container .bfi-settingsx:before,
 .bf-modal-root .bfi-settingsx:before {
-  content: "\E917";
+  content: '\E917';
 }
 .bf-container .bfi-share:before,
 .bf-modal-root .bfi-share:before {
-  content: "\E905";
+  content: '\E905';
 }
 .bf-container .bfi-share-square:before,
 .bf-modal-root .bfi-share-square:before {
-  content: "\E900";
+  content: '\E900';
 }
 .bf-container .bfi-strikethrough:before,
 .bf-modal-root .bfi-strikethrough:before {
-  content: "\E91F";
+  content: '\E91F';
 }
 .bf-container .bfi-text-color .path1:before,
 .bf-modal-root .bfi-text-color .path1:before {
   font-family: braft-icons !important;
-  content: "\E930";
+  content: '\E930';
   opacity: 0.36;
 }
 .bf-container .bfi-text-color .path2:before,
 .bf-modal-root .bfi-text-color .path2:before {
   font-family: braft-icons !important;
-  content: "\E931";
+  content: '\E931';
   margin-left: -1em;
 }
 .bf-container .bfi-underlined:before,
 .bf-modal-root .bfi-underlined:before {
-  content: "\E91D";
+  content: '\E91D';
 }
 .bf-content {
   height: 500px;
@@ -884,7 +883,7 @@
   display: block;
   border: 5px solid transparent;
   border-top-color: #21242a;
-  content: "";
+  content: '';
   transform: translateX(-5px);
 }
 .bf-container .bf-media-toolbar a {
@@ -1150,7 +1149,7 @@
   display: block;
   height: 1px;
   background-color: rgba(0, 0, 0, 0.1);
-  content: "";
+  content: '';
 }
 .bf-content .bf-hr:hover:before {
   background-color: rgba(0, 0, 0, 0.3);
@@ -1274,20 +1273,11 @@
 .bf-content .bf-image .bf-media-toolbar:before {
   visibility: hidden;
 }
-.bf-content
-  .bf-image
-  .bf-media-toolbar[data-align="center"]
-  [data-align="center"],
-.bf-content .bf-image .bf-media-toolbar[data-align="left"] [data-align="left"],
-.bf-content
-  .bf-image
-  .bf-media-toolbar[data-align="right"]
-  [data-align="right"],
-.bf-content .bf-image .bf-media-toolbar[data-float="left"] [data-float="left"],
-.bf-content
-  .bf-image
-  .bf-media-toolbar[data-float="right"]
-  [data-float="right"] {
+.bf-content .bf-image .bf-media-toolbar[data-align='center'] [data-align='center'],
+.bf-content .bf-image .bf-media-toolbar[data-align='left'] [data-align='left'],
+.bf-content .bf-image .bf-media-toolbar[data-align='right'] [data-align='right'],
+.bf-content .bf-image .bf-media-toolbar[data-float='left'] [data-float='left'],
+.bf-content .bf-image .bf-media-toolbar[data-float='right'] [data-float='right'] {
   color: #3498db;
 }
 .headings-dropdown {
@@ -1732,7 +1722,7 @@
   left: 0;
   height: 30px;
   border-radius: 2px;
-  content: "";
+  content: '';
   pointer-events: none;
 }
 .bf-emojis-wrap:before {

@@ -1,20 +1,20 @@
-@import "../../style/theme/variable.scss";
-@import "../../spin/style/index.scss";
+@import '../../style/theme/variable.scss';
+@import '../../spin/style/index.scss';
 
-$zimage-prefix-cls: "#{$xbzoom-prefix}-zimage";
+$zimage-prefix-cls: '#{$xbzoom-prefix}-zimage';
 
 .#{$zimage-prefix-cls} {
-  &--img{
+  &--img {
     width: 50px;
     height: 50px;
     border-radius: 3px;
     cursor: zoom-in;
     margin-right: 5px;
-    &--last{
+    &--last {
       margin-right: 0;
     }
   }
-  &--mask{
+  &--mask {
     position: fixed;
     background: $mask-color;
     width: 100%;
@@ -23,7 +23,7 @@ $zimage-prefix-cls: "#{$xbzoom-prefix}-zimage";
     left: 0;
     z-index: 1000;
   }
-  &--content{
+  &--content {
     position: fixed;
     left: 0;
     top: 0;
@@ -33,20 +33,20 @@ $zimage-prefix-cls: "#{$xbzoom-prefix}-zimage";
     user-select: none;
     cursor: zoom-out;
     z-index: 1001;
-    &--body{
+    &--body {
       position: absolute;
       height: 100%;
       cursor: zoom-in;
-      transition: all .2s linear;
+      transition: all 0.2s linear;
       overflow: hidden;
-      &--img{
+      &--img {
         height: 100%;
       }
-      &--original--img{
+      &--original--img {
         height: auto;
         cursor: zoom-out;
       }
-      &--progress{
+      &--progress {
         position: absolute;
         width: 100%;
         height: 30px;
@@ -54,28 +54,28 @@ $zimage-prefix-cls: "#{$xbzoom-prefix}-zimage";
         text-align: center;
         left: 0;
         bottom: 30px;
-        &--yuanxing{
+        &--yuanxing {
           margin: 0 2px;
           font-size: 14px;
           color: #fff;
           opacity: 0.3;
           cursor: pointer;
-          &:hover{
+          &:hover {
             opacity: 0.6;
           }
-          &--active{
+          &--active {
             opacity: 1;
           }
         }
       }
-      &--prevBtn{
+      &--prevBtn {
         display: none;
       }
-      &--nextBtn{
+      &--nextBtn {
         display: none;
       }
-      &:hover{
-        .#{$zimage-prefix-cls}--content--body--prevBtn{
+      &:hover {
+        .#{$zimage-prefix-cls}--content--body--prevBtn {
           display: block;
           position: absolute;
           left: -5px;
@@ -86,7 +86,7 @@ $zimage-prefix-cls: "#{$xbzoom-prefix}-zimage";
           opacity: 0.6;
           cursor: pointer;
         }
-        .#{$zimage-prefix-cls}--content--body--nextBtn{
+        .#{$zimage-prefix-cls}--content--body--nextBtn {
           display: block;
           position: absolute;
           right: -5px;
@@ -99,9 +99,9 @@ $zimage-prefix-cls: "#{$xbzoom-prefix}-zimage";
         }
       }
     }
-    &--original{
+    &--original {
       overflow: auto;
-      .xbzoom-zimage--content--body{
+      .xbzoom-zimage--content--body {
         height: auto;
       }
     }

@@ -1,16 +1,16 @@
-@import "../../style/theme/variable.scss";
-@import "../../spin/style/index.scss";
-@import "./editor.scss";
-@import "./color-picker.scss";
+@import '../../style/theme/variable.scss';
+@import '../../spin/style/index.scss';
+@import './editor.scss';
+@import './color-picker.scss';
 // @import "./code-highlighter.scss";
-@import "./table.scss";
+@import './table.scss';
 
-$RichEditor-prefix-cls: "#{$xbzoom-prefix}-rich-editor";
+$RichEditor-prefix-cls: '#{$xbzoom-prefix}-rich-editor';
 
 .#{$RichEditor-prefix-cls} {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
-  &-count{
+  &-count {
     display: flex;
     justify-content: flex-end;
     font-size: 16px;

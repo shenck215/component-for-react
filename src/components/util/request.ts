@@ -1,5 +1,5 @@
-import "whatwg-fetch";
-import * as queryString from 'querystring'
+import 'whatwg-fetch';
+import * as queryString from 'querystring';
 
 /**
  * 带有timeout的_fetch
@@ -10,7 +10,7 @@ const _fetch = (fetchPromise: Promise<Response>, timeout: number) => {
   let timeoutAction: any;
   const timerPromise = new Promise((resolve, reject) => {
     timeoutAction = () => {
-      reject("timeout");
+      reject('timeout');
     };
   });
   setTimeout(() => {
@@ -33,26 +33,26 @@ export interface ResponeData {
  * @param data {Object<JSON>} 请求参数
  * @param option {Object<JSON>} 额外的fetch可配置参数
  */
-const request = (url: string = "", data?: {}, option?: RequestInit) => {
+const request = (url = '', data?: {}, option?: RequestInit) => {
   let json: any = {
-    method: "post",
+    method: 'post',
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
     timeout: 10000,
     body: queryString.stringify(data || {}),
-    credentials: "include"
+    credentials: 'include',
   };
 
   if (option) {
     const { headers, method } = option;
-    if (headers && headers["Content-Type"] == "application/json") {
+    if (headers && headers['Content-Type'] == 'application/json') {
       option.body = JSON.stringify(data);
-      headers["dataType"] = "json";
+      headers['dataType'] = 'json';
     }
     json = {
       ...json,
-      ...option
+      ...option,
     };
 
     /**
@@ -60,7 +60,7 @@ const request = (url: string = "", data?: {}, option?: RequestInit) => {
      * get方式不允许body传参，
      * 只能url传参
      */
-    if (method && method.toLocaleLowerCase() === "get") {
+    if (method && method.toLocaleLowerCase() === 'get') {
       url = `${url}?${json.body}`;
       delete json.body;
     }
@@ -72,27 +72,27 @@ const request = (url: string = "", data?: {}, option?: RequestInit) => {
       })
       .then((data: ResponeData) => {
         if (Number(data.status) !== 0) {
-          console.log(data.error || data.msg || data.errmsg || "请求失败")
+          console.log(data.error || data.msg || data.errmsg || '请求失败');
         }
         resolve(data);
       })
-      .catch(error => {
+      .catch((error) => {
         let msg;
         switch (error.toString()) {
-          case "TypeError: Failed to fetch":
-            msg = "请求失败";
+          case 'TypeError: Failed to fetch':
+            msg = '请求失败';
             break;
-          case "timeout":
-            msg = "请求超时";
+          case 'timeout':
+            msg = '请求超时';
             break;
           default:
-            msg = "请求失败";
+            msg = '请求失败';
         }
-        console.log(msg)
+        console.log(msg);
         const data = { errcode: 1, status: 1, msg } as ResponeData;
         resolve(data);
       });
   });
 };
 
-export default request
+export default request;

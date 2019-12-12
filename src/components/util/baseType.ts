@@ -6,13 +6,13 @@ export type debounceOptionType = {
   maxWait?: number;
   /** 指定在延迟结束后调用 默认值true */
   trailing?: boolean;
-}
+};
 export type throttleOptionType = {
   /** 指定调用在节流开始前 默认值true */
   leading?: boolean;
   /** 指定调用在节流开始后 默认值true */
   trailing?: boolean;
-}
+};
 /**
  * 模糊匹配结果
  * @param q {string} 搜索关键字
@@ -31,7 +31,7 @@ export type searchResultArr = {
   name: string;
   pinyin: string;
   value: number;
-}
+};
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 // https://stackoverflow.com/questions/46176165/ways-to-get-string-literal-type-of-array-values-without-enum-overhead
@@ -59,11 +59,11 @@ interface BaseSyntheticEvent<E = object, C = any, T = any> {
 
 type NativeMouseEvent = Event;
 
-type EventHandler<E extends SyntheticEvent<any>> = { bivarianceHack(event: E): void }["bivarianceHack"];
+type EventHandler<E extends SyntheticEvent> = { bivarianceHack(event: E): void }['bivarianceHack'];
 
-interface SyntheticEvent<T = Element, E = Event> extends BaseSyntheticEvent<E, EventTarget & T, EventTarget> {}
+type SyntheticEvent = BaseSyntheticEvent<any, any, EventTarget>;
 
-interface MouseEvent<T = Element, E = NativeMouseEvent> extends SyntheticEvent<T, E> {
+interface MouseEvent<T = Element, E = NativeMouseEvent> extends SyntheticEvent {
   altKey: boolean;
   button: number;
   buttons: number;

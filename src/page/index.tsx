@@ -1,8 +1,8 @@
-import * as React from "react";
-import { render } from "react-dom";
-import { AppContainer } from "react-hot-loader";
-import { RickEditor } from "../components";
-import '../components/rich-editor/style'
+import * as React from 'react';
+import { render } from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
+import { RickEditor } from '../components';
+import '../components/rich-editor/style';
 
 const App = () => (
   <div>
@@ -15,14 +15,14 @@ function renderWithHotReload() {
     <AppContainer>
       <App />
     </AppContainer>,
-    document.getElementById("root")
+    document.getElementById('root')
   );
 }
 
 renderWithHotReload();
 
 if (module.hot) {
-  module.hot.accept("./index.tsx", () => {
+  module.hot.accept('./index.tsx', () => {
     renderWithHotReload();
   });
 }

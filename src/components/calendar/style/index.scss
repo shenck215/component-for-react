@@ -1,6 +1,6 @@
-@import "../../style/theme/variable.scss";
+@import '../../style/theme/variable.scss';
 
-$calendar-prefix-cls: "#{$xbzoom-prefix}-calendar";
+$calendar-prefix-cls: '#{$xbzoom-prefix}-calendar';
 
 .#{$calendar-prefix-cls} {
   width: 279px;

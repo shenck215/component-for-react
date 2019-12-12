@@ -1,32 +1,26 @@
-import React from 'react'
+import React from 'react';
 
 export interface PageProps {
   loading?: boolean;
 }
 
-export interface PageStates {
-  
-}
-
-export default class Spin extends React.Component<PageProps, PageStates>{
-
+export default class Spin extends React.Component<PageProps, {}> {
   static defaultProps = {
     loading: true,
-  }
+  };
 
-  render(){
-    const { loading } = this.props
-    const className = 'xbzoom-spin'
+  render() {
+    const { loading } = this.props;
+    const className = 'xbzoom-spin';
     return (
       <div className={className}>
-        {
-          loading &&
+        {loading && (
           <div className={`${className}--mask`}>
             <i className={`xbzoom xbzoom-loading ${className}--mask--loading`} />
           </div>
-        }
+        )}
         {this.props.children}
       </div>
-    )
+    );
   }
 }

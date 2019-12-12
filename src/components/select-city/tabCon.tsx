@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import * as classnames from "classnames";
+import React, { Component } from 'react';
+import * as classnames from 'classnames';
 
 export interface TabConProps {
   index: number;
@@ -16,14 +16,14 @@ class TabCon extends Component<TabConProps, {}> {
     // this.displayName = 'TabCon';
   }
   getItems() {
-    const className = "xbzoom-selectcity-container--tabCon";
+    const className = 'xbzoom-selectcity-container--tabCon';
     let { index, selectVal, valIndex, params, addressMap } = this.props;
 
     /**
      * [max 最大联动的层级]
      */
-    let deepMap = params.deepMap;
-    let max = deepMap.length;
+    const deepMap = params.deepMap;
+    const max = deepMap.length;
 
     /* index不能大于max */
     if (index >= max) {
@@ -31,39 +31,31 @@ class TabCon extends Component<TabConProps, {}> {
       valIndex = max - 2;
     }
 
-    let id = selectVal[valIndex];
+    const id = selectVal[valIndex];
     let data = addressMap[index];
 
-    let activeId = selectVal[index];
+    const activeId = selectVal[index];
 
     let globalkey = 0;
 
-    let cityItem = (val: {}) => {
-      let items: JSX.Element[] = [];
-      for (let key in val) {
+    const cityItem = (val: {}) => {
+      const items: JSX.Element[] = [];
+      for (const key in val) {
         let active = false;
-        let id = parseInt(key, 10);
+        const id = parseInt(key, 10);
         if (activeId === id) {
           active = true;
         }
-        items.push(
-          <CityItem
-            key={++globalkey}
-            id={id}
-            val={val}
-            active={active}
-            {...this.props}
-          />
-        );
+        items.push(<CityItem key={++globalkey} id={id} val={val} active={active} {...this.props} />);
       }
       return items;
     };
 
     /* 如果是第一级不同的处理 */
     if (index === 0) {
-      let tempData = {};
-      for (let val of data.values()) {
-        for (let key in val) {
+      const tempData = {};
+      for (const val of data.values()) {
+        for (const key in val) {
           tempData[key] = val[key];
         }
       }
@@ -73,18 +65,14 @@ class TabCon extends Component<TabConProps, {}> {
     }
 
     /* 城市容器 */
-    let items: JSX.Element[] = [];
-    for (let key in data) {
+    const items: JSX.Element[] = [];
+    for (const key in data) {
       items.push(
         <div className={`${className}--citys--areaGroup`} key={++globalkey}>
-          {key !== "" && key !== "null" && key !== "undefined" && (
-            <span className={`${className}--citys--areaGroup--areaItem`}>
-              {key}
-            </span>
+          {key !== '' && key !== 'null' && key !== 'undefined' && (
+            <span className={`${className}--citys--areaGroup--areaItem`}>{key}</span>
           )}
-          <div className={`${className}--citys--cityGroup`}>
-            {cityItem(data[key])}
-          </div>
+          <div className={`${className}--citys--cityGroup`}>{cityItem(data[key])}</div>
         </div>
       );
     }
@@ -94,15 +82,13 @@ class TabCon extends Component<TabConProps, {}> {
         {items.length > 0 ? (
           items
         ) : (
-          <div className={`${className}--citys--none`}>{`请先选择${
-            index === 1 ? "省份" : "城市"
-          }~`}</div>
+          <div className={`${className}--citys--none`}>{`请先选择${index === 1 ? '省份' : '城市'}~`}</div>
         )}
       </div>
     );
   }
   render() {
-    let items = this.getItems();
+    const items = this.getItems();
     return <div className="xbzoom-selectcity-container--tabCon">{items}</div>;
   }
 }
@@ -119,14 +105,7 @@ class CityItem extends Component<CityItemProps, {}> {
     // this.displayName = 'CityItem';
   }
   handleClick() {
-    let {
-      index,
-      changeState,
-      id,
-      selectVal,
-      valIndex,
-      clickHotCity
-    } = this.props;
+    let { index, changeState, id, selectVal, valIndex, clickHotCity } = this.props;
 
     /* 记录当前点击的索引，用来记录值得位置 */
     valIndex = index;
@@ -154,27 +133,23 @@ class CityItem extends Component<CityItemProps, {}> {
       index: index,
       valIndex: valIndex,
       selectVal: selectVal,
-      trigger: true
+      trigger: true,
     });
   }
   render() {
-    const className = "xbzoom-selectcity-container--tabCon";
-    let { id, val, active } = this.props;
+    const className = 'xbzoom-selectcity-container--tabCon';
+    const { id, val, active } = this.props;
     const { name } = val[id];
 
-    let className2 = classnames({
+    const className2 = classnames({
       [`${className}--citys--cityGroup--cityItem`]: true,
-      [`${className}--citys--cityGroup--cityItem--active`]: active
+      [`${className}--citys--cityGroup--cityItem--active`]: active,
     });
 
     return (
-      <span
-        className={className2}
-        data-id={id}
-        onClick={e => this.handleClick()}
-      >
-        {" "}
-        {name}{" "}
+      <span className={className2} data-id={id} onClick={(e) => this.handleClick()}>
+        {' '}
+        {name}{' '}
       </span>
     );
   }
