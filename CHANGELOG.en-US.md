@@ -18,6 +18,8 @@ React component library 🔥 overall overview, new module, 💄 module 🌟 adju
 ---
 
 #### Directory
+- [1.0.6](#106)
+  - [🔥Calendar (Calendar) components optimize](#%f0%9f%94%a5calendar-calendar-components-optimize)
 - [1.0.5](#105)
   - [🔥Program to add specification( prettier, eslint, husky, precommit )](#%f0%9f%94%a5program-to-add-specification-prettier-eslint-husky-precommit)
 - [1.0.4](#104)
@@ -32,6 +34,14 @@ React component library 🔥 overall overview, new module, 💄 module 🌟 adju
   - [🔥Implement on-demand loading](#%f0%9f%94%a5implement-on-demand-loading)
 - [0.1.0](#010)
   - [🔥Preliminary construction of project scaffolding](#%f0%9f%94%a5preliminary-construction-of-project-scaffolding)
+
+---
+
+## 1.0.6
+
+`2019-12-13`
+
+### 🔥Calendar (Calendar) components optimize
 
 ---
 

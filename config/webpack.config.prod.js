@@ -115,12 +115,6 @@ const prodConfig = {
       commonjs: 'react-dom',
       amd: 'react-dom',
     },
-    antd: {
-      root: 'antd',
-      commonjs2: 'antd',
-      commonjs: 'antd',
-      amd: 'antd',
-    },
     dayjs: {
       root: 'dayjs',
       commonjs2: 'dayjs',

@@ -65,13 +65,13 @@ export default class CalendarBody extends React.Component<PageProps, {}> {
       <table className={className}>
         <thead>
           <tr className={`${className}--week`}>
-            <th>日</th>
             <th>一</th>
             <th>二</th>
             <th>三</th>
             <th>四</th>
             <th>五</th>
             <th>六</th>
+            <th>日</th>
           </tr>
         </thead>
         <tbody>
