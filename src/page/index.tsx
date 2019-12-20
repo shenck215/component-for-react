@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import { RickEditor } from '../components';
-import '../components/rich-editor/style';
+import { Calendar } from '../components';
+import '../components/calendar/style';
 
 const App = () => (
   <div>
-    <RickEditor maxLength={5000} />
+    <Calendar />
   </div>
 );
 

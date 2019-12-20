@@ -18,6 +18,10 @@ React component library 🔥 overall overview, new module, 💄 module 🌟 adju
 ---
 
 #### Directory
+- [1.0.8](#108)
+  - [🔥The city plug-in (SelectCIty) component adds custom prompts when the search is empty](#%f0%9f%94%a5the-city-plug-in-selectcity-component-adds-custom-prompts-when-the-search-is-empty)
+- [1.0.7](#107)
+  - [🔥Calendar (Calendar) components added fast year selection feature](#%f0%9f%94%a5calendar-calendar-components-added-fast-year-selection-feature)
 - [1.0.6](#106)
   - [🔥Calendar (Calendar) components optimize](#%f0%9f%94%a5calendar-calendar-components-optimize)
 - [1.0.5](#105)
@@ -34,6 +38,24 @@ React component library 🔥 overall overview, new module, 💄 module 🌟 adju
   - [🔥Implement on-demand loading](#%f0%9f%94%a5implement-on-demand-loading)
 - [0.1.0](#010)
   - [🔥Preliminary construction of project scaffolding](#%f0%9f%94%a5preliminary-construction-of-project-scaffolding)
+
+---
+
+## 1.0.8
+
+`2019-12-20`
+
+### 🔥The city plug-in (SelectCIty) component adds custom prompts when the search is empty
+
+---
+
+## 1.0.7
+
+`2019-12-16`
+
+### 🔥Calendar (Calendar) components added fast year selection feature
+
+- 🐞Fixed city plugin ts type error
 
 ---
 

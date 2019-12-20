@@ -4,4 +4,4 @@ export { default as Spin } from './spin';
 export { default as Input } from './input';
 export { default as Zimage } from './zimage';
 export { default as Head } from './head';
-export { default as RickEditor } from './rich-editor';
+export { default as RichEditor } from './rich-editor';

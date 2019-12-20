@@ -70,7 +70,7 @@ export interface PageStates {
 
 // 编写扩展模块https://braft.margox.cn/demos/inline-style
 
-export default class RickEditor extends React.Component<PageProps, PageStates> {
+export default class RichEditor extends React.Component<PageProps, PageStates> {
   constructor(props) {
     super(props);
     const { defaultValue } = props;

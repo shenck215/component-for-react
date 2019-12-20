@@ -12,6 +12,8 @@ export interface PageProps {
   totalPage: number;
   prevBtn: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   nextBtn: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  /** 无搜索结果提示 */
+  notFoundContent?: string;
 }
 
 export default class List extends React.Component<PageProps, {}> {
@@ -52,6 +54,7 @@ export default class List extends React.Component<PageProps, {}> {
       totalPage,
       prevBtn,
       nextBtn,
+      notFoundContent = '找不到你要的结果，换个试试',
     } = this.props;
     const className = 'xbzoom-selectcity-container--list';
     return (
@@ -101,7 +104,7 @@ export default class List extends React.Component<PageProps, {}> {
             )}
           </>
         ) : (
-          <div className={`${className}--none`}>找不到你要的结果，换个试试</div>
+          <div className={`${className}--none`}>{notFoundContent}</div>
         )}
       </div>
     );

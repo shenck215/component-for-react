@@ -16,7 +16,7 @@ export interface PageProps {
   /** 是否多选 */
   multiple?: boolean;
   /** 选择日期回调 */
-  onDayClick?: (obj: { dates: string[]; dateString: string }) => { dates: string[]; dateString: string };
+  onDayClick?: (res: { dates: string[]; dateString: string }) => void;
   /** 最小可选日期 */
   minDate?: string;
   /** 最大可选日期 */
@@ -24,6 +24,7 @@ export interface PageProps {
 }
 
 export interface PageStates {
+  yearRangeCount: number;
   year: number;
   month: number;
   day: number;
@@ -104,7 +105,7 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
   static defaultProps = {
     wrapperClassName: '',
     defaultDates: [],
-    selectYear: false,
+    selectYear: true,
     selectMonth: true,
     multiple: false,
     minDate: '',
@@ -116,6 +117,7 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
     const now = new Date();
     const { defaultDates, selectYear, selectMonth } = props;
     this.state = {
+      yearRangeCount: 0,
       year: now.getFullYear(),
       month: now.getMonth(),
       day: now.getDate(),
@@ -130,16 +132,35 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
   }
 
   // 选择年
-  onSelectYear = (showYearQuickSelect: boolean) => {
+  onSelectYear = () => {
+    const { showYearQuickSelect: oldShowYearQuickSelect } = this.state;
     this.setState({
-      showYearQuickSelect,
+      showYearQuickSelect: !oldShowYearQuickSelect,
+      yearRangeCount: 0,
     });
   };
 
   // 选择月
-  onSelectMonth = (showMonthQuickSelect: boolean) => {
+  onSelectMonth = () => {
+    const { showMonthQuickSelect: oldShowMonthQuickSelect } = this.state;
     this.setState({
-      showMonthQuickSelect,
+      showMonthQuickSelect: !oldShowMonthQuickSelect,
+    });
+  };
+
+  // 切换上一年范围
+  prevYearQuick = () => {
+    const { yearRangeCount } = this.state;
+    this.setState({
+      yearRangeCount: yearRangeCount - 1,
+    });
+  };
+
+  // 切换下一年范围
+  nextYearQuick = () => {
+    const { yearRangeCount } = this.state;
+    this.setState({
+      yearRangeCount: yearRangeCount + 1,
     });
   };
 
@@ -225,6 +246,15 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
     }
   };
 
+  // 选择年份
+  changeYear = (year: number) => {
+    this.setState({
+      year,
+      showYearQuickSelect: false,
+      yearRangeCount: 0,
+    });
+  };
+
   // 选择月份
   changeMonth = (month: number) => {
     this.setState({
@@ -282,6 +312,21 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
     onDayClick && onDayClick({ dates, dateString });
   };
 
+  /** 获取年份选择区间 */
+  getYearSelectRange = () => {
+    const { year, yearRangeCount } = this.state;
+    const rangeStartYear = Math.floor(year / 12) * 12 + yearRangeCount * 12;
+    const yearArray: { index: number; year: number; isSelect: boolean }[] = [];
+    for (let i = 0; i < 12; i++) {
+      yearArray.push({
+        index: i,
+        year: rangeStartYear + i,
+        isSelect: rangeStartYear + i === year,
+      });
+    }
+    return yearArray;
+  };
+
   render() {
     const { year, month, day, dates, selectYear, selectMonth, showMonthQuickSelect, showYearQuickSelect } = this.state;
     const { wrapperClassName, minDate, maxDate } = this.props;
@@ -294,6 +339,7 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
                    ${day} 日`,
     };
     const className = 'xbzoom-calendar';
+    const yearArray = this.getYearSelectRange();
     return (
       <div
         className={classnames({
@@ -301,16 +347,16 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
           [wrapperClassName || '']: wrapperClassName,
         })}>
         {showYearQuickSelect && (
-          <div className={`${className}--monthSelect`}>
-            {monthArray.map((item) => (
-              <span className={`${className}--monthSelect--monthTd`} key={item}>
+          <div className={`${className}--yearSelect`}>
+            {yearArray.map((item) => (
+              <span className={`${className}--yearSelect--yearTd`} key={item.index}>
                 <span
                   className={classnames(
-                    `${className}--monthSelect--monthTd--monthItem`,
-                    month + 1 === item ? `${className}--active` : ''
+                    `${className}--yearSelect--yearTd--yearItem`,
+                    item.isSelect ? `${className}--yearSelect--yearTd--yearItem--active` : ''
                   )}
-                  onClick={() => this.changeMonth(item - 1)}>
-                  {monthMap[item]}
+                  onClick={() => this.changeYear(item.year)}>
+                  {item.year}
                 </span>
               </span>
             ))}
@@ -323,7 +369,7 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
                 <span
                   className={classnames(
                     `${className}--monthSelect--monthTd--monthItem`,
-                    month + 1 === item ? `${className}--active` : ''
+                    month + 1 === item ? `${className}--monthSelect--monthTd--monthItem--active` : ''
                   )}
                   onClick={() => this.changeMonth(item - 1)}>
                   {monthMap[item]}
@@ -334,8 +380,10 @@ export default class Calendar extends React.Component<PageProps, PageStates> {
         )}
         <div className={`${className}--main`}>
           <CalendarHeader
+            prevYearQuick={this.prevYearQuick}
             prevYear={this.prevYear}
             prevMonth={this.prevMonth}
+            nextYearQuick={this.nextYearQuick}
             nextYear={this.nextYear}
             nextMonth={this.nextMonth}
             selectYear={selectYear}

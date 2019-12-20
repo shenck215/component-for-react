@@ -26,6 +26,8 @@ export interface PostionContainerProps {
   show: boolean;
   searching: boolean;
   hotData: Array<{ name: string; provinceId: number; cityId: number }>;
+  /** 无搜索结果提示 */
+  notFoundContent?: string;
 }
 
 export interface PostionContainerStates {
@@ -142,7 +144,6 @@ export default class PostionContainer extends React.Component<PostionContainerPr
           current: newCurrent,
         });
       } else if (keyCode === 13) {
-        console.log(this.list);
         const node = document.querySelector(`.${this.list.classNameForSelected}`);
         node && (node as any).click();
       }
@@ -154,7 +155,7 @@ export default class PostionContainer extends React.Component<PostionContainerPr
     return newData.split('*&*').map((value: any) => {
       if (value === matchQ) {
         return (
-          <span style={{ color: '#ff6600' }} key={value}>
+          <span className="xbzoom-selectcity-container--list--row--highlight" key={value}>
             {value}
           </span>
         );
@@ -256,6 +257,7 @@ export default class PostionContainer extends React.Component<PostionContainerPr
       hotData,
       searchDataSource,
       setInputValue,
+      notFoundContent,
     } = this.props;
     const { selectedHotCityId, selectedIndex, current, pageSize, totalPage } = this.state;
     const className2 = classnames({
@@ -302,6 +304,7 @@ export default class PostionContainer extends React.Component<PostionContainerPr
             totalPage={totalPage}
             prevBtn={this.prevBtn}
             nextBtn={this.nextBtn}
+            notFoundContent={notFoundContent}
           />
         ) : (
           <div>

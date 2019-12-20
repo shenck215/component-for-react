@@ -2,16 +2,14 @@ import * as React from 'react';
 import { parseAddress, parseAddressName, matchSearch } from '../util/util';
 import fetchFn from '../util/request';
 import PostionContainer from './postionContainer';
-import { Spin, Input } from '../index';
+import Spin from '../spin';
+import Input from '../input';
 
 export interface ParamsProps {
   // deepMap: [{name: '省'},{name: '市'},{name: '区'}],
   deepMap: Array<{ name: string; value?: number }>;
   /* 弹窗样式 */
-  popupStyle?: {
-    width: number;
-    zIndex: number;
-  };
+  popupStyle?: React.CSSProperties;
   /* 搜索 */
   search?: boolean;
   /** 清空按钮 */
@@ -27,9 +25,7 @@ export interface ParamsProps {
   /* fetch api方式城市请求参数 */
   addressFetchData?: object;
   /* input 的样式 */
-  style?: {
-    width: number;
-  };
+  style?: React.CSSProperties;
   /* 选择到最后一层的回调 */
   onChange: (selectVal: number[], selectName: string[], code: any) => void;
   /* 每层选择的回调，除了， 除了最后一层调用onChange */
@@ -40,6 +36,8 @@ export interface ParamsProps {
   disabled?: boolean;
   /** 渲染父节点, 默认body */
   getPopupContainer?: (trigger?: HTMLElement) => HTMLElement;
+  /** 无搜索结果提示 */
+  notFoundContent?: string;
 }
 
 export interface SelectCityProps {
@@ -69,6 +67,8 @@ export interface SelectCityState {
   addressLoading: boolean;
   deepMap: Array<{ name: string; value?: number }>;
   hotData: Array<{ name: string; provinceId: number; cityId: number }>;
+  /** 无搜索结果提示 */
+  notFoundContent?: string;
 }
 
 export default class SelectCity extends React.Component<SelectCityProps, SelectCityState> {
@@ -84,7 +84,7 @@ export default class SelectCity extends React.Component<SelectCityProps, SelectC
     super(props);
     const {
       code,
-      params: { deepMap, onChange, address, addressApi, level = 3 },
+      params: { deepMap, onChange, address, addressApi, level = 3, notFoundContent },
     } = this.props;
     let addressMap: Map<string, any>[] = [];
     let addressMapSearch: any[] = [];
@@ -126,6 +126,7 @@ export default class SelectCity extends React.Component<SelectCityProps, SelectC
       addressLoading: !address || address.length <= 0,
       deepMap: newDeepMap,
       hotData: [],
+      notFoundContent,
     };
     this.state = state;
 
@@ -252,11 +253,11 @@ export default class SelectCity extends React.Component<SelectCityProps, SelectC
     if (typeof getPopupContainer === 'function') {
       const positionForContainer = this.getOffsetRect(getPopupContainer());
       left = left - positionForContainer.left;
-      top = top - positionForContainer.top;
+      top = top - positionForContainer.top + 1;
     }
     return {
       left,
-      top: top + input.offsetHeight,
+      top: top + input.offsetHeight + 1,
       width: popupStyle && popupStyle.width ? popupStyle.width : input.offsetWidth,
     };
   };
@@ -266,6 +267,11 @@ export default class SelectCity extends React.Component<SelectCityProps, SelectC
   componentDidMount() {
     /* 挂载document的hide */
     document.addEventListener('click', this.hide);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.debounceTimer);
+    window.removeEventListener('click', this.hide);
   }
 
   /** 根据级别过滤城市数据 */
@@ -305,6 +311,7 @@ export default class SelectCity extends React.Component<SelectCityProps, SelectC
       index,
       valIndex,
       deepMap,
+      notFoundContent,
     } = this.state;
     const { params } = this.props;
     return {
@@ -323,6 +330,7 @@ export default class SelectCity extends React.Component<SelectCityProps, SelectC
       index,
       valIndex,
       loading,
+      notFoundContent,
     };
   };
 
