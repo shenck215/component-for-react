@@ -1,12 +1,23 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import { Calendar } from '../components';
-import '../components/calendar/style';
+import { SelectCity } from '../components';
+import '../components/select-city/style';
+import address from '../components/assets/address.json';
 
 const App = () => (
   <div>
-    <Calendar />
+    <SelectCity
+      params={{
+        level: 2,
+        deepMap: [{ name: '省' }, { name: '市' }],
+        address,
+        search: true,
+        onChange: (selectVal, selectName) => {
+          console.log(selectVal, selectName);
+        },
+      }}
+    />
   </div>
 );
 

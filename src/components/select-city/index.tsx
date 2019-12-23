@@ -429,15 +429,25 @@ export default class SelectCity extends React.Component<SelectCityProps, SelectC
     if (this.state.searchDataSource.length <= 0) {
       this._cache.searchName = searchName;
     }
-    this.setState({
-      searching: searchName !== '',
-      searchName,
-      selectVal: [],
-      selectName: [],
-      index: 0,
-      valIndex: 0,
-      show: true,
-    });
+    this.setState(
+      {
+        searching: searchName !== '',
+        searchName,
+        selectVal: [],
+        selectName: [],
+        index: 0,
+        valIndex: 0,
+        show: true,
+      },
+      () => {
+        const {
+          params: { onChange },
+          code,
+        } = this.props;
+        typeof onChange === 'function' && onChange([], [], code);
+        this.triggerChange({ selectVal: [], selectName: [] });
+      }
+    );
 
     /**
      * 防抖动
@@ -519,7 +529,6 @@ export default class SelectCity extends React.Component<SelectCityProps, SelectC
   };
 
   render() {
-    console.log(this.props);
     const {
       params: { style = { width: '100%' }, disabled, showClear = true },
     } = this.props;

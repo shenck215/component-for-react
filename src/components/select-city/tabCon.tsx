@@ -8,7 +8,7 @@ export interface TabConProps {
   addressMap: any;
   valIndex: number;
   changeState: (data: any) => void;
-  clickHotCity: (provinceId: number, cityId: number) => void;
+  clearHotCityId: Function;
 }
 class TabCon extends Component<TabConProps, {}> {
   constructor(props: TabConProps) {
@@ -105,7 +105,7 @@ class CityItem extends Component<CityItemProps, {}> {
     // this.displayName = 'CityItem';
   }
   handleClick() {
-    let { index, changeState, id, selectVal, valIndex, clickHotCity } = this.props;
+    let { index, changeState, id, selectVal, valIndex, clearHotCityId } = this.props;
 
     /* 记录当前点击的索引，用来记录值得位置 */
     valIndex = index;
@@ -126,7 +126,7 @@ class CityItem extends Component<CityItemProps, {}> {
      */
     selectVal[valIndex] = parseInt(id, 10);
 
-    clickHotCity(selectVal[0], selectVal[1]);
+    clearHotCityId();
 
     /* 更新state */
     changeState({

@@ -436,7 +436,10 @@ export const matchSearch = (q: string, searchSource: searchSourceData[], address
       }
       return arr;
     };
-    const { py, name, pinyin } = data;
+    let { py, name, pinyin } = data;
+    py = py ? py.toLocaleLowerCase() : '';
+    name = name ? name.toLocaleLowerCase() : '';
+    pinyin = pinyin ? pinyin.toLocaleLowerCase() : '';
     /**
      * 匹配首字母，
      * 简拼，

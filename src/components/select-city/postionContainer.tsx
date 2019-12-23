@@ -226,7 +226,7 @@ export default class PostionContainer extends React.Component<PostionContainerPr
       params,
       addressMap,
       changeState,
-      clickHotCity: this.clickHotCity,
+      clearHotCityId: this.clearHotCityId,
     };
   };
 
@@ -244,6 +244,13 @@ export default class PostionContainer extends React.Component<PostionContainerPr
     }
     this.setState({
       selectedHotCityId: cityId || 0,
+    });
+  };
+
+  /** 清空热门城市选中项 */
+  clearHotCityId = () => {
+    this.setState({
+      selectedHotCityId: 0,
     });
   };
 

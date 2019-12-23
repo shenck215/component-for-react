@@ -18,8 +18,10 @@ React component library 🔥 overall overview, new module, 💄 module 🌟 adju
 ---
 
 #### Directory
+- [1.0.9](#109)
+  - [🔥City plug-in (SelectCIty) component optimization](#%f0%9f%94%a5city-plug-in-selectcity-component-optimization)
 - [1.0.8](#108)
-  - [🔥The city plug-in (SelectCIty) component adds custom prompts when the search is empty](#%f0%9f%94%a5the-city-plug-in-selectcity-component-adds-custom-prompts-when-the-search-is-empty)
+  - [🔥City plug-in (SelectCIty) component adds custom prompts when the search is empty](#%f0%9f%94%a5city-plug-in-selectcity-component-adds-custom-prompts-when-the-search-is-empty)
 - [1.0.7](#107)
   - [🔥Calendar (Calendar) components added fast year selection feature](#%f0%9f%94%a5calendar-calendar-components-added-fast-year-selection-feature)
 - [1.0.6](#106)
@@ -41,11 +43,23 @@ React component library 🔥 overall overview, new module, 💄 module 🌟 adju
 
 ---
 
+## 1.0.9
+
+`2019-12-23`
+
+### 🔥City plug-in (SelectCIty) component optimization
+
+- 💄 New screen, first remove the original choice of cities, and call the onChange
+- 💄 Click the city to remove the selected original hot city
+- 🐞 Repair fuzzy search everyday problems
+
+---
+
 ## 1.0.8
 
 `2019-12-20`
 
-### 🔥The city plug-in (SelectCIty) component adds custom prompts when the search is empty
+### 🔥City plug-in (SelectCIty) component adds custom prompts when the search is empty
 
 ---
 
